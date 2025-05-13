@@ -22,53 +22,8 @@ Typeora is a modern platform built using the **MERN stack** (MongoDB, Express, R
 * **React**: Frontend JavaScript library to build a responsive and dynamic user interface.
 * **Node.js**: JavaScript runtime for building the server-side application.
 
-## Installation
 
-To get started with **Typeora**, follow these steps:
 
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/yourusername/typeora.git
-   ```
-
-2. Navigate to the project directory:
-
-   ```bash
-   cd typeora
-   ```
-
-3. Install the dependencies for both the frontend and backend:
-
-   * For the **backend**:
-
-     ```bash
-     cd backend
-     npm install
-     ```
-   * For the **frontend**:
-
-     ```bash
-     cd frontend
-     npm install
-     ```
-
-4. Set up the necessary environment variables. Create a `.env` file in the root directory and fill in the required fields (e.g., database connection string, API keys).
-
-5. Start the development server:
-
-   * For **backend**:
-
-     ```bash
-     npm run dev
-     ```
-   * For **frontend**:
-
-     ```bash
-     npm start
-     ```
-
-Your application should now be running locally.
 
 ## License
 
@@ -77,17 +32,3 @@ You may **view** the code, but you **cannot copy, modify, or distribute** it in 
 Any use of the code without permission may be subject to legal action.
 
 For inquiries or permissions, please contact the project owner.
-
----
-
-### Key Sections of the README:
-
-* **Project Overview**: A brief explanation of what Typeora is and its purpose.
-* **Features**: Key functionality that your project provides, like news summarization, live streaming, and user roles.
-* **Technologies**: The main technologies used in the project (MERN stack in your case).
-* **Installation Instructions**: Steps for getting the project up and running locally.
-* **License**: Clarification that the project is protected, and no one is allowed to copy or modify it without your permission.
-
-This README should give visitors a clear idea of your project, how to get it running, and the restrictions in place for using the code. Let me know if you need to adjust anything!
-
-
