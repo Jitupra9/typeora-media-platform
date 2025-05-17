@@ -1,0 +1,43 @@
+@keyframes move_eye {
+  0%,
+  20% {
+    transform: translateX(0);
+  }
+  30%,
+  40% {
+    transform: translateX(-30%);
+  }
+  50%,
+  60% {
+    transform: translateX(40%);
+  }
+  70%,
+  80% {
+    transform: translateX(0%);
+  }
+  90%,
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes eye_pulse {
+  0%,
+  100% {
+    height: 0.25rem;
+  }
+  30%,
+  40%,
+  70%,
+  80% {
+    height: 2.5rem;
+  }
+}
+
+.move_slide {
+  animation: move_eye 5s ease-in-out infinite;
+}
+
+.eye_container {
+  animation: eye_pulse 2s infinite;
+}
