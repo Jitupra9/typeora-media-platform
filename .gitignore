@@ -1,62 +1,22 @@
+# Ignore node_modules and .env in both client and server
+
+# Root-level node_modules and .env (if any)
 node_modules/
-npm-debug.log*
-yarn-error.log
-
-# Ignore PHP-related files
-/vendor/
-/.env
 .env
-# Ignore build artifacts
-dist/
-build/
-*.log
 
-# Ignore OS-specific files
-.DS_Store
-Thumbs.db
+# Client folder
+/client/node_modules/
+/client/.env
 
-# Ignore editor-specific files
-.idea/
+# Server folder
+/server/node_modules/
+/server/.env
+
+# Optional: VS Code settings
 .vscode/
-*.sublime-workspace
-*.sublime-project
 
-# Ignore temporary files
-*.swp
-*.tmp
-*.bak
-*.pid
-*.seed
-*.backup
-
-# Ignore compiled files
-*.class
-*.o
-*.out
-*.so
-*.pyc
-*.pyo
-*.pyd
-
-# Ignore database files
-*.sqlite3
-*.db
-
-# Ignore images generated during processing
-*.jpg
-*.png
-*.gif
-
-# Ignore macOS-specific files
-.DS_Store
-
-# Ignore logs and debug files
-logs/
+# Logs
 *.log
 
-# Ignore uploaded files
-uploads/
-
-# Ignore coverage reports
-coverage/
-*.lcov
+# Mac system files
+.DS_Store
