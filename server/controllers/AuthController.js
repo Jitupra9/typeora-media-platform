@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel.js");
 
-const signup = async (req, res) => {
+exports.signup = async (req, res) => {
   const {
     userEmail,
     userPassword,
@@ -45,7 +45,7 @@ const signup = async (req, res) => {
   }
 };
 
-const login = async (req, res) => {
+exports.login = async (req, res) => {
   const { userEmail, userPassword } = req.body;
 
   try {
@@ -90,7 +90,7 @@ const login = async (req, res) => {
   }
 };
 
-const logout = (req, res) => {
+exports.logout = (req, res) => {
   res.cookie("token", "", {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
@@ -104,7 +104,7 @@ const logout = (req, res) => {
   });
 };
 
-const fetchUser = async (req, res) => {
+exports.fetchUser = async (req, res) => {
   try {
     const token = req.cookies.token;
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -131,5 +131,3 @@ const fetchUser = async (req, res) => {
     });
   }
 };
-
-module.exports = { signup, login, logout, fetchUser };

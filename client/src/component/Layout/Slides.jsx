@@ -31,8 +31,8 @@ function Slides() {
     },
     {
       icon: <Tv size={16} />,
-      path: "/live-reports",
-      name: "Live Reports",
+      path: "/Videos",
+      name: "Videos",
     },
     {
       icon: <Bookmark size={16} />,
@@ -105,12 +105,7 @@ function Slides() {
               className="bg-blue-400 text-white dark:bg-gray-700 dark:textgray-900 dark:opacity-100 opacity-90 cursor-pointer flex items-center justify-center gap-2 border py-2 px-3 rounded-md"
             >
               <div className="images">
-                <img
-                  src={people}
-                  alt=""
-                  srcset=""
-                  className=" w-10 rounded-full"
-                />
+                <img src={people} alt="" className=" w-10 rounded-full" />
               </div>
               <div className="textarea ">
                 <h3 className=" text-md font-bold">
@@ -142,6 +137,7 @@ function Slides() {
             const isActive = location.pathname.endsWith(item.path);
             return (
               <div
+                key={index}
                 className={` px-7 ${
                   isActive
                     ? "bg-blue-50 text-cyan-600 border-l-4 border-blue-500 dark:bg-gray-700 dark:text-white dark:border-blue-50"

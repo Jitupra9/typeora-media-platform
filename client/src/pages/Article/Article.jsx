@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import forest from "../../assets/images/cloud-forest-landscape.jpg";
 import people from "../../assets/images/people.jpg";
 import sports from "../../assets/images/sports.jpg";
@@ -15,8 +15,15 @@ import {
 function Article() {
   const [isActive, setisActive] = useState(null);
   const handleAciveArticle = (item, i) => {
+    console.log("test is it runed or what");
     setisActive(i);
   };
+  useEffect(() => {
+    console.log("article component render");
+  });
+  useEffect(() => {
+    console.log("article component first render");
+  }, []);
   return (
     <div className="h-[88vh] lg:h-[85vh] flex text-gray-500 dark:text-gray-400">
       {isActive && (
@@ -54,12 +61,7 @@ function Article() {
               </div>
               <div className=" flex justify-between *:flex *:items-center *:gap-4 *:text-xs ">
                 <div>
-                  <img
-                    src={people}
-                    alt=""
-                    srcset=""
-                    className=" rounded-full w-6 h-6"
-                  />
+                  <img src={people} alt="" className=" rounded-full w-6 h-6" />
                   <h3>
                     Helena Thomton
                     <span className=" text-gray-300 font-normal">
@@ -81,7 +83,6 @@ function Article() {
                   <img
                     src={people}
                     alt=""
-                    srcset=""
                     className=" rounded-full w-12 h-12"
                   />
                   <div>
@@ -158,7 +159,6 @@ function Article() {
                       <img
                         src={sports}
                         alt=""
-                        srcset=""
                         className=" w-full rounded-t-md"
                       />
                     </div>
@@ -201,12 +201,7 @@ function Article() {
           >
             <div className=" images relative cursor-pointer">
               <div className="absolute inset-0 bg-black bg-opacity-20"></div>
-              <img
-                src={sports}
-                alt=""
-                srcset=""
-                className=" w-full rounded-t-md"
-              />
+              <img src={sports} alt="" className=" w-full rounded-t-md" />
             </div>
             <div className=" textareas">
               <div className=" p-2 sm:p-5">
@@ -223,7 +218,6 @@ function Article() {
                     <img
                       src={people}
                       alt=""
-                      srcset=""
                       className=" rounded-full w-5 h-5"
                     />
                     <h3 className=" font-semibold text-[10px] lg:text-sm ">

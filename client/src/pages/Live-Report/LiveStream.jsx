@@ -25,12 +25,7 @@ function LiveStream() {
           <div className=" mt-10 flex flex-col sm:flex-row justify-between items-center">
             <div className=" flex items-center gap-5 w-full justify-between sm:justify-start my-5 sm:my-0">
               <div className=" flex items-center gap-3">
-                <img
-                  src={img}
-                  alt=""
-                  srcset=""
-                  className=" rounded-full w-12 h-12"
-                />
+                <img src={img} alt="" className=" rounded-full w-12 h-12" />
                 <div>
                   <h3 className=" font-semibold text-sm xl:text-lg  ">
                     Fidaa Music Odia
@@ -75,7 +70,7 @@ function LiveStream() {
             </div>
           </div>
           <div
-            class={` overflow-hidden dark:bg-gray-900 dark:bg-opacity-85 bg-white p-5 mt-10 rounded-xl border border-gray-200 border-opacity-20`}
+            className={` overflow-hidden dark:bg-gray-900 dark:bg-opacity-85 bg-white p-5 mt-10 rounded-xl border border-gray-200 border-opacity-20`}
           >
             <p className=" font-bold">
               17k views - <span>1 minute ago</span>
@@ -106,12 +101,7 @@ function LiveStream() {
                 >
                   <div className=" w-full images relative cursor-pointer">
                     <div className="absolute inset-0 bg-black bg-opacity-20"></div>
-                    <img
-                      src={sports}
-                      alt=""
-                      srcset=""
-                      className=" w-full rounded-t-md"
-                    />
+                    <img src={sports} alt="" className=" w-full rounded-t-md" />
                   </div>
                   <div className=" textareas">
                     <div className=" p-2">

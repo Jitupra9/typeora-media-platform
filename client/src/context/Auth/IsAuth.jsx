@@ -49,10 +49,6 @@ function IsAuth({ children }) {
     fetchUser();
   }, [fetchUser]);
 
-  useEffect(() => {
-    fetchUser();
-  }, [fetchUser, Auth.islogined]);
-
   const contextValue = useMemo(() => ({ Auth, setAuth }), [Auth]);
 
   return (

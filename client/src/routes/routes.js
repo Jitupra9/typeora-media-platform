@@ -19,7 +19,7 @@ const routes = [
         component: Blogs,
       },
       {
-        path: "live-reports",
+        path: "Videos",
         component: LiveReports,
       },
       {
