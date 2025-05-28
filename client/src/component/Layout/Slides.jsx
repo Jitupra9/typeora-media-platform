@@ -2,7 +2,6 @@ import React, { memo, useContext } from "react";
 import { IsAuthnticate } from "../../context/Auth/IsAuth";
 import people from "../../assets/images/people.jpg";
 import { Link, useLocation } from "react-router-dom";
-import axios from "axios";
 import toast from "react-hot-toast";
 import {
   User,
@@ -22,7 +21,6 @@ function Slides() {
   const { Auth, setAuth } = useContext(IsAuthnticate);
 
   const location = useLocation();
-  const SERVER_URL = process.env.REACT_APP_API_URL;
   const pages = [
     {
       icon: <Newspaper size={18} />,
@@ -70,25 +68,19 @@ function Slides() {
       name: "Help & Support",
     },
   ];
-
   const handleLogout = async () => {
-    try {
-      const res = await axios.get(`${SERVER_URL}/logout`, {
-        withCredentials: true,
-      });
-      if (res.data?.success) {
-        toast.success(res.data?.message);
-        setAuth((prev) => ({
-          ...prev,
-          islogined: false,
-        }));
-      }
-    } catch (err) {
-      if (err.response?.data?.message) {
-        toast.error(err.response.data.message);
-      } else {
-        toast.error("Logout failed");
-      }
+    const userData = JSON.parse(localStorage.getItem("userData"));
+    if (!userData?.user?._id) {
+      toast.error("login First");
+      return;
+    } else {
+      localStorage.removeItem("userData");
+      setAuth((prev) => ({
+        ...prev,
+        islogined: false,
+        user: null,
+      }));
+      toast.success("Logged out successfully!");
     }
   };
 
@@ -109,11 +101,8 @@ function Slides() {
               </div>
               <div className="textarea ">
                 <h3 className=" text-md font-bold">
-                  {Auth.user === null
-                    ? "loading..."
-                    : Auth?.user?.userFirstname +
-                      " " +
-                      Auth?.user?.userLastName}
+                  {Auth.user &&
+                    Auth?.user?.userFirstname + " " + Auth?.user?.userLastName}
                 </h3>
                 <p className=" text-xs">Premium Plan</p>
               </div>
