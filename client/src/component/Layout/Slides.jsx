@@ -123,7 +123,11 @@ function Slides() {
       <div className=" h-[76vh] hidel_slide_roler overflow-y-scroll">
         <div className="  py-3 flex flex-col gap-y-4 border-b-2">
           {pages.map((item, index) => {
-            const isActive = location.pathname.endsWith(item.path);
+            const isActive =
+              location.pathname === item.path ||
+              (item.path === "/Videos" &&
+                location.pathname.startsWith("/Videos/"));
+
             return (
               <div
                 key={index}

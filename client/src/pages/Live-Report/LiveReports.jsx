@@ -1,10 +1,10 @@
 import React, { memo, useContext, useEffect, useMemo } from "react";
 import { Headers } from "../../context/utils/Headercontext";
+import { Link } from "react-router-dom";
 import bgimg from "../../assets/images/videos.jpg";
 import logo from "../../assets/images/logo.png";
 import poster from "../../assets/images/videos2.jpg";
-// import LiveStream from "./LiveStream";
-// import ContentSlider from "../../component/Layout/ContentSlider";
+import { Dot } from "lucide-react";
 function LiveReports() {
   const { setheaders } = useContext(Headers);
 
@@ -30,23 +30,16 @@ function LiveReports() {
   useEffect(() => {
     setheaders(categories);
   }, [categories, setheaders]);
-  return (
-    // <div className="flex gap-1">
-    //   <div className="w-full lg:w-[60%]">
-    //     <LiveStream />
-    //   </div>
-    //   <div className=" hidden lg:block lg:w-[39%]">
-    //     <ContentSlider />
-    //   </div>
-    // </div>
 
+  return (
     <div className="text-gray-200 dark:text-gray-400 ">
       <h1 className="dark:text-white text-black text-xl font-bold mb-3">
         Top This Week
       </h1>
       <div className=" flex flex-wrap justify-between gap-y-3 overflow-hidden h-60 ">
         {[...Array(3)].map((item, key) => (
-          <div
+          <Link
+            to={`/Videos/${key}`}
             className=" border border-gray-300 relative overflow-hidden p-5 flex flex-col   justify-end w-full sm:w-[49%] lg:w-[32%] h-60 rounded-md bg-cover bg-center"
             style={{ backgroundImage: `url(${bgimg})` }}
           >
@@ -78,7 +71,7 @@ function LiveReports() {
                 <p>SoundShare</p>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
       <h1 className="dark:text-white text-black text-xl font-bold my-3">
@@ -86,11 +79,12 @@ function LiveReports() {
       </h1>
       <div className="flex flex-wrap justify-between gap-y-6">
         {[...Array(12)].map((item, key) => (
-          <div
+          <Link
+            to={`/Videos/${key}`}
             key={key}
-            className="w-full sm:w-[48%] lg:w-[24%] px-2 box-border"
+            className="w-full cursor-pointer sm:w-[48%] lg:w-[24%] px-2 box-border "
           >
-            <div className=" rounded-xl overflow-hidden shadow-md">
+            <div className=" rounded-xl overflow-hidden bg-white  dark:bg-gray-900 border">
               <div className="images mb-3">
                 <img
                   src={poster}
@@ -104,14 +98,20 @@ function LiveReports() {
                   alt="Logo"
                   className="w-8 h-8 rounded-full object-cover"
                 />
-                <div className="flex flex-col w-full">
-                  <h3 className="font-semibold text-gray-800 dark:text-white">
+                <div className="flex flex-col w-full text-gray-800 dark:text-gray-400">
+                  <h3 className="font-semibold  dark:text-white">
                     Full Video: Raajhan | Do Patti | Kriti Sanon, Shaheer Sheikh
                   </h3>
+                  <p className="">Jitu Pradhan</p>
+                  <p className=" flex">
+                    <span>66k views</span>
+                    <Dot />
+                    <span>11 days ago</span>
+                  </p>
                 </div>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

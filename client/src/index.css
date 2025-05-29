@@ -5,3 +5,13 @@
 .hidel_slide_roler::-webkit-scrollbar {
   display: none;
 }
+
+.date_icon_off::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}
+
+.time_icon_off::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}

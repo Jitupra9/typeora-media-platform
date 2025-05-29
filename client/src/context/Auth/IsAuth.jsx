@@ -6,7 +6,7 @@ function IsAuth({ children }) {
   const [Auth, setAuth] = useState({
     user: [""],
     islogined: false,
-    loading: false,
+    loading: true,
   });
 
   const fetchUser = () => {
