@@ -106,6 +106,13 @@ function Profile() {
               </li>
               <li
                 onClick={() => {
+                  setisactive("Videos");
+                }}
+              >
+                Videos
+              </li>
+              <li
+                onClick={() => {
                   setisactive("NewLives");
                 }}
               >

@@ -27,20 +27,18 @@ function Login() {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axios.post(
-        `${SERVER_URL}/login`,
-        {
-          userEmail: data.email,
-          userPassword: data.password,
-        },
-        { withCredentials: true }
-      );
+      const res = await axios.post(`${SERVER_URL}/login`, {
+        userEmail: data.email,
+        userPassword: data.password,
+      });
       console.log(res.data);
       if (res.data?.success) {
         setAuth((prev) => ({
           ...prev,
           islogined: true,
+          user: res.data?.userData?.user,
         }));
+        localStorage.setItem("userData", JSON.stringify(res?.data?.userData));
         toast.success("Login successful!");
         navigate("/");
       } else {

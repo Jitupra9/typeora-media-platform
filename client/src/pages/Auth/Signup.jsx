@@ -1,5 +1,5 @@
 import React, { memo, useState, useEffect } from "react";
-import { Mail, CheckCheck, Lock, EyeOff, Eye } from "lucide-react";
+import { Mail, CheckCheck, Lock, EyeOff, Eye, Pencil } from "lucide-react";
 import axios from "axios";
 import toast from "react-hot-toast";
 function Signup(props) {
@@ -26,7 +26,20 @@ function Signup(props) {
       [name]: value,
     }));
   };
-
+  const changeProgress = () => {
+    setdatas((prev) => ({
+      ...prev,
+      firstName: "",
+      lastName: "",
+      phoneNo: "",
+      location: "",
+      otp: "",
+      password: "",
+      Mailverifyed: false,
+      allfillup: false,
+    }));
+    setisotp(false);
+  };
   const Mailsend = async () => {
     if (datas.email.length <= 0) {
       return toast.error("Enter the velid mail");
@@ -38,15 +51,25 @@ function Signup(props) {
       });
       if (result) {
         setisotp(true);
-        toast.success("OTP sended successfully");
+        return toast.success("OTP sended successfully");
       }
     } catch (err) {
-      toast.error("OTP can't send");
+      if (err.response?.data?.code === 11000) {
+        return toast.error(err.response?.data?.message);
+      }
+
+      if (err.response?.data?.message) {
+        toast.error(err.response.data.message);
+      } else {
+        toast.error("somthing is wrong try later");
+      }
       console.log(err);
     } finally {
       setisloading(false);
     }
+    return;
   };
+
   const Mailverify = async () => {
     try {
       const res = await axios.post(`${SERVER_URL}/veifyEmail`, {
@@ -55,18 +78,19 @@ function Signup(props) {
       });
       if (res.data?.success) {
         toast.success("Email verifyed successfully");
-        setdatas((prev) => ({
+        return setdatas((prev) => ({
           ...prev,
           Mailverifyed: true,
         }));
       }
     } catch (err) {
       if (err.response?.data) {
-        toast.error(err.response?.data.message);
+        return toast.error(err.response?.data.message);
       } else {
         console.log("somthing is wrong");
       }
     }
+    return;
   };
   useEffect(() => {
     console.log("Updated datas:", datas);
@@ -139,78 +163,93 @@ function Signup(props) {
           <p className=" font-semibold text-gray-700">Email Address</p>
           <input
             type="email"
-            className=" bg-transparent outline-none font-bold text-black mt-1"
+            className=" bg-transparent outline-none font-bold text-black dark:text-gray-400 mt-1"
             placeholder="xyzabc@gmail.com"
             name="email"
             onChange={handlechange}
             value={datas.email}
           />
         </div>
-        <CheckCheck
-          className={` w-4 h-4 text-white rounded-full p-1 ${
-            isotp === true ? " bg-green-700" : "bg-gray-700"
-          }`}
-        />
+
+        {isotp ? (
+          <Pencil onClick={changeProgress} className="w-4 h-4 cursor-pointer" />
+        ) : (
+          <CheckCheck className=" w-4 h-4 text-white rounded-full p-1 bg-gray-600" />
+        )}
       </div>
+
       {datas.Mailverifyed && !datas.allfillup ? (
-        <div className=" absolute top-0 left-0 flex bg-black bg-opacity-85 justify-center items-center w-[100vw] h-[100vh]">
-          <div className=" text-left text-xs font-semibold p-5 bg-white dark:bg-gray-900 text-black dark:text-gray-200 rounded-md h-full w-full sm:w-[50%] sm:h-[50%]">
-            <div className=" border-b py-3 text-lg">
-              <h3>Basic details</h3>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80">
+          <div className="w-full h-full sm:w-[90%] sm:h-auto md:w-[60%] lg:w-[50%] bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-6 transition-all duration-300 ease-in-out">
+            <div className="border-b border-gray-300 dark:border-gray-700 pb-4 mb-6">
+              <h3 className="text-xl font-bold text-gray-800 dark:text-gray-200">
+                Basic Details
+              </h3>
             </div>
-            <div className="flex w-full *:sm:w-[48%] *:md:w-[32%] justify-between flex-wrap gap-y-10 py-5">
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-6 gap-x-2 text-left">
               <div className="">
-                <p>First name</p>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  First Name
+                </label>
                 <input
-                  className=" bg-transparent outline-none py-2 border-b border-gray-600 text-sm"
                   type="text"
                   name="firstName"
                   placeholder="Abc"
+                  className="w-full py-2 px-3 bg-transparent border-b-2 border-gray-400 focus:border-blue-500 text-sm text-gray-800 dark:text-gray-100 outline-none transition-all"
                   onChange={handlechange}
+                  required
                   value={datas.firstName}
                 />
               </div>
+
               <div className="">
-                <p>Last Name</p>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  Last Name
+                </label>
                 <input
-                  className=" bg-transparent outline-none py-2   border-b border-gray-600 text-sm"
                   type="text"
                   name="lastName"
-                  id=""
                   placeholder="Xyz"
+                  className="w-full py-2 px-3 bg-transparent border-b-2 border-gray-400 focus:border-blue-500 text-sm text-gray-800 dark:text-gray-100 outline-none transition-all"
                   onChange={handlechange}
                   value={datas.lastName}
                 />
               </div>
-              <div className=" ">
-                <p>Phone no.</p>
+
+              <div className="">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  Phone No.
+                </label>
                 <input
-                  className=" bg-transparent outline-none py-2   border-b border-gray-600 text-sm"
-                  type=" text"
+                  type="text"
                   name="phoneNo"
-                  id=""
                   placeholder="9876543210"
+                  className="w-full py-2 px-3 bg-transparent border-b-2 border-gray-400 focus:border-blue-500 text-sm text-gray-800 dark:text-gray-100 outline-none transition-all"
                   onChange={handlechange}
                   value={datas.phoneNo}
                 />
               </div>
-              <div className=" w-[45%]">
-                <p>Location</p>
+
+              <div className="">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  Location
+                </label>
                 <input
-                  className=" bg-transparent outline-none py-2  border-b border-gray-600 text-sm"
                   type="text"
                   name="location"
-                  placeholder="Berhamour,Odisha"
-                  id=""
+                  placeholder="Berhampur, Odisha"
+                  className="w-full py-2 px-3 bg-transparent border-b-2 border-gray-400 focus:border-blue-500 text-sm text-gray-800 dark:text-gray-100 outline-none transition-all"
                   onChange={handlechange}
                   value={datas.location}
                 />
               </div>
             </div>
-            <div className=" text-right mt-5">
+
+            <div className="mt-8 text-right">
               <button
                 onClick={isFillupData}
-                className=" dark:bg-gray-700 p-2 shadow-md shadow-gray-700 bg-blue-600 text-white rounded-md"
+                className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md shadow-md transition-all"
               >
                 Submit
               </button>
@@ -237,6 +276,7 @@ function Signup(props) {
               required
             />
           </div>
+
           {passEye === true ? (
             <Eye
               onClick={() => {
@@ -256,7 +296,7 @@ function Signup(props) {
       ) : (
         <div
           className={` relative w-full  border-2 my-5 px-3 py-2 gap-2 rounded-xl flex items-center ${
-            isotp !== true ? "invisible" : "visible"
+            isotp !== true ? " invisible" : " visible"
           }`}
         >
           <Lock className="w-4 h-4" />

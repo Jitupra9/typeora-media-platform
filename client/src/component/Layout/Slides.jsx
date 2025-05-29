@@ -2,7 +2,6 @@ import React, { memo, useContext } from "react";
 import { IsAuthnticate } from "../../context/Auth/IsAuth";
 import people from "../../assets/images/people.jpg";
 import { Link, useLocation } from "react-router-dom";
-import axios from "axios";
 import toast from "react-hot-toast";
 import {
   User,
@@ -22,7 +21,6 @@ function Slides() {
   const { Auth, setAuth } = useContext(IsAuthnticate);
 
   const location = useLocation();
-  const SERVER_URL = process.env.REACT_APP_API_URL;
   const pages = [
     {
       icon: <Newspaper size={18} />,
@@ -31,8 +29,8 @@ function Slides() {
     },
     {
       icon: <Tv size={16} />,
-      path: "/live-reports",
-      name: "Live Reports",
+      path: "/Videos",
+      name: "Videos",
     },
     {
       icon: <Bookmark size={16} />,
@@ -70,25 +68,19 @@ function Slides() {
       name: "Help & Support",
     },
   ];
-
   const handleLogout = async () => {
-    try {
-      const res = await axios.get(`${SERVER_URL}/logout`, {
-        withCredentials: true,
-      });
-      if (res.data?.success) {
-        toast.success(res.data?.message);
-        setAuth((prev) => ({
-          ...prev,
-          islogined: false,
-        }));
-      }
-    } catch (err) {
-      if (err.response?.data?.message) {
-        toast.error(err.response.data.message);
-      } else {
-        toast.error("Logout failed");
-      }
+    const userData = JSON.parse(localStorage.getItem("userData"));
+    if (!userData?.user?._id) {
+      toast.error("login First");
+      return;
+    } else {
+      localStorage.removeItem("userData");
+      setAuth((prev) => ({
+        ...prev,
+        islogined: false,
+        user: null,
+      }));
+      toast.success("Logged out successfully!");
     }
   };
 
@@ -105,20 +97,12 @@ function Slides() {
               className="bg-blue-400 text-white dark:bg-gray-700 dark:textgray-900 dark:opacity-100 opacity-90 cursor-pointer flex items-center justify-center gap-2 border py-2 px-3 rounded-md"
             >
               <div className="images">
-                <img
-                  src={people}
-                  alt=""
-                  srcset=""
-                  className=" w-10 rounded-full"
-                />
+                <img src={people} alt="" className=" w-10 rounded-full" />
               </div>
               <div className="textarea ">
                 <h3 className=" text-md font-bold">
-                  {Auth.user === null
-                    ? "loading..."
-                    : Auth?.user?.userFirstname +
-                      " " +
-                      Auth?.user?.userLastName}
+                  {Auth.user &&
+                    Auth?.user?.userFirstname + " " + Auth?.user?.userLastName}
                 </h3>
                 <p className=" text-xs">Premium Plan</p>
               </div>
@@ -139,9 +123,14 @@ function Slides() {
       <div className=" h-[76vh] hidel_slide_roler overflow-y-scroll">
         <div className="  py-3 flex flex-col gap-y-4 border-b-2">
           {pages.map((item, index) => {
-            const isActive = location.pathname.endsWith(item.path);
+            const isActive =
+              location.pathname === item.path ||
+              (item.path === "/Videos" &&
+                location.pathname.startsWith("/Videos/"));
+
             return (
               <div
+                key={index}
                 className={` px-7 ${
                   isActive
                     ? "bg-blue-50 text-cyan-600 border-l-4 border-blue-500 dark:bg-gray-700 dark:text-white dark:border-blue-50"

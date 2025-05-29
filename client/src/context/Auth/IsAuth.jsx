@@ -1,57 +1,35 @@
-import React, {
-  createContext,
-  useEffect,
-  useState,
-  useMemo,
-  useCallback,
-} from "react";
-import axios from "axios";
+import React, { createContext, useEffect, useState, useMemo } from "react";
 
 export const IsAuthnticate = createContext();
 
 function IsAuth({ children }) {
-  const SERVER_URL = process.env.REACT_APP_API_URL;
-
   const [Auth, setAuth] = useState({
     user: [""],
     islogined: false,
     loading: true,
   });
 
-  const fetchUser = useCallback(async () => {
-    try {
-      const result = await axios.get(`${SERVER_URL}/fetchUser`, {
-        withCredentials: true,
-      });
-      if (result.data?.success) {
-        setAuth((prev) => ({
-          ...prev,
-          islogined: true,
-          user: result?.data?.user,
-          loading: false,
-        }));
-      } else {
-        setAuth((prev) => ({
-          ...prev,
-          loading: false,
-        }));
-      }
-    } catch (err) {
-      console.log(err);
+  const fetchUser = () => {
+    const result = JSON.parse(localStorage.getItem("userData") || "null");
+
+    if (result?.user?._id) {
+      setAuth((prev) => ({
+        ...prev,
+        islogined: true,
+        user: result?.user,
+        loading: false,
+      }));
+    } else {
       setAuth((prev) => ({
         ...prev,
         loading: false,
       }));
     }
-  }, [SERVER_URL]);
+  };
 
   useEffect(() => {
     fetchUser();
-  }, [fetchUser]);
-
-  useEffect(() => {
-    fetchUser();
-  }, [fetchUser, Auth.islogined]);
+  }, []);
 
   const contextValue = useMemo(() => ({ Auth, setAuth }), [Auth]);
 
