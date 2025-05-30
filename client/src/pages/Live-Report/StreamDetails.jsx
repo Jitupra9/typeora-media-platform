@@ -1,5 +1,5 @@
 import React from "react";
-import LiveStream from "./LiveStream";
+import LiveStream from "./Video";
 import ContentSlider from "../../component/Layout/ContentSlider";
 function StreamDetails() {
   return (
