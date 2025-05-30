@@ -2,7 +2,7 @@ import { createContext, useState, useEffect } from "react";
 
 export const ThemeContext = createContext();
 function ThemeProvide({ children }) {
-  const [theme, setTheme] = useState("day");
+  const [theme, setTheme] = useState("night");
 
   useEffect(() => {
     const root = document.documentElement;
