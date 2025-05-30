@@ -39,8 +39,8 @@ function LiveReports() {
       <div className=" flex flex-wrap justify-between gap-y-3 overflow-hidden h-60 ">
         {[...Array(3)].map((item, key) => (
           <Link
-            to={`/Videos/${key}`}
-            className=" border border-gray-300 relative overflow-hidden p-5 flex flex-col   justify-end w-full sm:w-[49%] lg:w-[32%] h-60 rounded-md bg-cover bg-center"
+            to={`/${key}`}
+            className=" border border-gray-800 relative overflow-hidden p-5 flex flex-col   justify-end w-full sm:w-[49%] lg:w-[32%] h-60 rounded-md bg-cover bg-center"
             style={{ backgroundImage: `url(${bgimg})` }}
           >
             <div
@@ -49,7 +49,11 @@ function LiveReports() {
                 backgroundImage:
                   "linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0))",
               }}
-            ></div>
+            >
+              <div className=" absolute bg-black opacity-75 px-2 text-xs py-1 rounded-md right-5 top-3">
+                10:12
+              </div>
+            </div>
 
             <div className=" z-10 flex flex-col gap-y-2 text-xs">
               <h3 className=" font-semibold text-sm  text-white dark:text-gray-300">
@@ -80,17 +84,20 @@ function LiveReports() {
       <div className="flex flex-wrap justify-between gap-y-6">
         {[...Array(12)].map((item, key) => (
           <Link
-            to={`/Videos/${key}`}
+            to={`/${key}`}
             key={key}
             className="w-full cursor-pointer sm:w-[48%] lg:w-[24%] px-2 box-border "
           >
-            <div className=" rounded-xl overflow-hidden bg-white  dark:bg-gray-900 border">
-              <div className="images mb-3">
+            <div className=" rounded-lg overflow-hidden ">
+              <div className=" relative images mb-3">
                 <img
                   src={poster}
                   alt="Poster"
-                  className="rounded-xl w-full h-auto object-cover"
+                  className="rounded-lg w-full h-auto object-cover"
                 />
+                <div className=" absolute bg-black opacity-75 px-2 text-xs py-1 rounded-md right-5 bottom-3">
+                  10:12
+                </div>
               </div>
               <div className="textareas flex gap-3 px-2 pb-3 text-sm">
                 <img
