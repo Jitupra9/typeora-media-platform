@@ -18,19 +18,19 @@ const routes = [
     children: [
       {
         path: "",
-        component: Blogs,
-      },
-      {
-        path: "/:id",
-        component: ArticleDetails,
-      },
-      {
-        path: "Videos",
         component: LiveReports,
       },
       {
-        path: "Videos/:id",
+        path: "/:id",
         component: StreamDetails,
+      },
+      {
+        path: "Articles",
+        component: Blogs,
+      },
+      {
+        path: "Articles/:id",
+        component: ArticleDetails,
       },
       {
         path: "saved",

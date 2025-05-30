@@ -23,15 +23,16 @@ function Slides() {
   const location = useLocation();
   const pages = [
     {
-      icon: <Newspaper size={18} />,
-      path: "/",
-      name: "Articles",
-    },
-    {
       icon: <Tv size={16} />,
-      path: "/Videos",
+      path: "/",
       name: "Videos",
     },
+    {
+      icon: <Newspaper size={18} />,
+      path: "/Articles",
+      name: "Articles",
+    },
+
     {
       icon: <Bookmark size={16} />,
       path: "/Saved",
@@ -125,8 +126,9 @@ function Slides() {
           {pages.map((item, index) => {
             const isActive =
               location.pathname === item.path ||
-              (item.path === "/Videos" &&
-                location.pathname.startsWith("/Videos/"));
+              (item.path === "/Articles" &&
+                location.pathname.startsWith("/Articles")) ||
+              (item.path === "/" && /^\/\d+$/.test(location.pathname));
 
             return (
               <div

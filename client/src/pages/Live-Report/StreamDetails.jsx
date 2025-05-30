@@ -4,12 +4,12 @@ import ContentSlider from "../../component/Layout/ContentSlider";
 function StreamDetails() {
   return (
     <div className="flex gap-1">
-      <div className="w-full lg:w-[60%]">
+      <div className="w-full lg:w-[70%]">
         <Video />
       </div>
-      <div className=" hidden lg:block lg:w-[39%]">
+      {/* <div className=" hidden lg:block lg:w-[39%]">
         <ContentSlider />
-      </div>
+      </div> */}
     </div>
   );
 }

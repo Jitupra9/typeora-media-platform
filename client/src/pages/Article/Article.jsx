@@ -9,7 +9,7 @@ function Article() {
       <div className="overflow-hidden  overflow-y-scroll hidel_slide_roler w-full justify-center  sm:flex  all_blogs  flex flex-wrap  gap-3  font-semibold">
         {[...Array(12)].map((_, i) => (
           <Link
-            to={`/${i}`}
+            to={`/Articles/${i}`}
             key={i}
             className={`overflow-hidden  sm:w-[32%] lg:w-[24%]
             rounded-md border bg-white dark:bg-gray-900 dark:bg-opacity-85`}

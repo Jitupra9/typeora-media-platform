@@ -39,7 +39,7 @@ function LiveReports() {
       <div className=" flex flex-wrap justify-between gap-y-3 overflow-hidden h-60 ">
         {[...Array(3)].map((item, key) => (
           <Link
-            to={`/Videos/${key}`}
+            to={`/${key}`}
             className=" border border-gray-800 relative overflow-hidden p-5 flex flex-col   justify-end w-full sm:w-[49%] lg:w-[32%] h-60 rounded-md bg-cover bg-center"
             style={{ backgroundImage: `url(${bgimg})` }}
           >
@@ -84,7 +84,7 @@ function LiveReports() {
       <div className="flex flex-wrap justify-between gap-y-6">
         {[...Array(12)].map((item, key) => (
           <Link
-            to={`/Videos/${key}`}
+            to={`/${key}`}
             key={key}
             className="w-full cursor-pointer sm:w-[48%] lg:w-[24%] px-2 box-border "
           >
