@@ -2,7 +2,16 @@ import React, { memo, useEffect } from "react";
 
 import Videoplayer from "../../component/utils/videoplayer";
 import sports from "../../assets/images/sports.jpg";
-import { ThumbsUp, ThumbsDown, Share2, EllipsisVertical } from "lucide-react";
+import {
+  ThumbsUp,
+  ThumbsDown,
+  Share2,
+  EllipsisVertical,
+  Eye,
+  Heart,
+  Bell,
+  Forward,
+} from "lucide-react";
 import img from "../../assets/images/people.jpg";
 
 function LiveStream() {
@@ -11,17 +20,10 @@ function LiveStream() {
   });
 
   return (
-    <div
-      className={` h-[85vh] text-black  dark:text-white overflow-hidden overflow-y-scroll hidel_slide_roler`}
-    >
+    <div className=" sm:p-5 h-[85vh] text-black  dark:text-white overflow-hidden overflow-y-scroll hidel_slide_roler">
       <div className=" w-full streaming  rounded-xl  ">
         <Videoplayer />
         <div className=" mt-5">
-          <p className="Video-title  text-2xl font-bold">
-            Jete Samaya to sathire ll Varun Varma X Varshinee Varma version ll
-            Fidaa Music Odia
-          </p>
-
           <div className=" mt-10 flex flex-col sm:flex-row justify-between items-center">
             <div className=" flex items-center gap-5 w-full justify-between sm:justify-start my-5 sm:my-0">
               <div className=" flex items-center gap-3">
@@ -37,11 +39,7 @@ function LiveStream() {
                 Follow
               </div>
             </div>
-            <div
-              className={`text-xs *:bg-gray-200 dark:*:bg-gray-800 dark:text-white text-black w-full  overflow-hidden overflow-x-scroll md:overflow-auto hidel_slide_roler flex md:justify-end gap-3 font-semibold  lg:text-base
-              
-              `}
-            >
+            <div className=" text-xs *:bg-gray-200 dark:*:bg-gray-800 dark:text-white text-black w-full  overflow-hidden overflow-x-scroll md:overflow-auto hidel_slide_roler flex  sm:justify-end gap-3 font-semibold  lg:text-base">
               <div className=" rounded-full px-3 py-[6px] gap-4 items-center  flex ">
                 <div className=" border-r flex items-center gap-4 px-3 pl-3">
                   <ThumbsUp className=" w-4 h-4" /> 8.7k
@@ -69,9 +67,47 @@ function LiveStream() {
               </div>
             </div>
           </div>
-          <div
-            className={` overflow-hidden dark:bg-gray-900 dark:bg-opacity-85 bg-white p-5 mt-10 rounded-xl border border-gray-200 border-opacity-20`}
-          >
+          <div className=" flex flex-col sm:flex-row gap-5 justify-between mt-10">
+            <div className=" w-full sm:w-[65%] title-discription ">
+              <p className="Video-title  text-3xl  font-thin">
+                Basic how to ride your skateboard comfortly and Basic Equipment
+                to play skateboard safely
+              </p>
+              <div className=" text-gray-400 text-sm tracking-wide leading-relaxed ">
+                <p className=" mt-5">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Aperiam accusantium qui similique corporis natus perspiciatis
+                  sunt molestiae delectus nemo excepturi modi, ex fugiat veniam
+                  harum, illo possimus ut doloribus itaque odio. Officia,
+                  voluptates sequi odio nulla perspiciatis nemo sint molestiae.
+                </p>
+                <p className=" mt-5">
+                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ad
+                  natus hic dolore aperiam perspiciatis sint molestias,
+                  inventore omnis rerum deleniti tenetur iste, ipsam adipisci!
+                  Ipsa corrupti sed, inventore esse commodi cumque tempore odit
+                  laudantium repudiandae quis sit unde omnis maiores magni iste
+                  perferendis. Praesentium, dolore blanditiis? Voluptate,
+                  perspiciatis? Rerum, nulla.
+                </p>
+              </div>
+            </div>
+            <div className="flex  flex-wrap text-gray-400 sm:flex-col sm:px-[5%]  gap-7 w-full sm:w-[35%] *:flex *:gap-4">
+              <div>
+                <Eye /> 125,908 Views
+              </div>
+              <div>
+                <Heart className=" fill-gray-400 " /> 47,987 likes
+              </div>
+              <div>
+                <Bell /> Start 2 hours ago
+              </div>
+              <div>
+                <Forward /> 125,908 Shared
+              </div>
+            </div>
+          </div>
+          <div className=" hidden overflow-hidden dark:bg-gray-900 dark:bg-opacity-85 bg-white p-5 mt-10 rounded-xl border border-gray-200 border-opacity-20">
             <p className=" font-bold">
               17k views - <span>1 minute ago</span>
             </p>

@@ -15,8 +15,11 @@ import people from "../../assets/images/people.jpg";
 
 import forest from "../../assets/images/cloud-forest-landscape.jpg";
 function ArticleDetails() {
+  const handleGoBack = () => {
+    window.history.go(-1);
+  };
   return (
-    <div className=" w-full sm:flex">
+    <div className=" w-full sm:flex text-gray-600 dark:text-gray-400">
       <div className=" w-full h-[85vh] lg:w-[65%] sm:pr-[3%] overflow-hidden overflow-y-scroll hidel_slide_roler sm:border-r border-gray-300">
         <div
           className=" first_blogs w-full bg-cover bg-center font-semibold rounded-md text-white h-72 lg:h-96 relative overflow-hidden"
@@ -27,7 +30,7 @@ function ArticleDetails() {
           <div className="absolute inset-0 bg-black bg-opacity-5"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
           <div className=" cursor-pointer font-bold absolute right-3 top-3 bg-gray-900 p-1 rounded-full opacity-45">
-            <X className=" w-4 h-4" />
+            <X className=" w-4 h-4" onClick={handleGoBack} />
           </div>
           <div className=" absolute z-10 p-5 w-full bottom-0">
             <p className="tracking-wide text-gray-300 text-sm mb-2">Travel</p>

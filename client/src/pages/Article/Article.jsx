@@ -35,7 +35,7 @@ function Article() {
                       alt=""
                       className=" rounded-full w-5 h-5"
                     />
-                    <h3 className=" font-semibold text-[10px] lg:text-sm ">
+                    <h3 className=" font-semibold text-[10px]  lg:text-[12px] ">
                       Helena Thomton
                       <span className=" text-gray-400 font-normal">
                         - 1 min ago

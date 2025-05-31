@@ -33,7 +33,7 @@ function Videoplayer() {
   };
 
   return (
-    <div className=" rounded-md  overflow-hidden shadow-md shadow-gray-900 ">
+    <div className=" rounded-3xl  overflow-hidden shadow-md shadow-gray-900 ">
       <div className="w-full">
         <Plyr {...plyrProps} />
       </div>
