@@ -125,7 +125,7 @@ function Opinion() {
 
   return (
     <div className="min-h-screen dark:text-white text-black   py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold  mb-2">Public Opinion</h1>
           <p className="text-gray-600">
@@ -196,13 +196,9 @@ function Opinion() {
             <Plus className="h-4 w-4 mr-2" /> New Opinion
           </button>
         </div>
-
-        {/* New Opinion Form */}
         {showForm && (
-          <div className="bg-white shadow rounded-lg p-6 mb-6">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">
-              Share Your Opinion
-            </h3>
+          <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6 mb-6">
+            <h3 className="text-lg font-medium  mb-4">Share Your Opinion</h3>
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label
@@ -214,7 +210,7 @@ function Opinion() {
                 <input
                   type="text"
                   id="title"
-                  className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md p-2 border"
+                  className="shadow-sm bg-transparent focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md p-2 border"
                   placeholder="What's your opinion about?"
                   value={newOpinion.title}
                   onChange={(e) =>
@@ -234,7 +230,7 @@ function Opinion() {
                 <textarea
                   id="content"
                   rows={4}
-                  className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md p-2 border"
+                  className="shadow-sm bg-transparent focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md p-2 border"
                   placeholder="Express your thoughts in detail..."
                   value={newOpinion.content}
                   onChange={(e) =>
@@ -254,7 +250,7 @@ function Opinion() {
                 <input
                   type="text"
                   id="tags"
-                  className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md p-2 border"
+                  className="shadow-sm bg-transparent focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md p-2 border"
                   placeholder="technology, environment, politics"
                   value={newOpinion.tags}
                   onChange={(e) =>
@@ -281,14 +277,12 @@ function Opinion() {
             </form>
           </div>
         )}
-
-        {/* Opinions List */}
-        <div className="space-y-6">
+        <div className=" gap-6 flex flex-wrap w-full">
           {filteredOpinions.length > 0 ? (
             filteredOpinions.map((opinion) => (
               <div
                 key={opinion.id}
-                className="bg-white shadow overflow-hidden rounded-lg"
+                className="bg-white dark:bg-gray-800 shadow overflow-hidden rounded-lg w-[48%]"
               >
                 <div className="px-6 py-5 border-b border-gray-200">
                   <div className="flex items-center justify-between">
@@ -299,16 +293,14 @@ function Opinion() {
                         </div>
                       </div>
                       <div className="ml-3">
-                        <p className="text-sm font-medium text-gray-900">
-                          {opinion.author}
-                        </p>
+                        <p className="text-sm font-medium ">{opinion.author}</p>
                         <p className="text-sm text-gray-500">
                           {opinion.timestamp}
                         </p>
                       </div>
                     </div>
                     {opinion.trending && (
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                      <span className="inline-flex items-center px-2.5 py-1.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                         <TrendingUp className="h-3 w-3 mr-1" /> Trending
                       </span>
                     )}
@@ -316,9 +308,7 @@ function Opinion() {
                 </div>
 
                 <div className="px-6 py-4">
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">
-                    {opinion.title}
-                  </h3>
+                  <h3 className="text-lg font-medium  mb-2">{opinion.title}</h3>
                   <p className="text-gray-600 mb-4">{opinion.content}</p>
 
                   <div className="flex flex-wrap gap-2 mb-4">
