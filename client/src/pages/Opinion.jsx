@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useContext } from "react";
+import { Headers } from "../context/utils/Headercontext";
+
 import {
   Search,
   MessageSquare,
@@ -15,6 +17,31 @@ import {
 } from "lucide-react";
 
 function Opinion() {
+  const [isFilter, setisFilter] = useState(false);
+  const { setheaders } = useContext(Headers);
+
+  const categories = useMemo(
+    () => [
+      { path: "/", name: "All Topic" },
+      { path: "/Personal", name: "Personal" },
+      { path: "/Travel", name: "Travel" },
+      { path: "/Technology", name: "Technology" },
+      { path: "/Education", name: "Education" },
+      { path: "/Health", name: "Health" },
+      { path: "/Fitness", name: "Fitness" },
+      { path: "/Finance", name: "Finance" },
+      { path: "/Food", name: "Food" },
+      { path: "/Lifestyle", name: "Lifestyle" },
+      { path: "/Devt", name: "Devt" },
+      { path: "/Entertainment", name: "Entertainment" },
+      { path: "/Career", name: "Career" },
+      { path: "/Creativity", name: "Creativity" },
+    ],
+    []
+  );
+  useEffect(() => {
+    setheaders(categories);
+  }, [setheaders, categories]);
   const [opinions, setOpinions] = useState([
     {
       id: 1,
@@ -147,46 +174,54 @@ function Opinion() {
           </div>
 
           <div className="relative">
-            <button className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium  bg-gray-300 dark:bg-gray-800   rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button
+              onClick={() => {
+                setisFilter(!isFilter);
+              }}
+              className=" outline-none inline-flex justify-center w-full px-4 py-2 text-sm font-medium  bg-gray-300 dark:bg-gray-800   rounded-md shadow-sm hover:bg-gray-50 focus:outline-none"
+            >
               <Filter className="h-4 w-4 mr-2" />
-              {activeFilter.charAt(0).toUpperCase() + activeFilter.slice(1)}
+              {activeFilter.charAt(0).toUpperCase() + activeFilter.slice(1) ||
+                "Filter"}
               <ChevronDown className="h-4 w-4 ml-2" />
             </button>
-            <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-              <div className="py-1">
-                <button
-                  onClick={() => setActiveFilter("trending")}
-                  className={`block px-4 py-2 text-sm w-full text-left ${
-                    activeFilter === "trending"
-                      ? "bg-blue-50 text-blue-700"
-                      : "text-gray-700 hover:bg-gray-100"
-                  }`}
-                >
-                  <TrendingUp className="inline h-4 w-4 mr-2" /> Trending
-                </button>
-                <button
-                  onClick={() => setActiveFilter("recent")}
-                  className={`block px-4 py-2 text-sm w-full text-left ${
-                    activeFilter === "recent"
-                      ? "bg-blue-50 text-blue-700"
-                      : "text-gray-700 hover:bg-gray-100"
-                  }`}
-                >
-                  <MessageSquare className="inline h-4 w-4 mr-2" /> Recent
-                </button>
-                <button
-                  onClick={() => setActiveFilter("controversial")}
-                  className={`block px-4 py-2 text-sm w-full text-left ${
-                    activeFilter === "controversial"
-                      ? "bg-blue-50 text-blue-700"
-                      : "text-gray-700 hover:bg-gray-100"
-                  }`}
-                >
-                  <MessageSquare className="inline h-4 w-4 mr-2" />{" "}
-                  Controversial
-                </button>
+            {isFilter && (
+              <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                <div className="py-1">
+                  <button
+                    onClick={() => setActiveFilter("trending")}
+                    className={`block px-4 py-2 text-sm w-full text-left ${
+                      activeFilter === "trending"
+                        ? "bg-blue-50 text-blue-700"
+                        : "text-gray-700 hover:bg-gray-100"
+                    }`}
+                  >
+                    <TrendingUp className="inline h-4 w-4 mr-2" /> Trending
+                  </button>
+                  <button
+                    onClick={() => setActiveFilter("recent")}
+                    className={`block px-4 py-2 text-sm w-full text-left ${
+                      activeFilter === "recent"
+                        ? "bg-blue-50 text-blue-700"
+                        : "text-gray-700 hover:bg-gray-100"
+                    }`}
+                  >
+                    <MessageSquare className="inline h-4 w-4 mr-2" /> Recent
+                  </button>
+                  <button
+                    onClick={() => setActiveFilter("controversial")}
+                    className={`block px-4 py-2 text-sm w-full text-left ${
+                      activeFilter === "controversial"
+                        ? "bg-blue-50 text-blue-700"
+                        : "text-gray-700 hover:bg-gray-100"
+                    }`}
+                  >
+                    <MessageSquare className="inline h-4 w-4 mr-2" />{" "}
+                    Controversial
+                  </button>
+                </div>
               </div>
-            </div>
+            )}
           </div>
 
           <button
@@ -282,7 +317,7 @@ function Opinion() {
             filteredOpinions.map((opinion) => (
               <div
                 key={opinion.id}
-                className="bg-white dark:bg-gray-800 shadow overflow-hidden rounded-lg w-[48%]"
+                className="bg-white dark:bg-gray-800 shadow overflow-hidden rounded-lg w-full sm:w-[48%]"
               >
                 <div className="px-6 py-5 border-b border-gray-200">
                   <div className="flex items-center justify-between">
