@@ -1,7 +1,8 @@
 import React, { memo, useEffect, useState } from "react";
 import Shared from "../../component/models/Share";
+import Reportfedbacks from "../../component/models/report-fedbacks";
 import Videoplayer from "../../component/utils/videoplayer";
-import sports from "../../assets/images/sports.jpg";
+// import sports from "../../assets/images/sports.jpg";
 import {
   ThumbsUp,
   ThumbsDown,
@@ -16,6 +17,7 @@ import img from "../../assets/images/people.jpg";
 
 function LiveStream() {
   const [isSaharedOpen, setisSaharedOpen] = useState(false);
+  const [isReoprtModel, setisReoprtModel] = useState(false);
   useEffect(() => {
     console.log("live stream lender");
   });
@@ -56,7 +58,7 @@ function LiveStream() {
                 <Share2 className=" w-4 h-4" />
                 Share
               </div>
-              <div className="  sm:hidden rounded-full gap-2 text-center flex justify-center items-center px-3">
+              <div className="sm:hidden rounded-full gap-2 text-center flex justify-center items-center px-3">
                 <Share2 className=" w-4 h-4" />
                 Download
               </div>
@@ -68,7 +70,12 @@ function LiveStream() {
                 <Share2 className=" w-4 h-4" />
                 Report
               </div>
-              <div className="hidden rounded-full sm:flex items-center justify-center w-9 h-9 ">
+              <div
+                onClick={() => {
+                  setisReoprtModel(!isReoprtModel);
+                }}
+                className="hidden rounded-full sm:flex items-center justify-center w-9 h-9 "
+              >
                 <EllipsisVertical className=" w-4 h-4" />
               </div>
               {isSaharedOpen && (
@@ -76,9 +83,15 @@ function LiveStream() {
                   <Shared />
                 </div>
               )}
+
+              {isReoprtModel && (
+                <div className="  absolute rounded-xl overflow-hidden top-12 right-0">
+                  <Reportfedbacks />
+                </div>
+              )}
             </div>
           </div>
-          <div className=" flex flex-col sm:flex-row gap-5 justify-between mt-10 text-gray-600 dark:text-gray-400">
+          <div className=" hidden lg:flex flex-col sm:flex-row gap-5 justify-between mt-10 text-gray-600 dark:text-gray-400">
             <div className=" w-full sm:w-[65%] title-discription ">
               <p className="Video-title  text-3xl  font-thin dark:text-white text-black">
                 Basic how to ride your skateboard comfortly and Basic Equipment
