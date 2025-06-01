@@ -28,7 +28,7 @@ function Share() {
   return (
     <div className=" overflow-hidden">
       <Toaster />
-      <div className=" bg-white dark:bg-gray-900  rounded-xl ">
+      <div className=" bg-white dark:bg-gray-800  rounded-xl ">
         <div className="flex items-center justify-between p-4 border-b">
           <h3 className="text-lg font-semibold ">Share this</h3>
         </div>
