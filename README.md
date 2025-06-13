@@ -37,39 +37,8 @@
 
 ## 🚀 Demo
 
-- 🔗 [Live Demo](#) *(Add your hosted link here)*
-- 💻 [GitHub Repository](#) *(Add your GitHub repo link if needed)*
-- 📽️ Demo GIF or Screenshots: *(Insert images or GIF here)*
-
----
-
-## 🧑‍💻 Getting Started
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/your-username/typeora.git
-cd typeora
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- 🔗 [Live Demo](#) *(work in progress)*
+- 📽️ Demo GIF or Screenshots: *(work in progress)*
 
 
 
