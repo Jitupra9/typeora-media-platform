@@ -1,1 +1,0 @@
-# typeora-media-platform
