@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import bgimg from "../../assets/images/videos.jpg";
 import logo from "../../assets/images/logo.png";
 import poster from "../../assets/images/videos2.jpg";
-import { Dot } from "lucide-react";
+import { Dot, EllipsisVertical } from "lucide-react";
 function LiveReports() {
   const { setheaders } = useContext(Headers);
 
@@ -106,9 +106,13 @@ function LiveReports() {
                   className="w-8 h-8 rounded-full object-cover"
                 />
                 <div className="flex flex-col w-full text-gray-800 dark:text-gray-400">
-                  <h3 className="font-semibold  dark:text-white">
-                    Full Video: Raajhan | Do Patti | Kriti Sanon, Shaheer Sheikh
-                  </h3>
+                  <div>
+                    <h3 className="font-semibold  dark:text-white">
+                      Full Video: Raajhan | Do Patti | Kriti Sanon, Shaheer
+                      Sheikh
+                    </h3>
+                    <EllipsisVertical />
+                  </div>
                   <p className="">Jitu Pradhan</p>
                   <p className=" flex">
                     <span>66k views</span>
