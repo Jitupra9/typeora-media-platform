@@ -4,7 +4,7 @@ import Comment from "../../component/Page/videos-Page/comment";
 import RelatedVideos from "../../component/Page/videos-Page/RelatedVideos";
 function StreamDetails() {
   return (
-    <div className="  sm:px-5 flex gap-y-5 lg:gap-y-0 flex-col lg:flex-row justify-between w-full">
+    <div className="   flex gap-y-5 lg:gap-y-0 flex-col lg:flex-row justify-between w-full">
       <div className="w-full lg:h-[85vh]  lg:overflow-y-auto   hidel_slide_roler lg:w-[65%]">
         <Video />
       </div>

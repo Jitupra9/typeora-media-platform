@@ -1,4 +1,5 @@
-import React, { memo, useContext, useEffect, useMemo } from "react";
+import React, { memo, useContext, useEffect, useMemo, useState } from "react";
+import AllOptions from "../../component/models/AllOptions";
 import { Headers } from "../../context/utils/Headercontext";
 import { Link } from "react-router-dom";
 import bgimg from "../../assets/images/videos.jpg";
@@ -7,7 +8,7 @@ import poster from "../../assets/images/videos2.jpg";
 import { Dot, EllipsisVertical } from "lucide-react";
 function LiveReports() {
   const { setheaders } = useContext(Headers);
-
+  const [ModelOpen, setModelOpen] = useState(null);
   const categories = useMemo(
     () => [
       { path: "/live-reports", name: "All Topic" },
@@ -30,7 +31,10 @@ function LiveReports() {
   useEffect(() => {
     setheaders(categories);
   }, [categories, setheaders]);
-
+  const handleElips = (e, key) => {
+    e.preventDefault();
+    setModelOpen((prev) => (prev === key ? null : key));
+  };
   return (
     <div className="text-gray-200 dark:text-gray-400 ">
       <h1 className="dark:text-white text-black text-xl font-bold mb-3">
@@ -86,7 +90,7 @@ function LiveReports() {
           <Link
             to={`/watch?id=${key}`}
             key={key}
-            className="w-full cursor-pointer sm:w-[48%] lg:w-[24%] px-2 box-border "
+            className=" relative w-full cursor-pointer sm:w-[48%] lg:w-[24%] px-2 box-border "
           >
             <div className=" rounded-lg overflow-hidden ">
               <div className=" relative images mb-3">
@@ -106,12 +110,18 @@ function LiveReports() {
                   className="w-8 h-8 rounded-full object-cover"
                 />
                 <div className="flex flex-col w-full text-gray-800 dark:text-gray-400">
-                  <div>
+                  <div className=" flex">
                     <h3 className="font-semibold  dark:text-white">
                       Full Video: Raajhan | Do Patti | Kriti Sanon, Shaheer
                       Sheikh
                     </h3>
-                    <EllipsisVertical />
+                    <div className="">
+                      <EllipsisVertical
+                        onClick={(e) => {
+                          handleElips(e, key);
+                        }}
+                      />
+                    </div>
                   </div>
                   <p className="">Jitu Pradhan</p>
                   <p className=" flex">
@@ -122,6 +132,11 @@ function LiveReports() {
                 </div>
               </div>
             </div>
+            {ModelOpen === key && (
+              <div className=" absolute top-20 right-10 z-10">
+                <AllOptions />
+              </div>
+            )}
           </Link>
         ))}
       </div>

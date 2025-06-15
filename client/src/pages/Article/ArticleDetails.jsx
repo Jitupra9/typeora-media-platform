@@ -1,9 +1,13 @@
 import React from "react";
 import ContentSlider from "../../component/Layout/ContentSlider";
-import sports from "../../assets/images/sports.jpg";
+// import sports from "../../assets/images/sports.jpg";
 
 import {
   X,
+  Heart,
+  Bell,
+  Forward,
+  Eye,
   Bookmark,
   Share2,
   ThumbsUp,
@@ -20,9 +24,9 @@ function ArticleDetails() {
   };
   return (
     <div className=" w-full sm:flex text-gray-600 dark:text-gray-400">
-      <div className=" w-full h-[85vh] lg:w-[65%] sm:pr-[3%] overflow-hidden overflow-y-scroll hidel_slide_roler sm:border-r border-gray-300">
+      <div className=" w-full h-[85vh] lg:w-[65%] lg:pr-[3%] overflow-hidden overflow-y-scroll hidel_slide_roler lg:border-r border-gray-300">
         <div
-          className=" first_blogs w-full bg-cover bg-center font-semibold rounded-md text-white h-72 lg:h-96 relative overflow-hidden"
+          className=" first_blogs w-full bg-cover bg-center font-semibold rounded-md text-white h-72 sm:h-96 relative overflow-hidden"
           style={{
             backgroundImage: `url(${forest})`,
           }}
@@ -106,52 +110,48 @@ function ArticleDetails() {
           </div>
 
           <div
-            class={` overflow-hidden p-5 dark:bg-gray-900 dark:bg-opacity-85 bg-white rounded-xl border border-gray-200 border-opacity-20`}
+            className={`relative rounded-xl  lg:p-0 lg:px-0  overflow-hidden
+           lg:flex flex-col sm:flex-row gap-5 justify-between mt-3 lg:mt-10 text-gray-600 dark:text-gray-400 transition-all ease-in-out  duration-1000 lg:max-h-[1000px]
+           `}
           >
-            <p className=" font-bold">
-              17k views - <span>1 minute ago</span>
-            </p>
-            <p className=" mt-5">
-              &nbsp;&nbsp;&nbsp;&nbsp; Lorem, ipsum dolor sit amet consectetur
-              adipisicing elit. Quidem distinctio iste voluptatum at? Nobis
-              impedit optio labore quaerat quas unde quo voluptas tempore. Velit
-              quam omnis dicta necessitatibus pariatur rerum autem amet! Culpa
-              quam magnam praesentium quas illo vitae fugiat eum quidem libero
-              iure. Voluptas nihil minus commodi quisquam. Modi quam neque
-              blanditiis quidem cumque nihil rerum asperiores ducimus! Hic
-              repudiandae quaerat quisquam illo accusantium, amet tenetur
-              numquam architecto placeat eveniet commodi ratione nostrum ullam
-              deserunt, cumque repellat facere? Nulla totam quis enim. Expedita
-              neque quas atque voluptate dolor ex debitis laudantium laboriosam,
-              vel deserunt enim in aut cupiditate? Totam?
-            </p>
-
-            <h3 className=" mt-16 font-bold text-xl">
-              some article writeed by - Jitu Pradhan
-            </h3>
-            <div className=" flex flex-wrap gap-2 lg:gap-5 mt-5">
-              {[...Array(3)].map((_, i) => (
-                <div
-                  key={i}
-                  className=" overflow-hidden rounded-md border w-full sm:w-[30%] md:w-[20%]"
-                >
-                  <div className=" w-full images relative cursor-pointer">
-                    <div className="absolute inset-0 bg-black bg-opacity-20"></div>
-                    <img src={sports} alt="" className=" w-full rounded-t-md" />
-                  </div>
-                  <div className=" textareas">
-                    <div className=" p-2">
-                      <p className="tracking-wide text-gray-400 text-xs mb-2">
-                        Business
-                      </p>
-                      <h1 className=" font-semibold text-xs cursor-pointer">
-                        Before New York Auto Show , Cars Take Their Own Star
-                        Turns
-                      </h1>
-                    </div>
-                  </div>
-                </div>
-              ))}
+            <div className=" w-full lg:w-[65%] title-discription ">
+              <p className="hidden lg:block Video-title  text-3xl  font-thin dark:text-white text-black">
+                Basic how to ride your skateboard comfortly and Basic Equipment
+                to play skateboard safely
+              </p>
+              <div className="  text-sm tracking-wide leading-relaxed ">
+                <p className="mt-2 sm:mt-5">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Aperiam accusantium qui similique corporis natus perspiciatis
+                  sunt molestiae delectus nemo excepturi modi, ex fugiat veniam
+                  harum, illo possimus ut doloribus itaque odio. Officia,
+                  voluptates sequi odio nulla perspiciatis nemo sint molestiae.
+                </p>
+                <p className=" mt-5">
+                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ad
+                  natus hic dolore aperiam perspiciatis sint molestias,
+                  inventore omnis rerum deleniti tenetur iste, ipsam adipisci!
+                  Ipsa corrupti sed, inventore esse commodi cumque tempore odit
+                  laudantium repudiandae quis sit unde omnis maiores magni iste
+                  perferendis. Praesentium, dolore blanditiis? Voluptate,
+                  perspiciatis? Rerum, nulla.
+                </p>
+              </div>
+            </div>
+            <div className="flex  mt-5 lg:mt-0 flex-wrap lg:flex-col sm:px-[5%]  gap-7 w-full lg:w-[35%] *:flex *:gap-4">
+              <div>
+                <Eye /> 125,908 Views
+              </div>
+              <div>
+                <Heart className=" fill-gray-600 dark:fill-gray-400 " /> 47,987
+                likes
+              </div>
+              <div>
+                <Bell /> Start 2 hours ago
+              </div>
+              <div>
+                <Forward /> 125,908 Shared
+              </div>
             </div>
           </div>
         </div>
