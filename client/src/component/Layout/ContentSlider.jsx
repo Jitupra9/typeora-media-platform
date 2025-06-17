@@ -117,9 +117,13 @@ function ContentSlider() {
                     {item.type}
                   </p>
                   <Dot />
-                  <h3 className=" truncate ">{item.title}</h3>
+                  <h3 className=" truncate text-sm dark:text-gray-300 text-gray-700">
+                    {item.title}
+                  </h3>
                 </div>
-                <p className="text-sm text-gray-700 truncate">{item.desc}</p>
+                <p className="text-sm font-normal text-gray-500 dark:text-gray-600 truncate">
+                  {item.desc}
+                </p>
               </div>
             </div>
           ))}

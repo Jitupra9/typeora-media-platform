@@ -26,7 +26,7 @@ function Layout() {
 
         <div className=" w-full lg:w-[84%]  flex flex-col">
           <Header sidebar={{ sidebarActive, setsidebarActive }} />
-          <div className="px-1 sm:p-5  h-full overflow-y-scroll hidel_slide_roler">
+          <div className="p-1 sm:p-5  h-full overflow-y-scroll hidel_slide_roler">
             <Outlet />
           </div>
         </div>

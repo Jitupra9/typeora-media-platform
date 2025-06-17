@@ -1,7 +1,7 @@
 import React from "react";
 import ContentSlider from "../../component/Layout/ContentSlider";
 // import sports from "../../assets/images/sports.jpg";
-
+import RelatedArticles from "./RelatedArticle";
 import {
   X,
   Heart,
@@ -69,9 +69,9 @@ function ArticleDetails() {
           </div>
         </div>
         <div className="">
-          <div className=" w-full flex my-5 md:px-3 mt-4 md:mt-10 flex-col lg:flex-row justify-between items-center">
-            <div className=" flex items-center gap-5 w-full justify-between lg:justify-start my-5 lg:my-0">
-              <div className=" flex items-center gap-3">
+          <div className=" w-full flex my-5  mt-4 flex-col sm:flex-row md:mt-10 justify-between items-center">
+            <div className="  w-full my-5 lg:my-0 flex items-center gap-4 justify-between sm:justify-normal">
+              <div className=" flex items-center gap-4">
                 <img src={people} alt="" className=" rounded-full w-12 h-12" />
                 <div>
                   <h3 className=" font-semibold text-sm xl:text-lg  ">
@@ -84,7 +84,7 @@ function ArticleDetails() {
                 Follow
               </div>
             </div>
-            <div className=" *:bg-gray-300 dark:*:bg-gray-800 dark:text-white text-black text-xs w-full overflow-hidden hidel_slide_roler overflow-x-scroll  flex  lg:justify-end gap-5 md:gap-7 my-3 lg:my-0 font-semibold">
+            <div className=" *:bg-gray-300 dark:*:bg-gray-800 dark:text-white text-black  w-full overflow-hidden hidel_slide_roler overflow-x-scroll flex items-center gap-4 sm:justify-end *:py-2  text-sm font-semibold">
               <div className=" rounded-full px-3 py-[6px] gap-4 items-center flex ">
                 <div className=" border-r flex items-center gap-4 px-3 pl-3">
                   <ThumbsUp className=" w-4 h-4" /> 8.7k
@@ -95,26 +95,26 @@ function ArticleDetails() {
                 <MessageSquareMore className=" w-4 h-4 transform -scale-x-100 " />
                 Opinion
               </div>
-              <div className=" lg:hidden rounded-full gap-2 text-center flex justify-center items-center px-3">
+              <div className=" sm:hidden rounded-full gap-2 text-center flex justify-center items-center px-3">
                 <Share2 className=" w-4 h-4" />
                 Save
               </div>
-              <div className=" lg:hidden rounded-full gap-2 text-center flex justify-center items-center px-3">
+              <div className="sm:hidden rounded-full gap-2 text-center flex justify-center items-center px-3">
                 <Share2 className=" w-4 h-4" />
                 Report
               </div>
-              <div className="hidden  rounded-full lg:flex items-center justify-center w-9 h-9 ">
+              <div className=" hidden rounded-full sm:flex items-center justify-center w-9 h-9 ">
                 <EllipsisVertical className=" w-4 h-4" />
               </div>
             </div>
           </div>
 
           <div
-            className={`relative rounded-xl  lg:p-0 lg:px-0  overflow-hidden
+            className={`relative rounded-xl px-3  lg:p-0 overflow-hidden
            lg:flex flex-col sm:flex-row gap-5 justify-between mt-3 lg:mt-10 text-gray-600 dark:text-gray-400 transition-all ease-in-out  duration-1000 lg:max-h-[1000px]
            `}
           >
-            <div className=" w-full lg:w-[65%] title-discription ">
+            <div className=" w-full lg:w-[65%] title-discription  ">
               <p className="hidden lg:block Video-title  text-3xl  font-thin dark:text-white text-black">
                 Basic how to ride your skateboard comfortly and Basic Equipment
                 to play skateboard safely
@@ -156,8 +156,13 @@ function ArticleDetails() {
           </div>
         </div>
       </div>
-      <div className=" hidden lg:block lg:w-[35%]">
-        <ContentSlider />
+      <div className=" lg:w-[35%]">
+        <div>
+          <RelatedArticles />
+        </div>
+        <div className=" hidden lg:block">
+          <ContentSlider />
+        </div>
       </div>
     </div>
   );

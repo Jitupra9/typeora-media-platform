@@ -37,7 +37,7 @@ function LiveReports() {
   };
   return (
     <div className="text-gray-200 dark:text-gray-400 ">
-      <h1 className="dark:text-white text-black text-xl font-bold mb-3">
+      <h1 className=" hidden sm:block dark:text-white text-black text-xl font-bold mb-3">
         Top This Week
       </h1>
       <div className=" flex flex-wrap justify-between gap-y-3 overflow-hidden h-60 ">
