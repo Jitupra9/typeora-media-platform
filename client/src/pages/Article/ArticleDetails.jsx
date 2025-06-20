@@ -1,9 +1,14 @@
 import React from "react";
 import ContentSlider from "../../component/Layout/ContentSlider";
-import sports from "../../assets/images/sports.jpg";
+// import sports from "../../assets/images/sports.jpg";
 
+import Comments from "../../component/Page/Articles/Comment";
 import {
   X,
+  Heart,
+  Bell,
+  Forward,
+  Eye,
   Bookmark,
   Share2,
   ThumbsUp,
@@ -20,9 +25,9 @@ function ArticleDetails() {
   };
   return (
     <div className=" w-full sm:flex text-gray-600 dark:text-gray-400">
-      <div className=" w-full h-[85vh] lg:w-[65%] sm:pr-[3%] overflow-hidden overflow-y-scroll hidel_slide_roler sm:border-r border-gray-300">
+      <div className=" w-full h-[85vh] lg:w-[65%] lg:pr-[3%] overflow-hidden overflow-y-scroll hidel_slide_roler lg:border-r border-gray-300">
         <div
-          className=" first_blogs w-full bg-cover bg-center font-semibold rounded-md text-white h-72 lg:h-96 relative overflow-hidden"
+          className=" first_blogs w-full bg-cover bg-center font-semibold rounded-md text-white h-72 sm:h-96 relative overflow-hidden"
           style={{
             backgroundImage: `url(${forest})`,
           }}
@@ -65,9 +70,9 @@ function ArticleDetails() {
           </div>
         </div>
         <div className="">
-          <div className=" w-full flex my-5 md:px-3 mt-4 md:mt-10 flex-col lg:flex-row justify-between items-center">
-            <div className=" flex items-center gap-5 w-full justify-between lg:justify-start my-5 lg:my-0">
-              <div className=" flex items-center gap-3">
+          <div className=" w-full flex  flex-col sm:flex-row md:mt-10 justify-between items-center">
+            <div className="  w-full my-5 sm:my-0 lg:my-0 flex items-center gap-4 justify-between sm:justify-normal">
+              <div className=" flex items-center gap-4">
                 <img src={people} alt="" className=" rounded-full w-12 h-12" />
                 <div>
                   <h3 className=" font-semibold text-sm xl:text-lg  ">
@@ -76,11 +81,11 @@ function ArticleDetails() {
                   <p className=" text-gray-500">2.43k follwers</p>
                 </div>
               </div>
-              <div className=" bg-white shadow-lg cursor-pointer text-black px-4 py-1 rounded-full font-bold ">
+              <div className=" bg-white shadow-md cursor-pointer  text-black px-4 py-2 rounded-full font-bold ">
                 Follow
               </div>
             </div>
-            <div className=" *:bg-gray-300 dark:*:bg-gray-800 dark:text-white text-black text-xs w-full overflow-hidden hidel_slide_roler overflow-x-scroll  flex  lg:justify-end gap-5 md:gap-7 my-3 lg:my-0 font-semibold">
+            <div className=" *:bg-gray-300 dark:*:bg-gray-800 dark:text-white text-black  w-full overflow-hidden hidel_slide_roler overflow-x-scroll flex items-center gap-4 sm:justify-end *:py-2  text-sm font-semibold">
               <div className=" rounded-full px-3 py-[6px] gap-4 items-center flex ">
                 <div className=" border-r flex items-center gap-4 px-3 pl-3">
                   <ThumbsUp className=" w-4 h-4" /> 8.7k
@@ -91,73 +96,74 @@ function ArticleDetails() {
                 <MessageSquareMore className=" w-4 h-4 transform -scale-x-100 " />
                 Opinion
               </div>
-              <div className=" lg:hidden rounded-full gap-2 text-center flex justify-center items-center px-3">
+              <div className=" sm:hidden rounded-full gap-2 text-center flex justify-center items-center px-3">
                 <Share2 className=" w-4 h-4" />
                 Save
               </div>
-              <div className=" lg:hidden rounded-full gap-2 text-center flex justify-center items-center px-3">
+              <div className="sm:hidden rounded-full gap-2 text-center flex justify-center items-center px-3">
                 <Share2 className=" w-4 h-4" />
                 Report
               </div>
-              <div className="hidden  rounded-full lg:flex items-center justify-center w-9 h-9 ">
+              <div className=" hidden rounded-full sm:flex items-center justify-center w-9 h-9 ">
                 <EllipsisVertical className=" w-4 h-4" />
               </div>
             </div>
           </div>
 
           <div
-            class={` overflow-hidden p-5 dark:bg-gray-900 dark:bg-opacity-85 bg-white rounded-xl border border-gray-200 border-opacity-20`}
+            className={`relative rounded-xl px-3  lg:p-0 overflow-hidden
+           lg:flex flex-col sm:flex-row gap-5 justify-between mt-3 sm:mt-0 lg:mt-10 text-gray-600 dark:text-gray-400 transition-all ease-in-out  duration-1000 lg:max-h-[1000px]
+           `}
           >
-            <p className=" font-bold">
-              17k views - <span>1 minute ago</span>
-            </p>
-            <p className=" mt-5">
-              &nbsp;&nbsp;&nbsp;&nbsp; Lorem, ipsum dolor sit amet consectetur
-              adipisicing elit. Quidem distinctio iste voluptatum at? Nobis
-              impedit optio labore quaerat quas unde quo voluptas tempore. Velit
-              quam omnis dicta necessitatibus pariatur rerum autem amet! Culpa
-              quam magnam praesentium quas illo vitae fugiat eum quidem libero
-              iure. Voluptas nihil minus commodi quisquam. Modi quam neque
-              blanditiis quidem cumque nihil rerum asperiores ducimus! Hic
-              repudiandae quaerat quisquam illo accusantium, amet tenetur
-              numquam architecto placeat eveniet commodi ratione nostrum ullam
-              deserunt, cumque repellat facere? Nulla totam quis enim. Expedita
-              neque quas atque voluptate dolor ex debitis laudantium laboriosam,
-              vel deserunt enim in aut cupiditate? Totam?
-            </p>
-
-            <h3 className=" mt-16 font-bold text-xl">
-              some article writeed by - Jitu Pradhan
-            </h3>
-            <div className=" flex flex-wrap gap-2 lg:gap-5 mt-5">
-              {[...Array(3)].map((_, i) => (
-                <div
-                  key={i}
-                  className=" overflow-hidden rounded-md border w-full sm:w-[30%] md:w-[20%]"
-                >
-                  <div className=" w-full images relative cursor-pointer">
-                    <div className="absolute inset-0 bg-black bg-opacity-20"></div>
-                    <img src={sports} alt="" className=" w-full rounded-t-md" />
-                  </div>
-                  <div className=" textareas">
-                    <div className=" p-2">
-                      <p className="tracking-wide text-gray-400 text-xs mb-2">
-                        Business
-                      </p>
-                      <h1 className=" font-semibold text-xs cursor-pointer">
-                        Before New York Auto Show , Cars Take Their Own Star
-                        Turns
-                      </h1>
-                    </div>
-                  </div>
-                </div>
-              ))}
+            <div className=" w-full lg:w-[65%] title-discription  ">
+              <p className="hidden lg:block Video-title  text-3xl  font-thin dark:text-white text-black">
+                Basic how to ride your skateboard comfortly and Basic Equipment
+                to play skateboard safely
+              </p>
+              <div className="  text-sm tracking-wide leading-relaxed ">
+                <p className="mt-2 sm:mt-5">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Aperiam accusantium qui similique corporis natus perspiciatis
+                  sunt molestiae delectus nemo excepturi modi, ex fugiat veniam
+                  harum, illo possimus ut doloribus itaque odio. Officia,
+                  voluptates sequi odio nulla perspiciatis nemo sint molestiae.
+                </p>
+                <p className=" mt-5">
+                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ad
+                  natus hic dolore aperiam perspiciatis sint molestias,
+                  inventore omnis rerum deleniti tenetur iste, ipsam adipisci!
+                  Ipsa corrupti sed, inventore esse commodi cumque tempore odit
+                  laudantium repudiandae quis sit unde omnis maiores magni iste
+                  perferendis. Praesentium, dolore blanditiis? Voluptate,
+                  perspiciatis? Rerum, nulla.
+                </p>
+              </div>
+            </div>
+            <div className="flex  mt-5 lg:mt-0 flex-wrap lg:flex-col sm:px-[5%]  gap-7 w-full lg:w-[35%] *:flex *:gap-4">
+              <div>
+                <Eye /> 125,908 Views
+              </div>
+              <div>
+                <Heart className=" fill-gray-600 dark:fill-gray-400 " /> 47,987
+                likes
+              </div>
+              <div>
+                <Bell /> Start 2 hours ago
+              </div>
+              <div>
+                <Forward /> 125,908 Shared
+              </div>
             </div>
           </div>
         </div>
+        <div>
+          <Comments />
+        </div>
       </div>
-      <div className=" hidden lg:block lg:w-[35%]">
-        <ContentSlider />
+      <div className=" lg:w-[35%]">
+        <div className=" hidden lg:block">
+          <ContentSlider />
+        </div>
       </div>
     </div>
   );

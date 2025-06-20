@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import people from "../../assets/images/people.jpg";
 import sports from "../../assets/images/sports.jpg";
-import { Bookmark, Share2 } from "lucide-react";
+import { Bookmark, Dot, Share2 } from "lucide-react";
 import { Link } from "react-router-dom";
 function Article() {
   return (
@@ -20,9 +20,16 @@ function Article() {
             </div>
             <div className=" textareas">
               <div className=" p-2 sm:p-5">
-                <p className="tracking-wide text-gray-400 text-xs mb-2">
-                  Business
-                </p>
+                <div className=" flex justify-between items-center">
+                  <p className="tracking-wide text-gray-400 text-xs mb-2">
+                    Business
+                  </p>
+                  <p className=" flex text-[10px] items-center">
+                    <span>66k views</span>
+                    <Dot />
+                    <span>11 days</span>
+                  </p>
+                </div>
                 <h1 className=" font-bold text-xs  cursor-pointer">
                   Before New York Auto Show , Cars Take Their Own Star Turns
                 </h1>

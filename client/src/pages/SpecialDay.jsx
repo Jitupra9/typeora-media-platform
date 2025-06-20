@@ -1,5 +1,5 @@
 import React from "react";
-import { CalendarDays, Clock, PlusCircle } from "lucide-react";
+import { CalendarDays, PlusCircle } from "lucide-react";
 
 function SpecialDay() {
   return (
@@ -7,14 +7,14 @@ function SpecialDay() {
       <aside className="w-max bg-white border-r shadow-sm">
         <div className="p-4 text-xl font-bold text-orange-600">Studio 813</div>
         <nav className="flex flex-col gap-4 p-4 text-sm">
-          <a href="#" className="text-orange-600 font-medium">
+          <a href="/" className="text-orange-600 font-medium">
             Appointments
           </a>
-          <a href="#">Dashboard</a>
-          <a href="#">Customers</a>
-          <a href="#">Finances</a>
-          <a href="#">Reports</a>
-          <a href="#">Settings</a>
+          <a href="/">Dashboard</a>
+          <a href="/">Customers</a>
+          <a href="/">Finances</a>
+          <a href="/">Reports</a>
+          <a href="/">Settings</a>
         </nav>
         <div className="p-4 mt-auto border-t">
           <div className="text-sm font-semibold">Amelia Rhodes</div>

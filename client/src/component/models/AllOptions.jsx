@@ -6,11 +6,15 @@ import {
   OctagonAlert,
   Flag,
   ClockAlert,
+  Clock,
 } from "lucide-react";
 function AllOptions() {
   return (
     <div>
       <ul className=" p-5 *:mt-4 bg-white dark:bg-gray-800 rounded-xl px-5 *:flex *:gap-5 font-semibold text-gray-600 dark:text-gray-400 text-sm">
+        <li>
+          <Clock /> <p>Save to Watch Later</p>
+        </li>
         <li>
           <Bookmark /> <p>Save to playlist</p>
         </li>

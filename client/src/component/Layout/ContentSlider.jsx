@@ -7,36 +7,44 @@ import {
   Newspaper,
   TrendingUp,
   TrendingDown,
+  Dot,
 } from "lucide-react";
 
 function ContentSlider() {
   const blog_Types = [
     {
       type: "Sports",
+      title: "Tiger’s Historic Comeback",
       desc: "Tiger Woods, in a stunning return to the top, captures the Masters at 43.",
     },
     {
       type: "Health",
+      title: "Long-Term Benefits of Exercise",
       desc: "10 Years After an Exercise Study, Benefits Persist.",
     },
     {
       type: "Business",
+      title: "What to Know Before Buying a Tesla",
       desc: "Buying a Tesla seems pretty easy, but there are a few things to know.",
     },
     {
       type: "Food",
+      title: "15 Must-Try Breakfast Ideas",
       desc: "What to cook this week: Top 15 breakfast ideas.",
     },
     {
       type: "Health",
+      title: "The Gene-Editing Controversy",
       desc: "Gene-edited babies: What a Chinese scientist and American mentor revealed.",
     },
     {
       type: "Health",
+      title: "Tiger’s Impact on Health Discussions",
       desc: "Tiger Woods, in a stunning return to the top, captures the Masters at 43.",
     },
     {
       type: "Sports",
+      title: "Tiger Woods Strikes Again",
       desc: "Tiger Woods, in a stunning return to the top, captures the Masters at 43.",
     },
   ];
@@ -96,7 +104,7 @@ function ContentSlider() {
     <div className="w-full max-w-5xl mx-auto px-4 space-y-6  h-[85vh] overflow-hidden overflow-y-scroll hidel_slide_roler">
       <div className="rounded-md bg-white dark:bg-gray-900 dark:bg-opacity-85 dark:text-gray-200 text-gray-500 font-semibold shadow">
         <div className="px-4 py-2 border-b flex justify-between items-center">
-          <h1 className="text-lg sm:text-xl">Trending News</h1>
+          <h1 className="text-lg sm:text-xl">Trending Articles</h1>
           <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
         </div>
         <div className="flex flex-col p-4">
@@ -104,10 +112,18 @@ function ContentSlider() {
             <div className="flex gap-3 mb-4" key={i}>
               <div className="w-12 h-12 bg-gray-300 rounded-md flex-shrink-0"></div>
               <div className="overflow-hidden">
-                <p className="text-sm dark:text-gray-300 text-gray-700">
-                  {item.type}
+                <div className="flex">
+                  <p className="text-sm dark:text-gray-300 text-gray-700">
+                    {item.type}
+                  </p>
+                  <Dot />
+                  <h3 className=" truncate text-sm dark:text-gray-300 text-gray-700">
+                    {item.title}
+                  </h3>
+                </div>
+                <p className="text-sm font-normal text-gray-500 dark:text-gray-600 truncate">
+                  {item.desc}
                 </p>
-                <p className="text-sm text-gray-700 truncate">{item.desc}</p>
               </div>
             </div>
           ))}

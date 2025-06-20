@@ -12,9 +12,23 @@ function RelatedVideos() {
 
   return (
     <div className="h-full lg:p-5">
-      <h1 className=" hidden lg:block text-black dark:text-white mb-5 text-xl">
-        Related videos
-      </h1>
+      <div className=" relative  my-2">
+        <ul className="hidel_slide_roler *:cursor-pointer flex overflow-x-scroll gap-2 shadow-inner-right   *:bg-opacity-80 *:px-3 *:py-[6px] *:rounded-lg text-nowrap text-black dark:text-white text-sm font-semibold ">
+          <li className=" bg-black dark:bg-white text-white dark:text-black">
+            All
+          </li>
+          <li className="bg-gray-400 dark:bg-gray-800">More from this</li>
+          <li className="bg-gray-400 dark:bg-gray-800">
+            From Fidaa Music Odia
+          </li>
+          <li className="bg-gray-400 dark:bg-gray-800">Related</li>
+          <li className="bg-gray-400 dark:bg-gray-800">Foryou</li>
+          <li className="bg-gray-400 dark:bg-gray-800">Live</li>
+          <li className="bg-gray-400 dark:bg-gray-800">Recently uploaded</li>
+        </ul>
+        <div className=" absolute right-0 top-0 h-full w-20 bg-gradient-to-r from-transparent to-gray-100 dark:to-black rounded-none"></div>
+      </div>
+
       <div className=" flex flex-wrap lg:block justify-between">
         {[...Array(14)].map((_, i) => (
           <div

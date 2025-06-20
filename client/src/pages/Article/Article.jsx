@@ -1,7 +1,7 @@
 import React, { memo, useContext, useMemo, useEffect } from "react";
-import Article from "./Article";
+import Articles from "./Articles";
 import { Headers } from "../../context/utils/Headercontext";
-function Blogs() {
+function Article() {
   const { setheaders } = useContext(Headers);
 
   const categories = useMemo(
@@ -28,9 +28,9 @@ function Blogs() {
   }, [setheaders, categories]);
   return (
     <div className=" flex gap-1 w-full">
-      <Article />
+      <Articles />
     </div>
   );
 }
 
-export default memo(Blogs);
+export default memo(Article);
