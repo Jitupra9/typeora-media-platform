@@ -1,7 +1,8 @@
 import React from "react";
 import ContentSlider from "../../component/Layout/ContentSlider";
 // import sports from "../../assets/images/sports.jpg";
-import RelatedArticles from "./RelatedArticle";
+
+import Comments from "../../component/Page/Articles/Comment";
 import {
   X,
   Heart,
@@ -69,8 +70,8 @@ function ArticleDetails() {
           </div>
         </div>
         <div className="">
-          <div className=" w-full flex my-5  mt-4 flex-col sm:flex-row md:mt-10 justify-between items-center">
-            <div className="  w-full my-5 lg:my-0 flex items-center gap-4 justify-between sm:justify-normal">
+          <div className=" w-full flex  flex-col sm:flex-row md:mt-10 justify-between items-center">
+            <div className="  w-full my-5 sm:my-0 lg:my-0 flex items-center gap-4 justify-between sm:justify-normal">
               <div className=" flex items-center gap-4">
                 <img src={people} alt="" className=" rounded-full w-12 h-12" />
                 <div>
@@ -80,7 +81,7 @@ function ArticleDetails() {
                   <p className=" text-gray-500">2.43k follwers</p>
                 </div>
               </div>
-              <div className=" bg-white shadow-lg cursor-pointer text-black px-4 py-1 rounded-full font-bold ">
+              <div className=" bg-white shadow-md cursor-pointer  text-black px-4 py-2 rounded-full font-bold ">
                 Follow
               </div>
             </div>
@@ -111,7 +112,7 @@ function ArticleDetails() {
 
           <div
             className={`relative rounded-xl px-3  lg:p-0 overflow-hidden
-           lg:flex flex-col sm:flex-row gap-5 justify-between mt-3 lg:mt-10 text-gray-600 dark:text-gray-400 transition-all ease-in-out  duration-1000 lg:max-h-[1000px]
+           lg:flex flex-col sm:flex-row gap-5 justify-between mt-3 sm:mt-0 lg:mt-10 text-gray-600 dark:text-gray-400 transition-all ease-in-out  duration-1000 lg:max-h-[1000px]
            `}
           >
             <div className=" w-full lg:w-[65%] title-discription  ">
@@ -155,11 +156,11 @@ function ArticleDetails() {
             </div>
           </div>
         </div>
+        <div>
+          <Comments />
+        </div>
       </div>
       <div className=" lg:w-[35%]">
-        <div>
-          <RelatedArticles />
-        </div>
         <div className=" hidden lg:block">
           <ContentSlider />
         </div>

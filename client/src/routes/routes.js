@@ -2,7 +2,7 @@ import Auth from "../pages/Auth/Auth";
 import IsAuthRoutes from "./Auth-Routes/IsAuthRoutes";
 import Layout from "../layout/Layout";
 import Pagenotfound from "../pages/Pagenotfound";
-import Blogs from "../pages/Article/Blogs";
+import Blogs from "../pages/Article/Article";
 import LiveReports from "../pages/VIdeo/VIdeos";
 import Saved from "../pages/saved/Saved";
 import StreamDetails from "../pages/VIdeo/StreamDetails";
