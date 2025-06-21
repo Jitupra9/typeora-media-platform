@@ -11,6 +11,10 @@ import SpecialDay from "../pages/SpecialDay";
 import History from "../pages/Histrory";
 import Profile from "../pages/profile/Profile";
 import ArticleDetails from "../pages/Article/ArticleDetails";
+import About from "../pages/About";
+import Contact from "../pages/Contact";
+import Support from "../pages/Support";
+import Settings from "../pages/Setting";
 const routes = [
   {
     path: "/",
@@ -45,8 +49,24 @@ const routes = [
         component: SpecialDay,
       },
       {
+        path: "about",
+        component: About,
+      },
+      {
+        path: "contact",
+        component: Contact,
+      },
+      {
+        path: "help",
+        component: Support,
+      },
+      {
         path: "history",
         component: History,
+      },
+      {
+        path: "setting",
+        component: Settings,
       },
       {
         path: "profile",
