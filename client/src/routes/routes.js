@@ -14,6 +14,8 @@ import ArticleDetails from "../pages/Article/ArticleDetails";
 import About from "../pages/About";
 import Support from "../pages/Support";
 import Settings from "../pages/Setting";
+import Report from "../pages/Report";
+import Feedback from "../pages/FeedBack";
 const routes = [
   {
     path: "/",
@@ -55,6 +57,14 @@ const routes = [
       {
         path: "help",
         component: Support,
+      },
+      {
+        path: "report-history",
+        component: Report,
+      },
+      {
+        path: "Feedback",
+        component: Feedback,
       },
       {
         path: "history",
