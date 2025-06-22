@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useContext, useMemo, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { Headers } from "../context/utils/Headercontext";
 import {
   User,
   Lock,
@@ -11,34 +13,43 @@ import {
   Clock,
   Globe,
   Image,
-  Link,
+  Link2,
   MessageSquare,
   Users,
   Shield,
   Video,
   Archive,
-  Tag,
   Settings as SettingsIcon,
-  Edit,
   Activity,
   MapPin,
   ChevronRight,
-  Check,
   AlertCircle,
   Info,
 } from "lucide-react";
 
 function Settings() {
+  const { setheaders } = useContext(Headers);
+
+  const categories = useMemo(
+    () => [
+      { path: "/", name: "HOME" },
+      { path: "/Profile", name: "ACCOUNT" },
+    ],
+    []
+  );
+  useEffect(() => {
+    setheaders(categories);
+  }, [setheaders, categories]);
   const accountPublic = true;
   const twoFactorAuth = false;
-  const storageUsed = 65; // percentage
+  const storageUsed = 65;
   const loginLocations = [
     { location: "New York, USA", device: "iPhone 12", time: "2 hours ago" },
     { location: "London, UK", device: "MacBook Pro", time: "1 day ago" },
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 p-4 md:p-8 dark:text-gray-300">
+    <div className="min-h-screen  dark:text-gray-300">
       <div className="max-w-7xl mx-auto">
         {/* Header with breadcrumbs */}
         <div className="mb-6">
@@ -48,7 +59,7 @@ function Settings() {
             </span>
             <ChevronRight className="w-4 h-4 mx-2" />
             <span className="hover:text-gray-700 dark:hover:text-gray-300 cursor-pointer">
-              Account
+              <Link to="/profile"> Account</Link>
             </span>
             <ChevronRight className="w-4 h-4 mx-2" />
             <span className="text-blue-600 dark:text-blue-400">Settings</span>
@@ -160,7 +171,7 @@ function Settings() {
                 action={<BlueButton>Change</BlueButton>}
               />
               <SettingItem
-                icon={<Link />}
+                icon={<Link2 />}
                 title="Social Links"
                 description="Connect your profiles"
                 action={<BlueButton>Manage</BlueButton>}
@@ -331,7 +342,6 @@ function Settings() {
   );
 }
 
-// Reusable Components
 function SettingItem({ icon, title, description, action, danger = false }) {
   return (
     <div

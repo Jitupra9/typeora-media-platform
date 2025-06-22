@@ -71,7 +71,7 @@ const routes = [
         component: History,
       },
       {
-        path: "setting",
+        path: "settings",
         component: Settings,
       },
       {

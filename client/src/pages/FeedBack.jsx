@@ -1,4 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext, useMemo, useEffect } from "react";
+import { Headers } from "../context/utils/Headercontext";
+
 import {
   MessageSquare,
   Star,
@@ -42,7 +44,12 @@ function Feedback() {
   const fileInputRef = useRef(null);
   const [showFeedbackPrompt, setShowFeedbackPrompt] = useState(false);
   const [feedbackPrompt, setFeedbackPrompt] = useState("");
+  const { setheaders } = useContext(Headers);
 
+  const categories = useMemo(() => [], []);
+  useEffect(() => {
+    setheaders(categories);
+  }, [setheaders, categories]);
   const [feedbackHistory, setFeedbackHistory] = useState([
     {
       id: 1,

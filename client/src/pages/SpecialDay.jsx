@@ -258,9 +258,9 @@ function IncidentTracker() {
   const allSeverities = ["high", "medium", "low"];
 
   return (
-    <div className="min-h-screen">
-      <header className="bg-gradient-to-r from-blue-400 to-blue-500 dark:from-blue-900 dark:to-blue-950 text-white">
-        <div className="container mx-auto px-4 py-6">
+    <div className="min-h-screen text-black dark:text-white">
+      <header className="bg-gradient-to-r  from-blue-400 to-blue-500 dark:from-blue-900 dark:to-blue-950 text-white rounded-t-lg">
+        <div className="container mx-auto px-4 py-6 ">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
               <h1 className="text-3xl font-bold flex items-center gap-2">
@@ -288,9 +288,7 @@ function IncidentTracker() {
           </div>
         </div>
       </header>
-
-      {/* Filters */}
-      <div className="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-10 border-b border-gray-200 dark:border-gray-700">
+      <div className="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-10 border-b border-gray-200 dark:border-gray-700 rounded-b-lg">
         <div className="container mx-auto px-4 py-4">
           <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
             {/* Search */}
