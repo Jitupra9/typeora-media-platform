@@ -14,7 +14,6 @@ import {
   Eye,
   Clock,
   ChevronDown,
-  Filter,
   AlertCircle,
   Plus,
   BarChart2,
@@ -105,7 +104,6 @@ function IncidentCard({ incident }) {
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-sm hover:shadow-md transition-all duration-200">
-      {/* Card Header */}
       <div className="flex items-start justify-between p-4 border-b border-gray-200 dark:border-gray-700">
         <div className="flex items-start space-x-3">
           <div
@@ -200,7 +198,6 @@ function IncidentCard({ incident }) {
           </div>
         )}
 
-        {/* Footer */}
         <div className="flex items-center justify-between pt-3 border-t border-gray-100 dark:border-gray-700">
           <div className="flex items-center space-x-2">
             <img
@@ -256,16 +253,13 @@ function IncidentTracker() {
       matchesSeverity
     );
   });
-
-  // Extract all unique tags for filter
   const allTags = [...new Set(incidents.flatMap((incident) => incident.tags))];
   const allTypes = [...new Set(incidents.map((incident) => incident.type))];
   const allSeverities = ["high", "medium", "low"];
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
-      {/* Header */}
-      <header className="bg-gradient-to-r from-blue-600 to-blue-800 dark:from-blue-900 dark:to-blue-950 text-white">
+    <div className="min-h-screen">
+      <header className="bg-gradient-to-r from-blue-400 to-blue-500 dark:from-blue-900 dark:to-blue-950 text-white">
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
