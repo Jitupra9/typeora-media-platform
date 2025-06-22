@@ -38,11 +38,10 @@ function Slides() {
       path: "/opinion",
       name: "Opinion",
     },
-
     {
-      icon: <History size={18} />,
-      path: "/history",
-      name: "History",
+      icon: <CalendarCheck size={18} />,
+      path: "/events-calendar",
+      name: "Special",
     },
     {
       icon: <Bookmark size={16} />,
@@ -50,9 +49,9 @@ function Slides() {
       name: "saved",
     },
     {
-      icon: <CalendarCheck size={18} />,
-      path: "/events-calendar",
-      name: "Special",
+      icon: <History size={18} />,
+      path: "/history",
+      name: "History",
     },
     {
       icon: <Info size={18} />,
