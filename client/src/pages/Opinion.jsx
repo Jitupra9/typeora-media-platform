@@ -154,11 +154,10 @@ function Opinion() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen  text-gray-900 dark:text-gray-100 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
-        {/* Hero Section */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+          <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-cyan-400 to-cyan-600 bg-clip-text text-transparent">
             Public Opinion Hub
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
@@ -166,8 +165,6 @@ function Opinion() {
             community
           </p>
         </div>
-
-        {/* Search and Filter Bar */}
         <div className="flex flex-col sm:flex-row gap-4 mb-8">
           <div className="relative flex-grow">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -243,7 +240,7 @@ function Opinion() {
 
             <button
               onClick={() => setShowForm(!showForm)}
-              className="inline-flex items-center px-4 py-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-medium rounded-lg shadow-md hover:from-blue-700 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all"
+              className="inline-flex items-center px-4 py-3 bg-gradient-to-r from-cyan-400 to-cyan-600 text-white font-medium rounded-lg shadow-md hover:from-blue-700 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all"
             >
               <Plus className="h-5 w-5 mr-2" /> New Opinion
             </button>
@@ -338,16 +335,12 @@ function Opinion() {
             </form>
           </div>
         )}
-
-        {/* Opinions Grid */}
         {filteredOpinions.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
             {filteredOpinions.map((opinion) => (
               <div
                 key={opinion.id}
-                className={`bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden border border-gray-200 dark:border-gray-700 transition-all hover:shadow-lg ${
-                  opinion.trending ? "ring-2 ring-blue-500/20" : ""
-                }`}
+                className={`bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden border border-gray-200 dark:border-gray-700 transition-all hover:shadow-lg `}
               >
                 <div className="p-6">
                   {/* Author and Metadata */}
