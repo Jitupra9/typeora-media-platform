@@ -5,7 +5,6 @@ import {
   MessageSquare,
   TrendingUp,
   Hash,
-  User,
   ThumbsUp,
   ThumbsDown,
   Share2,
