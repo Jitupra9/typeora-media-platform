@@ -9,21 +9,25 @@ import {
   UserRoundX,
   Newspaper,
   CalendarCheck,
-  History,
-  Info,
-  PhoneCall,
-  LifeBuoy,
   UserPen,
   Tv,
   Bookmark,
+  ThumbsUp,
+  Film,
+  FileText,
+  Flag,
+  Mail,
+  LifeBuoy,
+  ChevronDown,
 } from "lucide-react";
+
 function Slides() {
   const { Auth, setAuth } = useContext(IsAuthnticate);
-
   const location = useLocation();
-  const pages = [
+
+  const mainPages = [
     {
-      icon: <Tv size={16} />,
+      icon: <Tv size={18} />,
       path: "/",
       name: "Videos",
     },
@@ -32,9 +36,8 @@ function Slides() {
       path: "/Articles",
       name: "Articles",
     },
-
     {
-      icon: <UserPen size={16} />,
+      icon: <UserPen size={18} />,
       path: "/opinion",
       name: "Opinion",
     },
@@ -43,36 +46,75 @@ function Slides() {
       path: "/events-calendar",
       name: "Special",
     },
+  ];
+
+  const yourPages = Auth.islogined
+    ? [
+        {
+          icon: <Film size={18} />,
+          path: "/your-videos",
+          name: "Your Videos",
+        },
+        {
+          icon: <FileText size={18} />,
+          path: "/your-articles",
+          name: "Your Articles",
+        },
+        {
+          icon: <ThumbsUp size={18} />,
+          path: "/liked-content",
+          name: "Liked",
+        },
+        {
+          icon: <Bookmark size={18} />,
+          path: "/saved",
+          name: "Saved",
+        },
+      ]
+    : [];
+
+  // Demo data for people you follow
+  const followingPeople = [
     {
-      icon: <Bookmark size={16} />,
-      path: "/Saved",
-      name: "saved",
+      id: 1,
+      name: "Alex Johnson",
+      avatar: people,
+      role: "Content Creator",
     },
     {
-      icon: <History size={18} />,
-      path: "/history",
-      name: "History",
+      id: 2,
+      name: "Sarah Williams",
+      avatar: people,
+      role: "Journalist",
     },
     {
-      icon: <Info size={18} />,
-      path: "/about",
-      name: "About",
+      id: 3,
+      name: "Michael Chen",
+      avatar: people,
+      role: "Editor",
     },
     {
-      icon: <PhoneCall size={18} />,
-      path: "/contact",
-      name: "Contact",
-    },
-    {
-      icon: <LifeBuoy size={18} />,
-      path: "/help",
-      name: "Help & Support",
+      id: 4,
+      name: "Emma Davis",
+      avatar: people,
+      role: "Photographer",
     },
   ];
+
+  const isActive = (path) => {
+    return (
+      location.pathname === path ||
+      (path === "/" && location.pathname.startsWith("/watch")) ||
+      (path === "/Articles" &&
+        location.pathname.startsWith("/ArticleDetails")) ||
+      (path === "/" && /^\/\d+$/.test(location.pathname))
+    );
+  };
+
   const handleLogout = async () => {
     const userData = JSON.parse(localStorage.getItem("userData"));
     if (!userData?.user?._id) {
-      toast.error("login First");
+      toast.error("Login First");
       return;
     } else {
       localStorage.removeItem("userData");
@@ -86,109 +128,206 @@ function Slides() {
   };
 
   return (
-    <div className="h-[100vh] font-semibold overflow-hidden text-nowrap bg-white text-gray-500 dark:bg-gray-900  dark:text-gray-400">
+    <div className="h-[100vh] font-semibold overflow-hidden text-nowrap bg-white text-gray-500 dark:bg-gray-900 dark:text-gray-400 flex flex-col">
       <div className="text-center py-4 text-2xl font-bold text-black dark:text-white">
         Typeora
       </div>
-      <div>
-        <div className=" px-2 py-3 border-b">
-          {Auth.islogined === true ? (
-            <Link
-              to="/profile"
-              className="bg-blue-400 text-white dark:bg-gray-700 dark:textgray-900 dark:opacity-100 opacity-90 cursor-pointer flex items-center justify-center gap-2 border py-2 px-3 rounded-md"
+
+      <div className="px-2 py-3 ">
+        {Auth.islogined === true ? (
+          <Link
+            to="/profile"
+            className="bg-blue-400 text-white dark:bg-gray-500 dark:bg-opacity-60  cursor-pointer flex items-center justify-center gap-2 border py-2 px-3 rounded-md"
+          >
+            <div className="images">
+              <img src={people} alt="" className="w-10 rounded-full" />
+            </div>
+            <div className="textarea">
+              <h3 className="text-md font-bold">
+                {Auth.user &&
+                  `${Auth.user.userFirstname} ${Auth.user.userLastName}`}
+              </h3>
+              <p className="text-xs">Premium Plan</p>
+            </div>
+          </Link>
+        ) : (
+          <div className="dark:bg-gray-700 dark:text-gray-300 bg-gray-100 text-gray-600 opacity-90 flex items-center justify-around gap-3 border py-2 px-3 rounded-md cursor-not-allowed">
+            <div className="images bg-white rounded-full p-2 border border-gray-200">
+              <User className="text-gray-400" />
+            </div>
+            <div className="textarea opacity-60">
+              <h3 className="text-md font-semibold">Login</h3>
+              <p className="text-xs">Access Denied</p>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div className="flex-1 hidel_slide_roler overflow-hidden overflow-y-scroll">
+        <div className="py-3 flex flex-col gap-y-1">
+          {mainPages.map((item, index) => (
+            <div
+              key={`main-${index}`}
+              className={`px-5  ${
+                isActive(item.path)
+                  ? "bg-blue-50 text-cyan-600 border-l-4 border-blue-500 dark:bg-gray-700 dark:text-white dark:border-blue-50"
+                  : "text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800"
+              }`}
             >
-              <div className="images">
-                <img src={people} alt="" className=" w-10 rounded-full" />
+              <Link
+                to={item.path}
+                className="py-3 w-full flex items-center justify-start pl-3 gap-3 text-sm font-medium cursor-pointer"
+              >
+                {item.icon}
+                <span>{item.name}</span>
+              </Link>
+            </div>
+          ))}
+        </div>
+
+        {Auth.islogined && (
+          <>
+            <div className="py-3 flex flex-col gap-y-1 border-t border-gray-200 dark:border-gray-700">
+              <div className="px-5 text-lg font-bold text-gray-500 dark:text-gray-400">
+                You
               </div>
-              <div className="textarea ">
-                <h3 className=" text-md font-bold">
-                  {Auth.user &&
-                    Auth?.user?.userFirstname + " " + Auth?.user?.userLastName}
-                </h3>
-                <p className=" text-xs">Premium Plan</p>
+              {yourPages.map((item, index) => (
+                <div
+                  key={`user-${index}`}
+                  className={`px-5  ${
+                    isActive(item.path)
+                      ? "bg-blue-50 text-cyan-600 border-l-4 border-blue-500 dark:bg-gray-700 dark:text-white dark:border-blue-50"
+                      : "text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800"
+                  }`}
+                >
+                  <Link
+                    to={item.path}
+                    className="py-3 w-full flex items-center justify-start pl-3 gap-3 text-sm font-medium cursor-pointer"
+                  >
+                    {item.icon}
+                    <span>{item.name}</span>
+                  </Link>
+                </div>
+              ))}
+            </div>
+
+            <div className="py-3 flex flex-col gap-y-1 border-t border-gray-200 dark:border-gray-700">
+              <div className="px-5 text-lg font-bold text-gray-500 dark:text-gray-400">
+                Following
               </div>
+              {followingPeople.map((person) => (
+                <div
+                  key={`person-${person.id}`}
+                  className="px-5 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800"
+                >
+                  <Link
+                    to={`/profile/${person.id}`}
+                    className="py-3 w-full flex items-center justify-start pl-3 gap-3 text-sm font-medium cursor-pointer"
+                  >
+                    <img
+                      src={person.avatar}
+                      alt={person.name}
+                      className="w-6 h-6 rounded-full object-cover"
+                    />
+                    <div className="flex flex-col">
+                      <span>{person.name}</span>
+                      <span className="text-xs text-gray-400">
+                        {person.role}
+                      </span>
+                    </div>
+                  </Link>
+                </div>
+              ))}
+              <div className="text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800">
+                <Link
+                  to="/following"
+                  className="py-3 w-full flex items-center justify-start pl-3 gap-3 text-sm font-medium cursor-pointer"
+                >
+                  <ChevronDown size={18} />
+                  <span>See all following</span>
+                </Link>
+              </div>
+            </div>
+          </>
+        )}
+
+        <div className=" px-5 py-3 flex flex-col gap-y-1 border-t border-gray-200 dark:border-gray-700">
+          <div
+            className={` ${
+              isActive("/settings")
+                ? "bg-blue-50 text-cyan-600 border-l-4 border-blue-500 dark:bg-gray-700 dark:text-white dark:border-blue-50"
+                : "text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800"
+            }`}
+          >
+            <Link
+              to="/setting"
+              className="py-3 w-full flex items-center justify-start pl-3 gap-3 text-sm font-medium cursor-pointer"
+            >
+              <Settings size={18} />
+              <span>Settings</span>
             </Link>
-          ) : (
-            <div className="dark:bg-gray-700 dark:text-gray-300  bg-gray-100 text-gray-600 opacity-90 flex items-center justify-around gap-3 border py-2 px-3 rounded-md  cursor-not-allowed ">
-              <div className="images bg-white rounded-full p-2  border border-gray-200 ">
-                <User className=" text-gray-400" />
-              </div>
-              <div className="textarea opacity-60  ">
-                <h3 className=" text-md font-semibold">Login</h3>
-                <p className=" text-xs">Access Deined</p>
-              </div>
+          </div>
+          <div
+            className={` ${
+              isActive("/help")
+                ? "bg-blue-50 text-cyan-600 border-l-4 border-blue-500 dark:bg-gray-700 dark:text-white dark:border-blue-50"
+                : "text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800"
+            }`}
+          >
+            <Link
+              to="/help"
+              className="py-3 w-full flex items-center justify-start pl-3 gap-3 text-sm font-medium cursor-pointer"
+            >
+              <LifeBuoy size={18} />
+              <span>Help</span>
+            </Link>
+          </div>
+          <div
+            className={` ${
+              isActive("/report-history")
+                ? "bg-blue-50 text-cyan-600 border-l-4 border-blue-500 dark:bg-gray-700 dark:text-white dark:border-blue-50"
+                : "text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800"
+            }`}
+          >
+            <Link
+              to="/report-history"
+              className="py-3 w-full flex items-center justify-start pl-3 gap-3 text-sm font-medium cursor-pointer"
+            >
+              <Flag size={18} />
+              <span>Report</span>
+            </Link>
+          </div>
+          <div
+            className={` ${
+              isActive("/feedback")
+                ? "bg-blue-50 text-cyan-600 border-l-4 border-blue-500 dark:bg-gray-700 dark:text-white dark:border-blue-50"
+                : "text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800"
+            }`}
+          >
+            <Link
+              to="/feedback"
+              className="py-3 w-full flex items-center justify-start pl-3 gap-3 text-sm font-medium cursor-pointer"
+            >
+              <Mail size={18} />
+              <span>Feedback</span>
+            </Link>
+          </div>
+          {Auth.islogined && (
+            <div
+              className="px-5 py-3 w-full flex items-center justify-start pl-3 gap-3 text-sm font-medium cursor-pointer text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800"
+              onClick={handleLogout}
+            >
+              <UserRoundX size={18} />
+              <span>Logout</span>
             </div>
           )}
         </div>
-      </div>
-      <div className=" h-[76vh] hidel_slide_roler overflow-y-scroll">
-        <div className="  py-3 flex flex-col gap-y-4 border-b-2">
-          {pages.map((item, index) => {
-            const isActive =
-              location.pathname === item.path ||
-              (item.path === "/" && location.pathname.startsWith("/watch")) ||
-              (item.path === "/Articles" &&
-                location.pathname.startsWith("/ArticleDetails")) ||
-              (item.path === "/" && /^\/\d+$/.test(location.pathname));
-
-            return (
-              <div
-                key={index}
-                className={` px-7 ${
-                  isActive
-                    ? "bg-blue-50 text-cyan-600 border-l-4 border-blue-500 dark:bg-gray-700 dark:text-white dark:border-blue-50"
-                    : "text-gray-500 "
-                }`}
-              >
-                <Link
-                  to={item.path}
-                  key={index}
-                  className=" py-2 w-full flex items-center justify-start pl-3 gap-2 text-sm font-medium  cursor-pointer"
-                >
-                  {item.icon}
-                  <span>{item.name}</span>
-                </Link>
-              </div>
-            );
-          })}
+        <div className="px-4 py-3 text-xs text-gray-500 dark:text-gray-400">
+          <div>
+            © 2025 Typeora International. <br />
+            <br /> All copyrights reserved.
+          </div>
         </div>
-        {Auth.islogined === true ? (
-          <div className="px-7 py-3 flex flex-col gap-y-5  text-gray-500 text-xs">
-            <Link
-              to="/setting"
-              className=" flex text-sm font-medium gap-2 pl-3  cursor-pointer"
-            >
-              <Settings size={20} />
-              Setting
-            </Link>
-
-            <li
-              onClick={handleLogout}
-              className=" flex text-sm font-medium gap-2 pl-3 cursor-pointer"
-            >
-              <UserRoundX size={20} />
-              <span>Logout</span>
-            </li>
-          </div>
-        ) : (
-          <div className="px-7 py-3 flex flex-col gap-y-5  text-gray-500 text-xs">
-            <Link
-              to="/setting"
-              className=" flex text-sm font-medium gap-2 pl-3 opacity-55 cursor-not-allowed"
-            >
-              <Settings size={20} />
-              Setting
-            </Link>
-
-            <Link
-              to="/Login"
-              className=" flex text-sm font-medium gap-2 pl-3  cursor-pointer"
-            >
-              <User size={20} />
-              <span>Login</span>
-            </Link>
-          </div>
-        )}
       </div>
     </div>
   );

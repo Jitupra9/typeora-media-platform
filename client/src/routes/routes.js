@@ -12,7 +12,6 @@ import History from "../pages/Histrory";
 import Profile from "../pages/profile/Profile";
 import ArticleDetails from "../pages/Article/ArticleDetails";
 import About from "../pages/About";
-import Contact from "../pages/Contact";
 import Support from "../pages/Support";
 import Settings from "../pages/Setting";
 const routes = [
@@ -52,10 +51,7 @@ const routes = [
         path: "about",
         component: About,
       },
-      {
-        path: "contact",
-        component: Contact,
-      },
+
       {
         path: "help",
         component: Support,

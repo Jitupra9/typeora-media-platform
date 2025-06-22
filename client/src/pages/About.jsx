@@ -9,15 +9,13 @@ import {
   Clock,
   Check,
   MapPin,
-  BarChart2,
   Award,
 } from "lucide-react";
 
 function About() {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 text-gray-800 dark:text-gray-200">
-      {/* Hero Section */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-800 dark:from-blue-900 dark:to-blue-950 text-white py-16 px-6">
+    <div className="min-h-screen  text-gray-800 dark:text-gray-200">
+      <div className="bg-gradient-to-r from-sky-400 to-sky-600 dark:from-blue-900 dark:to-blue-950 text-white py-16 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center gap-3 mb-4">
             <div className="bg-white/20 p-2 rounded-lg backdrop-blur-sm">
