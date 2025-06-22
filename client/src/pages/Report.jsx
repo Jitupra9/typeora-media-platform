@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useMemo, useEffect } from "react";
+import { Headers } from "../context/utils/Headercontext";
+
 import {
   AlertTriangle,
   Flag,
@@ -22,6 +24,12 @@ function Report() {
   const [reportType, setReportType] = useState("content");
   const [message, setMessage] = useState("");
   const [department, setDepartment] = useState("support");
+  const { setheaders } = useContext(Headers);
+
+  const categories = useMemo(() => [], []);
+  useEffect(() => {
+    setheaders(categories);
+  }, [setheaders, categories]);
   const [reports, setReports] = useState([
     {
       id: 1,
@@ -93,7 +101,7 @@ function Report() {
   };
 
   return (
-    <div className="min-h-screen text-black dark:text-gray-300 p-4 md:p-8">
+    <div className="min-h-screen text-black dark:text-gray-300 ">
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-3xl font-bold flex items-center gap-3">

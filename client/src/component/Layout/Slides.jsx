@@ -11,6 +11,7 @@ import {
   CalendarCheck,
   UserPen,
   Tv,
+  History,
   Bookmark,
   ThumbsUp,
   Film,
@@ -19,6 +20,7 @@ import {
   Mail,
   LifeBuoy,
   ChevronDown,
+  User2,
 } from "lucide-react";
 
 function Slides() {
@@ -61,19 +63,24 @@ function Slides() {
           name: "Your Articles",
         },
         {
-          icon: <ThumbsUp size={18} />,
-          path: "/liked-content",
-          name: "Liked",
-        },
-        {
           icon: <Bookmark size={18} />,
           path: "/saved",
           name: "Saved",
         },
+        {
+          icon: <ThumbsUp size={18} />,
+          path: "/liked-content",
+          name: "Liked",
+        },
+
+        {
+          icon: <History size={18} />,
+          path: "/History",
+          name: "History",
+        },
       ]
     : [];
 
-  // Demo data for people you follow
   const followingPeople = [
     {
       id: 1,
@@ -151,7 +158,7 @@ function Slides() {
             </div>
           </Link>
         ) : (
-          <div className="dark:bg-gray-700 dark:text-gray-300 bg-gray-100 text-gray-600 opacity-90 flex items-center justify-around gap-3 border py-2 px-3 rounded-md cursor-not-allowed">
+          <div className="dark:bg-gray-700 dark:text-gray-300 bg-gray-100 text-gray-600 opacity-90 flex items-center justify-center gap-5 border py-2 px-3 rounded-md cursor-not-allowed">
             <div className="images bg-white rounded-full p-2 border border-gray-200">
               <User className="text-gray-400" />
             </div>
@@ -168,10 +175,10 @@ function Slides() {
           {mainPages.map((item, index) => (
             <div
               key={`main-${index}`}
-              className={`px-5  ${
+              className={` ${
                 isActive(item.path)
-                  ? "bg-blue-50 text-cyan-600 border-l-4 border-blue-500 dark:bg-gray-700 dark:text-white dark:border-blue-50"
-                  : "text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800"
+                  ? "bg-blue-50 text-cyan-600 border-l-4 px-4 border-blue-500 dark:bg-gray-700 dark:text-white dark:border-blue-50"
+                  : "text-gray-500 px-5  hover:bg-gray-100 dark:hover:bg-gray-800"
               }`}
             >
               <Link
@@ -194,10 +201,10 @@ function Slides() {
               {yourPages.map((item, index) => (
                 <div
                   key={`user-${index}`}
-                  className={`px-5  ${
+                  className={` ${
                     isActive(item.path)
-                      ? "bg-blue-50 text-cyan-600 border-l-4 border-blue-500 dark:bg-gray-700 dark:text-white dark:border-blue-50"
-                      : "text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800"
+                      ? "bg-blue-50 text-cyan-600 border-l-4 px-4 border-blue-500 dark:bg-gray-700 dark:text-white dark:border-blue-50"
+                      : "text-gray-500 hover:bg-gray-100 px-5  dark:hover:bg-gray-800"
                   }`}
                 >
                   <Link
@@ -251,16 +258,16 @@ function Slides() {
           </>
         )}
 
-        <div className=" px-5 py-3 flex flex-col gap-y-1 border-t border-gray-200 dark:border-gray-700">
+        <div className=" py-3 flex flex-col gap-y-1 border-t border-gray-200 dark:border-gray-700">
           <div
             className={` ${
               isActive("/settings")
-                ? "bg-blue-50 text-cyan-600 border-l-4 border-blue-500 dark:bg-gray-700 dark:text-white dark:border-blue-50"
-                : "text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800"
+                ? "bg-blue-50 text-cyan-600 px-4 border-l-4 border-blue-500 dark:bg-gray-700 dark:text-white dark:border-blue-50"
+                : "text-gray-500  px-5 hover:bg-gray-100 dark:hover:bg-gray-800"
             }`}
           >
             <Link
-              to="/setting"
+              to="/settings"
               className="py-3 w-full flex items-center justify-start pl-3 gap-3 text-sm font-medium cursor-pointer"
             >
               <Settings size={18} />
@@ -270,8 +277,8 @@ function Slides() {
           <div
             className={` ${
               isActive("/help")
-                ? "bg-blue-50 text-cyan-600 border-l-4 border-blue-500 dark:bg-gray-700 dark:text-white dark:border-blue-50"
-                : "text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800"
+                ? "bg-blue-50 text-cyan-600 px-4 border-l-4 border-blue-500 dark:bg-gray-700 dark:text-white dark:border-blue-50"
+                : "text-gray-500 hover:bg-gray-100 px-5 dark:hover:bg-gray-800"
             }`}
           >
             <Link
@@ -285,8 +292,8 @@ function Slides() {
           <div
             className={` ${
               isActive("/report-history")
-                ? "bg-blue-50 text-cyan-600 border-l-4 border-blue-500 dark:bg-gray-700 dark:text-white dark:border-blue-50"
-                : "text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800"
+                ? "bg-blue-50 text-cyan-600 px-4 border-l-4 border-blue-500 dark:bg-gray-700 dark:text-white dark:border-blue-50"
+                : "text-gray-500 hover:bg-gray-100 px-5 dark:hover:bg-gray-800"
             }`}
           >
             <Link
@@ -300,27 +307,36 @@ function Slides() {
           <div
             className={` ${
               isActive("/feedback")
-                ? "bg-blue-50 text-cyan-600 border-l-4 border-blue-500 dark:bg-gray-700 dark:text-white dark:border-blue-50"
-                : "text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800"
+                ? "bg-blue-50 text-cyan-600 border-l-4 px-4 border-blue-500 dark:bg-gray-700 dark:text-white dark:border-blue-50"
+                : "text-gray-500 hover:bg-gray-100 px-5 dark:hover:bg-gray-800"
             }`}
           >
             <Link
               to="/feedback"
-              className="py-3 w-full flex items-center justify-start pl-3 gap-3 text-sm font-medium cursor-pointer"
+              className="py-3 w-full px-5 flex items-center justify-start pl-3 gap-3 text-sm font-medium cursor-pointer"
             >
               <Mail size={18} />
               <span>Feedback</span>
             </Link>
           </div>
-          {Auth.islogined && (
-            <div
-              className="px-5 py-3 w-full flex items-center justify-start pl-3 gap-3 text-sm font-medium cursor-pointer text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800"
-              onClick={handleLogout}
-            >
-              <UserRoundX size={18} />
-              <span>Logout</span>
-            </div>
-          )}
+          <div className="">
+            {Auth.islogined ? (
+              <div
+                className=" py-3 w-full flex items-center justify-start  px-8 gap-3 text-sm font-medium cursor-pointer text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800"
+                onClick={handleLogout}
+              >
+                <UserRoundX size={18} />
+                <span>Logout</span>
+              </div>
+            ) : (
+              <div className="py-3 w-full flex items-center justify-start px-8  gap-3 text-sm font-medium cursor-pointer text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800">
+                <User2 size={18} />
+                <span>
+                  <Link to="/login">Login</Link>
+                </span>
+              </div>
+            )}
+          </div>
         </div>
         <div className="px-4 py-3 text-xs text-gray-500 dark:text-gray-400">
           <div>

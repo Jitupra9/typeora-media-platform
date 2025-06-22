@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useContext, useMemo, useEffect } from "react";
+import { Headers } from "../context/utils/Headercontext";
+
 import {
   LifeBuoy,
   Server,
@@ -8,7 +10,6 @@ import {
   Mail,
   MessageSquare,
   Clock,
-  Zap,
   ChevronRight,
   Search,
   AlertCircle,
@@ -18,6 +19,12 @@ import {
 } from "lucide-react";
 
 function Support() {
+  const { setheaders } = useContext(Headers);
+
+  const categories = useMemo(() => [], []);
+  useEffect(() => {
+    setheaders(categories);
+  }, [setheaders, categories]);
   const supportTeams = [
     {
       title: "Technical Support",
@@ -233,7 +240,7 @@ function Support() {
             ))}
             <div className="p-4 bg-gray-50 dark:bg-gray-800 text-center">
               <a
-                href="#"
+                href="/"
                 className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-400 inline-flex items-center"
               >
                 View all FAQs <ChevronRight className="w-4 h-4 ml-1" />
@@ -242,7 +249,6 @@ function Support() {
           </div>
         </section>
 
-        {/* Resources Section */}
         <section className="mb-16">
           <div className="text-center mb-12">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
