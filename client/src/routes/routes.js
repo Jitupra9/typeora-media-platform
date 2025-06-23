@@ -16,6 +16,7 @@ import Support from "../pages/Support";
 import Settings from "../pages/Setting";
 import Report from "../pages/Report";
 import Feedback from "../pages/FeedBack";
+import MyActions from "../pages/MyActions";
 const routes = [
   {
     path: "/",
@@ -40,6 +41,10 @@ const routes = [
       {
         path: "saved",
         component: Saved,
+      },
+      {
+        path: "Actions",
+        component: MyActions,
       },
       {
         path: "opinion",
