@@ -13,7 +13,6 @@ import {
   Tv,
   History,
   Bookmark,
-  ThumbsUp,
   Film,
   FileText,
   Flag,
@@ -21,6 +20,7 @@ import {
   LifeBuoy,
   ChevronDown,
   User2,
+  PlugZap,
 } from "lucide-react";
 
 function Slides() {
@@ -68,9 +68,9 @@ function Slides() {
           name: "Saved",
         },
         {
-          icon: <ThumbsUp size={18} />,
-          path: "/liked-content",
-          name: "Liked",
+          icon: <PlugZap size={18} />,
+          path: "/Actions",
+          name: "Actions",
         },
 
         {
