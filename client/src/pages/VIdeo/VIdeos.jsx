@@ -259,7 +259,7 @@ function LiveReports() {
           </h1>
         </div>
 
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-2 sm:space-x-4">
           <button className="flex items-center space-x-1 bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 text-white px-3 py-1.5 rounded-lg transition-colors text-sm">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -275,13 +275,14 @@ function LiveReports() {
                 d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
               />
             </svg>
-            <span>Upload</span>
+            <span className="hidden sm:block">Upload</span>
           </button>
 
           <div className="flex items-center space-x-1 bg-red-100 dark:bg-red-800 dark:bg-opacity-50 px-2 py-1 rounded-md">
             <div className="h-2 w-2 bg-red-500 rounded-full animate-pulse"></div>
-            <span className="text-red-700 dark:text-red-300 text-sm">
-              Live Now
+            <span className="text-red-700 dark:text-red-300 text-sm ">
+              <span className="">Live</span>{" "}
+              <span className="hidden sm:block">Now</span>
             </span>
           </div>
           <div className="flex border border-gray-300 dark:border-gray-600 rounded-lg overflow-hidden">

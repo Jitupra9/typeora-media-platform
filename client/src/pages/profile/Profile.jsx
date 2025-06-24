@@ -64,7 +64,7 @@ function Profile() {
     switch (componentName) {
       case "Personal":
         return <Personalinfo />;
-      case "Article":
+      case "NewArticle":
         return <NewArticle />;
       default:
         return "Click valid button";
@@ -84,7 +84,7 @@ function Profile() {
   }, [setheaders, categories]);
 
   return (
-    <div className="p-1 sm:p-5 font-semibold flex flex-col lg:flex-row justify-between text-gray-700 dark:text-gray-200 gap-5">
+    <div className="p-1  font-semibold flex flex-col lg:flex-row justify-between text-gray-700 dark:text-gray-200 gap-5">
       <div className="w-full lg:w-[68%] space-y-5">
         <div className="bg-white dark:bg-gray-900 p-5 rounded-xl shadow-sm">
           <div className="flex flex-col sm:flex-row py-3 items-start sm:items-center justify-between border-b border-gray-200 dark:border-gray-700 gap-4">
@@ -104,21 +104,25 @@ function Profile() {
                     Pro
                   </span>
                 </h3>
-                <p className="text-gray-500 dark:text-gray-400 text-sm flex items-center">
-                  <Briefcase className="w-4 h-4 mr-1" />
-                  Senior Full Stack Developer
-                  <Dot className="mx-1" />
-                  <Mail className="w-4 h-4 mr-1" />
-                  {Auth.user.userEmail}
+                <p className=" flex flex-col lg:flex-row   text-gray-500 dark:text-gray-400 text-sm ">
+                  <div className=" flex items-center">
+                    <Briefcase className="w-4 h-4 mr-1" />
+                    Senior Full Stack Developer
+                  </div>
+                  <Dot className="mx-1 hidden lg:block" />
+                  <div className=" flex items-center">
+                    <Mail className="w-4 h-4 mr-1" />
+                    {Auth.user.userEmail}
+                  </div>
                 </p>
               </div>
             </div>
-            <div className="flex gap-3">
+            <div className="flex gap-3  justify-between w-full sm:w-max sm:justify-normal ">
               <button className="flex items-center gap-2 text-sm bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors">
                 <Edit className="w-4 h-4" />
                 Edit Profile
               </button>
-              <button className="hidden sm:flex items-center gap-2 text-sm bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 px-4 py-2 rounded-lg transition-colors">
+              <button className="flex items-center gap-2 text-sm bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 px-4 py-2 rounded-lg transition-colors">
                 <Share2 className="w-4 h-4" />
                 Share
               </button>

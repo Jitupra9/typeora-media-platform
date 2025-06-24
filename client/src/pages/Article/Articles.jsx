@@ -13,10 +13,9 @@ import { Link } from "react-router-dom";
 
 function Article() {
   return (
-    <div className="min-h-[88vh] lg:min-h-[85vh]">
+    <div className=" min-h-[88vh] lg:min-h-[85vh]">
       <div className="max-w-7xl mx-auto">
-        <div className="flex items-center justify-between my-6">
-          {/* Left side - All Articles with icon */}
+        <div className="flex  items-center justify-between my-3 sm:my-6 sm:mt-2">
           <div className="flex items-center space-x-3">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -37,9 +36,7 @@ function Article() {
             </h3>
           </div>
 
-          {/* Right side - Multiple actions and indicators */}
-          <div className="flex items-center space-x-4">
-            {/* New Article Button */}
+          <div className="flex items-center space-x-2 sm:space-x-4">
             <button className="flex items-center space-x-1 bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 text-white px-3 py-1.5 rounded-lg transition-colors">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -55,10 +52,10 @@ function Article() {
                   d="M12 6v6m0 0v6m0-6h6m-6 0H6"
                 />
               </svg>
-              <span className="text-sm font-medium">New Article</span>
+              <span className="text-sm font-medium hidden sm:block">
+                New Article
+              </span>
             </button>
-
-            {/* Filter Dropdown */}
             <div className="relative group">
               <button className="flex items-center space-x-1 border border-gray-300 dark:border-gray-600 px-3 py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
                 <svg
@@ -75,7 +72,7 @@ function Article() {
                     d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
                   />
                 </svg>
-                <span className="text-sm text-gray-600 dark:text-gray-300">
+                <span className="text-sm text-gray-600 dark:text-gray-300 hidden sm:block">
                   Filter
                 </span>
                 <svg
@@ -94,8 +91,6 @@ function Article() {
                 </svg>
               </button>
             </div>
-
-            {/* View Toggle */}
             <div className="flex border border-gray-300 dark:border-gray-600 rounded-lg overflow-hidden">
               <button className="p-1.5 bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-white">
                 <svg
@@ -146,7 +141,6 @@ function Article() {
               key={i}
               className="group overflow-hidden rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 bg-white dark:bg-gray-800 dark:border-gray-700"
             >
-              {/* Article image with hover effect */}
               <div className="relative h-48 overflow-hidden">
                 <img
                   src={sports}
