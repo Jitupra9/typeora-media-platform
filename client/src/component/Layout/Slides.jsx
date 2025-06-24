@@ -13,7 +13,6 @@ import {
   Tv,
   History,
   Bookmark,
-  Film,
   FileText,
   Flag,
   Mail,
@@ -53,14 +52,9 @@ function Slides() {
   const yourPages = Auth.islogined
     ? [
         {
-          icon: <Film size={18} />,
-          path: "/your-videos",
-          name: "Your Videos",
-        },
-        {
           icon: <FileText size={18} />,
-          path: "/your-articles",
-          name: "Your Articles",
+          path: "/myContent",
+          name: "Your Content",
         },
         {
           icon: <Bookmark size={18} />,

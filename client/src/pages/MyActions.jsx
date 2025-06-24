@@ -1,10 +1,7 @@
 import React from "react";
 import {
   ThumbsUp,
-  ThumbsDown,
   MessageSquare,
-  Flag,
-  Bookmark,
   FileText,
   Video,
   User,
@@ -12,9 +9,7 @@ import {
   Users,
   Hash,
   Heart,
-  AlertCircle,
   Share2,
-  Eye,
   ChevronRight,
   Star,
   Zap,
