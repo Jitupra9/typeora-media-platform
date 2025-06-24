@@ -1,5 +1,5 @@
 import { memo, useState } from "react";
-import CloudinaryUpload from "../utils/CloudinaryUpload";
+import CloudinaryUpload from "../../../component/utils/CloudinaryUpload";
 import {
   Upload,
   Image as ImageIcon,

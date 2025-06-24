@@ -280,9 +280,10 @@ function LiveReports() {
 
           <div className="flex items-center space-x-1 bg-red-100 dark:bg-red-800 dark:bg-opacity-50 px-2 py-1 rounded-md">
             <div className="h-2 w-2 bg-red-500 rounded-full animate-pulse"></div>
-            <span className="text-red-700 dark:text-red-300 text-sm ">
-              <span className="">Live</span>{" "}
-              <span className="hidden sm:block">Now</span>
+            <span className="text-red-700 dark:text-red-300 text-sm  ">
+              <span className="">
+                Live <span className="hidden sm:inline-block">Now</span>
+              </span>
             </span>
           </div>
           <div className="flex border border-gray-300 dark:border-gray-600 rounded-lg overflow-hidden">
