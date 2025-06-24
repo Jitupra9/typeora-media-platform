@@ -17,6 +17,7 @@ import Settings from "../pages/Setting";
 import Report from "../pages/Report";
 import Feedback from "../pages/FeedBack";
 import MyActions from "../pages/MyActions";
+import MyContent from "../pages/MyContent";
 const routes = [
   {
     path: "/",
@@ -37,6 +38,10 @@ const routes = [
       {
         path: "/ArticleDetails",
         component: ArticleDetails,
+      },
+      {
+        path: "myContent",
+        component: MyContent,
       },
       {
         path: "saved",
