@@ -1,6 +1,10 @@
 import React, { memo, useContext, useMemo, useEffect, useState } from "react";
 import ProfileHeader from "./ProfileHeader";
 import ProfileSidebar from "./ProfileSidebar";
+import Articles from "../../component/Page/Profile/Articles";
+import Videos from "../../component/Page/Profile/Videos";
+import Friends from "../../component/Page/Profile/friends";
+import Setting from "../../component/Page/Profile/Settings";
 import Personalinfo from "../../component/Page/Profile/Personalinfo";
 import NewArticle from "../../component/Page/Profile/NewArticle";
 import { Headers } from "../../context/utils/Headercontext";
@@ -10,7 +14,6 @@ import {
   BookOpen,
   Video,
   Settings,
-  BarChart2,
   Users as FriendsIcon,
 } from "lucide-react";
 
@@ -35,8 +38,16 @@ function Profile() {
     switch (componentName) {
       case "Personal":
         return <Personalinfo />;
-      case "Article":
+      case "NewArticle":
         return <NewArticle />;
+      case "Article":
+        return <Articles />;
+      case "Videos":
+        return <Videos />;
+      case "Friends":
+        return <Friends />;
+      case "Settings":
+        return <Setting />;
       default:
         return "Click valid button";
     }
@@ -56,7 +67,6 @@ function Profile() {
               { name: "Article", icon: BookOpen },
               { name: "Videos", icon: Video },
               { name: "Lives", icon: Video },
-              { name: "Stats", icon: BarChart2 },
               { name: "Friends", icon: FriendsIcon },
               { name: "Settings", icon: Settings },
             ].map((item) => (
@@ -74,7 +84,7 @@ function Profile() {
               </li>
             ))}
           </ul>
-          <div className="mt-5 bg-white dark:bg-gray-900 rounded-xl p-4">
+          <div className="mt-5 bg-white dark:bg-gray-900 rounded-xl py-4">
             {components(isactive)}
           </div>
         </div>

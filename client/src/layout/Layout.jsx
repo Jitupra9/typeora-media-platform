@@ -24,9 +24,9 @@ function Layout() {
           <Slides />
         </div>
 
-        <div className=" w-full lg:w-[84%]">
+        <div className=" w-full lg:w-[84%] sm:pb-20 ">
           <Header sidebar={{ sidebarActive, setsidebarActive }} />
-          <div className="p-2 sm:p-5 h-full overflow-y-scroll hidel_slide_roler">
+          <div className="p-2 sm:p-5  h-full overflow-y-scroll hidel_slide_roler">
             <Outlet />
           </div>
         </div>

@@ -10,7 +10,7 @@ function Personalinfo() {
           Edit
         </p>
       </div>
-      <div className="flex  *:w-full *:sm:w-[48%] *:md:w-[32%] justify-between flex-wrap gap-y-10 py-5 mt-5">
+      <div className="flex  *:w-full *:sm:w-[48%] *:md:w-[32%] justify-between flex-wrap gap-y-9 py-5 mt-5">
         <div className="">
           <p>First name</p>
           <input

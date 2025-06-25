@@ -38,7 +38,6 @@ function LiveReports() {
   return (
     <div className="text-gray-200 dark:text-gray-400 ">
       <div className="flex items-center justify-between mb-6">
-        {/* Left side - Title with trending icon */}
         <div className="flex items-center space-x-3">
           <h1 className="hidden sm:block dark:text-white text-black text-xl font-bold">
             <div className="flex items-center">
@@ -128,8 +127,6 @@ function LiveReports() {
               </div>
             </div>
           </div>
-
-          {/* Category filter */}
           <div className="relative group">
             <button className="flex items-center space-x-1 text-sm text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors">
               <span>All Categories</span>
