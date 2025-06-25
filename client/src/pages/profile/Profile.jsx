@@ -1,8 +1,8 @@
 import React, { memo, useContext, useMemo, useEffect, useState } from "react";
 import ProfileHeader from "./ProfileHeader";
 import ProfileSidebar from "./ProfileSidebar";
-import Personalinfo from "./component/Personalinfo";
-import NewArticle from "./component/NewArticle";
+import Personalinfo from "../../component/Page/Profile/Personalinfo";
+import NewArticle from "../../component/Page/Profile/NewArticle";
 import { Headers } from "../../context/utils/Headercontext";
 import { IsAuthnticate } from "../../context/Auth/IsAuth";
 import {
@@ -19,22 +19,10 @@ function Profile() {
   const [isactive, setisactive] = useState("Personal");
   const { Auth } = useContext(IsAuthnticate);
   const [profileCompletion, setProfileCompletion] = useState(75);
-  const [stats, setStats] = useState({
-    articles: 24,
-    followers: 1342,
-    following: 543,
-    views: 12500,
-  });
+
   useEffect(() => {
     setProfileCompletion(60);
-    setStats((prev) => ({
-      ...prev,
-      articles: 24,
-      followers: 1342,
-      following: 543,
-      views: 12500,
-    }));
-  }, [stats, profileCompletion]);
+  }, []);
   const categories = useMemo(
     () => [
       { path: "/profile", name: "Profile" },

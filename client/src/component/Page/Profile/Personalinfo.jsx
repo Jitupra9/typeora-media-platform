@@ -1,4 +1,5 @@
 import { Pencil } from "lucide-react";
+import { memo } from "react";
 function Personalinfo() {
   return (
     <div className=" ">
@@ -113,4 +114,4 @@ function Personalinfo() {
   );
 }
 
-export default Personalinfo;
+export default memo(Personalinfo);
