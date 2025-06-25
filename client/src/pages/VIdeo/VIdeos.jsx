@@ -38,7 +38,6 @@ function LiveReports() {
   return (
     <div className="text-gray-200 dark:text-gray-400 ">
       <div className="flex items-center justify-between mb-6">
-        {/* Left side - Title with trending icon */}
         <div className="flex items-center space-x-3">
           <h1 className="hidden sm:block dark:text-white text-black text-xl font-bold">
             <div className="flex items-center">
@@ -102,25 +101,25 @@ function LiveReports() {
             <div className="hidden group-hover:block absolute right-0 mt-2 w-40 bg-white dark:bg-gray-800 rounded-md shadow-lg z-10 border border-gray-200 dark:border-gray-700">
               <div className="py-1">
                 <a
-                  href="#"
+                  href="/"
                   className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   Today
                 </a>
                 <a
-                  href="#"
+                  href="/"
                   className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   This Week
                 </a>
                 <a
-                  href="#"
+                  href="/"
                   className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   This Month
                 </a>
                 <a
-                  href="#"
+                  href="/"
                   className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   All Time
@@ -128,8 +127,6 @@ function LiveReports() {
               </div>
             </div>
           </div>
-
-          {/* Category filter */}
           <div className="relative group">
             <button className="flex items-center space-x-1 text-sm text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors">
               <span>All Categories</span>
@@ -151,25 +148,25 @@ function LiveReports() {
             <div className="hidden group-hover:block absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg z-10 border border-gray-200 dark:border-gray-700">
               <div className="py-1">
                 <a
-                  href="#"
+                  href="/"
                   className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   All Categories
                 </a>
                 <a
-                  href="#"
+                  href="/"
                   className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   Videos
                 </a>
                 <a
-                  href="#"
+                  href="/"
                   className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   Articles
                 </a>
                 <a
-                  href="#"
+                  href="/"
                   className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   Podcasts
@@ -199,6 +196,7 @@ function LiveReports() {
       <div className=" flex flex-wrap justify-between gap-y-3 overflow-hidden h-60 ">
         {[...Array(3)].map((item, key) => (
           <Link
+            key={key}
             to={`/watch?id=${key}`}
             className=" border border-gray-800 relative overflow-hidden p-5 flex flex-col   justify-end w-full sm:w-[49%] lg:w-[32%] h-60 rounded-md bg-cover bg-center"
             style={{ backgroundImage: `url(${bgimg})` }}
@@ -228,7 +226,7 @@ function LiveReports() {
                   <img
                     src={logo}
                     alt=""
-                    srcset=""
+                    srcSet=""
                     className=" w-6 h-6 rounded-full"
                   />
                 </div>
@@ -259,7 +257,7 @@ function LiveReports() {
           </h1>
         </div>
 
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-2 sm:space-x-4">
           <button className="flex items-center space-x-1 bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 text-white px-3 py-1.5 rounded-lg transition-colors text-sm">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -275,13 +273,15 @@ function LiveReports() {
                 d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
               />
             </svg>
-            <span>Upload</span>
+            <span className="hidden sm:block">Upload</span>
           </button>
 
           <div className="flex items-center space-x-1 bg-red-100 dark:bg-red-800 dark:bg-opacity-50 px-2 py-1 rounded-md">
             <div className="h-2 w-2 bg-red-500 rounded-full animate-pulse"></div>
-            <span className="text-red-700 dark:text-red-300 text-sm">
-              Live Now
+            <span className="text-red-700 dark:text-red-300 text-sm  ">
+              <span className="">
+                Live <span className="hidden sm:inline-block">Now</span>
+              </span>
             </span>
           </div>
           <div className="flex border border-gray-300 dark:border-gray-600 rounded-lg overflow-hidden">

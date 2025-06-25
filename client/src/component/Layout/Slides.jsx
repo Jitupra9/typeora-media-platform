@@ -222,7 +222,7 @@ function Slides() {
                   className="px-5 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800"
                 >
                   <Link
-                    to={`/profile/${person.id}`}
+                    to={`/visited?${person.id}`}
                     className="py-3 w-full flex items-center justify-start pl-3 gap-3 text-sm font-medium cursor-pointer"
                   >
                     <img

@@ -1,5 +1,5 @@
 import { memo, useState } from "react";
-import CloudinaryUpload from "../utils/CloudinaryUpload";
+import CloudinaryUpload from "../../utils/CloudinaryUpload";
 import {
   Upload,
   Image as ImageIcon,
@@ -77,7 +77,6 @@ function NewArticle() {
 
   return (
     <form onSubmit={handleSubmit} className="max-w-6xl mx-auto p-4">
-      {/* Header */}
       <div className="border-b border-gray-200 dark:border-gray-700 pb-4 mb-6">
         <h2 className="text-2xl font-bold flex items-center gap-3 text-blue-600 dark:text-blue-400">
           <FileText className="w-6 h-6" />
@@ -85,9 +84,7 @@ function NewArticle() {
         </h2>
       </div>
 
-      {/* Main Content */}
       <div className="flex flex-col lg:flex-row gap-6">
-        {/* Media Upload Section */}
         <div className="w-full lg:w-1/2">
           <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-gray-800 dark:to-gray-900 border border-blue-200 dark:border-gray-700 rounded-2xl p-4 sm:p-6 shadow-sm">
             <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 text-center">
@@ -175,7 +172,6 @@ function NewArticle() {
                 />
               </div>
 
-              {/* Subheading */}
               <div>
                 <label className=" text-sm font-medium mb-2 flex items-center gap-2 text-gray-700 dark:text-gray-300">
                   <Heading2 className="w-4 h-4 text-blue-500" />
@@ -252,8 +248,6 @@ function NewArticle() {
                   </div>
                 )}
               </div>
-
-              {/* Description */}
               <div>
                 <label className="text-sm font-medium mb-2 flex items-center gap-2 text-gray-700 dark:text-gray-300">
                   <FileText className="w-4 h-4 text-blue-500" />
@@ -269,8 +263,6 @@ function NewArticle() {
                 />
               </div>
             </div>
-
-            {/* Submit Button */}
             <div className="mt-6 flex justify-end">
               <button
                 type="submit"

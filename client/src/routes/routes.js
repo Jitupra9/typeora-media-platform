@@ -18,6 +18,7 @@ import Report from "../pages/Report";
 import Feedback from "../pages/FeedBack";
 import MyActions from "../pages/MyActions";
 import MyContent from "../pages/MyContent";
+import visitedProfileContent from "../pages/visitedProfileContent";
 const routes = [
   {
     path: "/",
@@ -42,6 +43,10 @@ const routes = [
       {
         path: "myContent",
         component: MyContent,
+      },
+      {
+        path: "visited",
+        component: visitedProfileContent,
       },
       {
         path: "saved",

@@ -288,10 +288,9 @@ function IncidentTracker() {
           </div>
         </div>
       </header>
-      <div className="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-10 border-b border-gray-200 dark:border-gray-700 rounded-b-lg">
+      <div className="bg-white dark:bg-gray-800 shadow-sm sticky -top-2 sm:-top-5 z-10 border-b border-gray-200 dark:border-gray-700 rounded-b-lg">
         <div className="container mx-auto px-4 py-4">
           <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
-            {/* Search */}
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <Search className="h-4 w-4 text-gray-400" />
@@ -321,8 +320,6 @@ function IncidentTracker() {
                 <option value="2023-06-21">June 21, 2023</option>
               </select>
             </div>
-
-            {/* Type Filter */}
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <Layers className="h-4 w-4 text-gray-400" />
