@@ -76,10 +76,7 @@ function LiveReports() {
             Trending
           </span>
         </div>
-
-        {/* Right side - Controls and filters */}
         <div className="flex items-center space-x-3">
-          {/* Time period selector */}
           <div className="relative group">
             <button className="flex items-center space-x-1 text-sm text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors">
               <span>This Week</span>

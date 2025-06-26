@@ -1,13 +1,5 @@
-import React, { useState, useEffect, memo } from "react";
-import {
-  Plus,
-  Grid,
-  List,
-  LayoutGrid,
-  ChevronLeft,
-  ChevronRight,
-  MoreHorizontal,
-} from "lucide-react";
+import React, { memo } from "react";
+import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
 function pagination(props) {
   const totalPages = props.totalPages;
   const currentPage = props.currentPage;
