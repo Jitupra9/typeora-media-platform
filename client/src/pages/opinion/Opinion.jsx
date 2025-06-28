@@ -1,5 +1,10 @@
 import React, { useState, useEffect, useMemo, useContext } from "react";
-import { Headers } from "../context/utils/Headercontext";
+import Pagination from "../../component/utils/pagination";
+import NewOpinionForm from "../../component/Page/opinions/NewOpinionForm";
+import { Headers } from "../../context/utils/Headercontext";
+import CommunityStats from "../../component/Page/opinions/CommunityStats";
+import TrendingTopics from "../../component/Page/opinions/TrendingTopics";
+import TopConributers from "../../component/Page/opinions/TopConributers";
 import {
   Search,
   MessageSquare,
@@ -15,98 +20,20 @@ import {
   Flame,
   Clock,
   AlertCircle,
-  BarChart2,
   Users,
   Award,
   Zap,
-  ChevronRight,
-  Sparkles,
-  Circle,
 } from "lucide-react";
-
+import HeadrCatogories from "./HeaderCatogories";
 function Opinion() {
   const [isFilter, setisFilter] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
   const { setheaders } = useContext(Headers);
-
-  const categories = useMemo(
-    () => [
-      {
-        path: "/",
-        name: "All Topic",
-        icon: <Sparkles className="h-4 w-4 text-purple-500" />,
-      },
-      {
-        path: "/Personal",
-        name: "Personal",
-        icon: <Circle className="h-4 w-4 text-pink-500" />,
-      },
-      {
-        path: "/Travel",
-        name: "Travel",
-        icon: <Circle className="h-4 w-4 text-blue-500" />,
-      },
-      {
-        path: "/Technology",
-        name: "Technology",
-        icon: <Circle className="h-4 w-4 text-green-500" />,
-      },
-      {
-        path: "/Education",
-        name: "Education",
-        icon: <Circle className="h-4 w-4 text-yellow-500" />,
-      },
-      {
-        path: "/Health",
-        name: "Health",
-        icon: <Circle className="h-4 w-4 text-red-500" />,
-      },
-      {
-        path: "/Fitness",
-        name: "Fitness",
-        icon: <Circle className="h-4 w-4 text-orange-500" />,
-      },
-      {
-        path: "/Finance",
-        name: "Finance",
-        icon: <Circle className="h-4 w-4 text-emerald-500" />,
-      },
-      {
-        path: "/Food",
-        name: "Food",
-        icon: <Circle className="h-4 w-4 text-amber-500" />,
-      },
-      {
-        path: "/Lifestyle",
-        name: "Lifestyle",
-        icon: <Circle className="h-4 w-4 text-cyan-500" />,
-      },
-      {
-        path: "/Devt",
-        name: "Devt",
-        icon: <Circle className="h-4 w-4 text-indigo-500" />,
-      },
-      {
-        path: "/Entertainment",
-        name: "Entertainment",
-        icon: <Circle className="h-4 w-4 text-fuchsia-500" />,
-      },
-      {
-        path: "/Career",
-        name: "Career",
-        icon: <Circle className="h-4 w-4 text-sky-500" />,
-      },
-      {
-        path: "/Creativity",
-        name: "Creativity",
-        icon: <Circle className="h-4 w-4 text-violet-500" />,
-      },
-    ],
-    []
-  );
+  const categories = HeadrCatogories();
 
   useEffect(() => {
     setheaders(categories);
-  }, [setheaders, categories]);
+  }, []);
 
   const [opinions, setOpinions] = useState([
     {
@@ -165,42 +92,10 @@ function Opinion() {
       trending: true,
       authorBadge: "expert",
     },
-    {
-      id: 5,
-      author: "HealthNut",
-      title: "Intermittent fasting changed my life",
-      content:
-        "After struggling with weight and energy levels for years, adopting a 16:8 intermittent fasting schedule has dramatically improved my health markers, energy, and mental clarity. More people should consider this approach.",
-      tags: ["#Health", "#Nutrition", "#Wellness"],
-      likes: 312,
-      dislikes: 38,
-      comments: 74,
-      timestamp: "8 hours ago",
-      trending: false,
-      authorBadge: "regular",
-    },
-    {
-      id: 6,
-      author: "TravelBug",
-      title: "Solo travel is the best way to grow",
-      content:
-        "Traveling alone forces you out of your comfort zone and builds confidence like nothing else. The connections you make and challenges you overcome shape you in ways that last a lifetime.",
-      tags: ["#Travel", "#PersonalGrowth", "#Adventure"],
-      likes: 267,
-      dislikes: 19,
-      comments: 53,
-      timestamp: "1 day ago",
-      trending: true,
-      authorBadge: "top-contributor",
-    },
   ]);
 
   const [searchTerm, setSearchTerm] = useState("");
-  const [newOpinion, setNewOpinion] = useState({
-    title: "",
-    content: "",
-    tags: "",
-  });
+
   const [showForm, setShowForm] = useState(false);
   const [activeFilter, setActiveFilter] = useState("trending");
   const [activeCategory, setActiveCategory] = useState("All Topic");
@@ -229,26 +124,6 @@ function Opinion() {
       return 0;
     });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const newOpinionObj = {
-      id: opinions.length + 1,
-      author: "You",
-      title: newOpinion.title,
-      content: newOpinion.content,
-      tags: newOpinion.tags.split(",").map((tag) => `#${tag.trim()}`),
-      likes: 0,
-      dislikes: 0,
-      comments: 0,
-      timestamp: "Just now",
-      trending: false,
-      authorBadge: "new",
-    };
-    setOpinions([newOpinionObj, ...opinions]);
-    setNewOpinion({ title: "", content: "", tags: "" });
-    setShowForm(false);
-  };
-
   const handleLike = (id) => {
     setOpinions(
       opinions.map((opinion) =>
@@ -266,43 +141,12 @@ function Opinion() {
       )
     );
   };
-
-  // Statistics for the sidebar
   const totalOpinions = opinions.length;
   const totalEngagement = opinions.reduce(
     (sum, opinion) => sum + opinion.likes + opinion.dislikes + opinion.comments,
     0
   );
   const mostActiveCategory = "Technology";
-  const trendingTopics = [
-    {
-      name: "AI Regulation",
-      count: 42,
-      icon: <Zap className="h-4 w-4 text-purple-500" />,
-    },
-    {
-      name: "Remote Work",
-      count: 38,
-      icon: <Clock className="h-4 w-4 text-blue-500" />,
-    },
-    {
-      name: "Climate Change",
-      count: 35,
-      icon: <Flame className="h-4 w-4 text-orange-500" />,
-    },
-    {
-      name: "Mental Health",
-      count: 28,
-      icon: <AlertCircle className="h-4 w-4 text-green-500" />,
-    },
-  ];
-
-  const popularAuthors = [
-    { name: "JaneDoe", contributions: 24, badge: "expert" },
-    { name: "EcoWarrior", contributions: 18, badge: "top-contributor" },
-    { name: "TechEnthusiast", contributions: 15, badge: "regular" },
-    { name: "FinanceGuru", contributions: 12, badge: "expert" },
-  ];
 
   const getBadgeIcon = (badge) => {
     switch (badge) {
@@ -318,7 +162,7 @@ function Opinion() {
   };
 
   return (
-    <div className="min-h-screen text-gray-900 dark:text-gray-100 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen text-gray-900 dark:text-gray-100 py-4 px-4">
       <div className="">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-cyan-400 to-cyan-600 bg-clip-text text-transparent">
@@ -331,9 +175,9 @@ function Opinion() {
         </div>
 
         <div className="flex flex-col lg:flex-row gap-8 relative">
-          <div className="hidden lg:block absolute left-3/4 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-gray-300 dark:via-gray-600 to-transparent"></div>
+          <div className="hidden lg:block absolute left-[70%] top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-gray-300 dark:via-gray-600 to-transparent"></div>
 
-          <div className="lg:w-3/4">
+          <div className="lg:w-[70%]">
             <div className="flex flex-wrap gap-3 mb-6 overflow-x-auto pb-2">
               {categories.map((category) => (
                 <button
@@ -436,101 +280,10 @@ function Opinion() {
                 </button>
               </div>
             </div>
-
-            {/* Opinion Form */}
-            {showForm && (
-              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 mb-8 transition-all duration-300">
-                <h3 className="text-xl font-semibold mb-6 flex items-center gap-2">
-                  <MessageSquare className="text-blue-500" />
-                  Share Your Perspective
-                </h3>
-                <form onSubmit={handleSubmit}>
-                  <div className="mb-6">
-                    <label
-                      htmlFor="title"
-                      className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
-                    >
-                      Opinion Title
-                    </label>
-                    <input
-                      type="text"
-                      id="title"
-                      className="w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                      placeholder="What's your opinion about?"
-                      value={newOpinion.title}
-                      onChange={(e) =>
-                        setNewOpinion({ ...newOpinion, title: e.target.value })
-                      }
-                      required
-                    />
-                  </div>
-
-                  <div className="mb-6">
-                    <label
-                      htmlFor="content"
-                      className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
-                    >
-                      Your Detailed Opinion
-                    </label>
-                    <textarea
-                      id="content"
-                      rows={5}
-                      className="w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                      placeholder="Express your thoughts in detail..."
-                      value={newOpinion.content}
-                      onChange={(e) =>
-                        setNewOpinion({
-                          ...newOpinion,
-                          content: e.target.value,
-                        })
-                      }
-                      required
-                    />
-                  </div>
-
-                  <div className="mb-6">
-                    <label
-                      htmlFor="tags"
-                      className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
-                    >
-                      Tags (comma separated)
-                    </label>
-                    <input
-                      type="text"
-                      id="tags"
-                      className="w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                      placeholder="technology, environment, politics"
-                      value={newOpinion.tags}
-                      onChange={(e) =>
-                        setNewOpinion({ ...newOpinion, tags: e.target.value })
-                      }
-                    />
-                    <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                      Add relevant tags to help others find your opinion
-                    </p>
-                  </div>
-
-                  <div className="flex justify-end gap-3">
-                    <button
-                      type="button"
-                      onClick={() => setShowForm(false)}
-                      className="px-6 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      type="submit"
-                      className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-medium rounded-lg shadow hover:from-blue-700 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all"
-                    >
-                      Publish Opinion
-                    </button>
-                  </div>
-                </form>
-              </div>
-            )}
+            {showForm && <NewOpinionForm setShowForm={setShowForm} />}
 
             {filteredOpinions.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {filteredOpinions.map((opinion) => (
                   <div
                     key={opinion.id}
@@ -539,7 +292,6 @@ function Opinion() {
                     }`}
                   >
                     <div className="p-6">
-                      {/* Author and Metadata */}
                       <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center space-x-3">
                           <div className="h-10 w-10 rounded-full bg-gradient-to-r from-blue-500 to-blue-400 flex items-center justify-center text-white font-medium">
@@ -566,8 +318,6 @@ function Opinion() {
                           </span>
                         )}
                       </div>
-
-                      {/* Opinion Content */}
                       <div className="mb-5">
                         <h3 className="text-xl font-semibold mb-3">
                           {opinion.title}
@@ -576,8 +326,6 @@ function Opinion() {
                           {opinion.content}
                         </p>
                       </div>
-
-                      {/* Tags */}
                       <div className="flex flex-wrap gap-2 mb-6">
                         {opinion.tags.map((tag, index) => (
                           <span
@@ -589,8 +337,6 @@ function Opinion() {
                           </span>
                         ))}
                       </div>
-
-                      {/* Engagement Buttons */}
                       <div className="flex items-center justify-between border-t border-gray-200 dark:border-gray-700 pt-4">
                         <div className="flex space-x-4">
                           <button
@@ -647,105 +393,20 @@ function Opinion() {
                 </div>
               </div>
             )}
+            <Pagination
+              totalPages={5}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+            />
           </div>
-
-          {/* Sidebar - 1 column */}
-          <div className="lg:w-1/4 space-y-6 lg:pl-6">
-            {/* Community Stats Card */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 p-6">
-              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                <BarChart2 className="h-5 w-5 text-blue-500" />
-                Community Stats
-              </h3>
-              <div className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600 dark:text-gray-400 flex items-center gap-2">
-                    <Sparkles className="h-4 w-4 text-purple-500" /> Total
-                    Opinions
-                  </span>
-                  <span className="font-medium">{totalOpinions}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600 dark:text-gray-400 flex items-center gap-2">
-                    <MessageSquare className="h-4 w-4 text-green-500" /> Total
-                    Engagement
-                  </span>
-                  <span className="font-medium">{totalEngagement}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600 dark:text-gray-400 flex items-center gap-2">
-                    <TrendingUp className="h-4 w-4 text-orange-500" /> Most
-                    Active Category
-                  </span>
-                  <span className="font-medium">{mostActiveCategory}</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Trending Topics */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 p-6">
-              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                <Flame className="h-5 w-5 text-orange-500" />
-                Trending Topics
-              </h3>
-              <div className="space-y-3">
-                {trendingTopics.map((topic, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700/50 p-2 rounded-lg transition-colors"
-                  >
-                    <div className="flex items-center gap-2">
-                      {topic.icon}
-                      <span className="text-gray-700 dark:text-gray-300">
-                        {topic.name}
-                      </span>
-                    </div>
-                    <span className="text-sm bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 px-2 py-1 rounded-full">
-                      {topic.count} opinions
-                    </span>
-                  </div>
-                ))}
-                <button className="w-full flex items-center justify-center text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 mt-2 transition-colors">
-                  View all trending topics{" "}
-                  <ChevronRight className="h-4 w-4 ml-1" />
-                </button>
-              </div>
-            </div>
-
-            {/* Top Contributors */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 p-6">
-              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                <Award className="h-5 w-5 text-yellow-500" />
-                Top Contributors
-              </h3>
-              <div className="space-y-4">
-                {popularAuthors.map((author, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center gap-3 hover:bg-gray-50 dark:hover:bg-gray-700/50 p-2 rounded-lg transition-colors"
-                  >
-                    <div className="h-8 w-8 rounded-full bg-gradient-to-r from-blue-500 to-blue-400 flex items-center justify-center text-white text-sm font-medium">
-                      {author.name.charAt(0)}
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2">
-                        <span className="font-medium">{author.name}</span>
-                        {getBadgeIcon(author.badge)}
-                      </div>
-                      <span className="text-xs text-gray-500 dark:text-gray-400">
-                        {author.contributions} contributions
-                      </span>
-                    </div>
-                  </div>
-                ))}
-                <button className="w-full flex items-center justify-center text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 mt-2 transition-colors">
-                  View all contributors{" "}
-                  <ChevronRight className="h-4 w-4 ml-1" />
-                </button>
-              </div>
-            </div>
-
-            {/* Community Guidelines */}
+          <div className="lg:w-[29%] space-y-6 ">
+            <CommunityStats
+              totalOpinions={totalOpinions}
+              totalEngagement={totalEngagement}
+              mostActiveCategory={mostActiveCategory}
+            />
+            <TrendingTopics />
+            <TopConributers />
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 p-6">
               <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
                 <AlertCircle className="h-5 w-5 text-green-500" />
