@@ -33,7 +33,7 @@ function Opinion() {
 
   useEffect(() => {
     setheaders(categories);
-  }, [setheaders, categories]);
+  }, []);
 
   const [opinions, setOpinions] = useState([
     {

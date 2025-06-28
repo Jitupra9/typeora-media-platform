@@ -7,7 +7,7 @@ import LiveReports from "../pages/VIdeo/VIdeos";
 import Saved from "../pages/saved/Saved";
 import StreamDetails from "../pages/VIdeo/StreamDetails";
 import Opinion from "../pages/opinion/Opinion";
-import SpecialDay from "../pages/SpecialDay";
+import SpecialDay from "../pages/special/SpecialDay";
 import History from "../pages/Histrory";
 import Profile from "../pages/profile/Profile";
 import ArticleDetails from "../pages/Article/ArticleDetails";
