@@ -17,7 +17,7 @@ import Settings from "../pages/Setting";
 import Report from "../pages/Report";
 import Feedback from "../pages/FeedBack";
 import MyActions from "../pages/MyActions";
-import MyContent from "../pages/MyContent";
+import MyContent from "../pages/MyContent/MyContent";
 import visitedProfileContent from "../pages/visitedProfileContent";
 const routes = [
   {

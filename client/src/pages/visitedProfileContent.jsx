@@ -583,8 +583,6 @@ const VisitorProfile = ({ user = {} }) => {
     </div>
   );
 };
-
-// Example usage with sample data
 const sampleUser = {
   name: "Alex Johnson",
   avatar: "https://randomuser.me/api/portraits/men/1.jpg",
