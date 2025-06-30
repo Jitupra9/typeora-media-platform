@@ -19,7 +19,7 @@ import {
 
 function Profile() {
   const { setheaders } = useContext(Headers);
-  const [isactive, setisactive] = useState("Personal");
+  const [isactive, setisactive] = useState("Friends");
   const { Auth } = useContext(IsAuthnticate);
   const [profileCompletion, setProfileCompletion] = useState(75);
 
@@ -63,11 +63,11 @@ function Profile() {
         <div className="bg-white dark:bg-gray-900 p-5 rounded-xl shadow-sm">
           <ul className="flex overflow-x-auto gap-1 pb-2 hidel_slide_roler">
             {[
+              { name: "Friends", icon: FriendsIcon },
               { name: "Personal", icon: User },
               { name: "Article", icon: BookOpen },
               { name: "Videos", icon: Video },
               { name: "Lives", icon: Video },
-              { name: "Friends", icon: FriendsIcon },
               { name: "Settings", icon: Settings },
             ].map((item) => (
               <li

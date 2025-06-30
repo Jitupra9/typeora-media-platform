@@ -195,7 +195,7 @@ function MyActions() {
                           <span className="flex items-center gap-1">
                             <User className="h-4 w-4" /> {item.author}
                           </span>
-                          <span className="flex items-center gap-1">
+                          <span className="flex items-center gap-1 truncate">
                             <Clock className="h-4 w-4" /> {item.timestamp}
                           </span>
                           <span className="flex items-center gap-1">
@@ -231,8 +231,6 @@ function MyActions() {
                 ))}
               </div>
             </div>
-
-            {/* Contributions Section */}
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
               <div className="p-5 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/30">
                 <h2 className="text-xl font-semibold flex items-center gap-3">
@@ -258,7 +256,7 @@ function MyActions() {
                       <div className="flex-1 min-w-0">
                         <h3 className="font-medium">{item.title}</h3>
                         <p className="text-sm text-gray-600 dark:text-gray-400 mt-1 flex items-center gap-3">
-                          <span className="flex items-center gap-1">
+                          <span className="flex items-center gap-1 ">
                             <Clock className="h-4 w-4" /> {item.timestamp}
                           </span>
                         </p>
@@ -296,10 +294,7 @@ function MyActions() {
               </div>
             </div>
           </div>
-
-          {/* Right Sidebar */}
           <div className="space-y-6">
-            {/* Community Section */}
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
               <div className="p-5 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/30">
                 <h2 className="text-xl font-semibold flex items-center gap-3">
@@ -349,8 +344,6 @@ function MyActions() {
                 ))}
               </div>
             </div>
-
-            {/* Quick Links Section */}
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
               <div className="p-5 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/30">
                 <h2 className="text-xl font-semibold flex items-center gap-3">
@@ -391,8 +384,6 @@ function MyActions() {
                 </div>
               </div>
             </div>
-
-            {/* Recent Notifications */}
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
               <div className="p-5 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/30">
                 <h2 className="text-xl font-semibold flex items-center gap-3">

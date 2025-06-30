@@ -1,4 +1,5 @@
-import React, { memo, useState } from "react";
+import React, { memo, useState, useContext } from "react";
+import { ThemeContext } from "../../../context/utils/ThemeProvide";
 import {
   ChevronRight,
   Mail,
@@ -18,6 +19,11 @@ import {
 
 function Settings() {
   const [darkMode, setDarkMode] = useState(false);
+  const { theme, setTheme } = useContext(ThemeContext);
+  const toggleDarkMode = () => {
+    setTheme(theme === "day" ? "night" : "day");
+  };
+
   const [activeTab, setActiveTab] = useState("security");
 
   const [twoFactorAuth, setTwoFactorAuth] = useState(false);
@@ -28,6 +34,10 @@ function Settings() {
   const [emailReminders, setEmailReminders] = useState(true);
   const [pushNotifications, setPushNotifications] = useState(true);
 
+  const [newFollowers, setnewFollowers] = useState(true);
+  const [commentsOnPost, setcommentsOnPost] = useState(true);
+  const [Mentions, setMentions] = useState(true);
+
   const [allowDownloads, setAllowDownloads] = useState(true);
   const [articleVisibility, setArticleVisibility] = useState("public");
   const [videoVisibility, setVideoVisibility] = useState("public");
@@ -35,17 +45,8 @@ function Settings() {
   const [newEmail, setNewEmail] = useState("");
   const [newPhone, setNewPhone] = useState("");
 
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-    document.documentElement.classList.toggle("dark");
-  };
-
   return (
-    <div
-      className={`min-h-screen px-4 transition-colors duration-200 ${
-        darkMode ? "dark" : ""
-      }`}
-    >
+    <div className={`min-h-screen sm:px-4 transition-colors duration-200`}>
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-3">
@@ -56,13 +57,13 @@ function Settings() {
           </div>
           <button
             onClick={toggleDarkMode}
-            className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200"
+            className="p-2 rounded-full bg-gray-100  dark:bg-gray-700 text-gray-700 dark:text-gray-200"
             aria-label={
-              darkMode ? "Switch to light mode" : "Switch to dark mode"
+              theme === "day" ? "Switch to light mode" : "Switch to dark mode"
             }
           >
-            {darkMode ? (
-              <Sun className="h-5 w-5" />
+            {theme === "day" ? (
+              <Sun className="h-5 w-5 text-orange-500" />
             ) : (
               <Moon className="h-5 w-5" />
             )}
@@ -191,7 +192,6 @@ function Settings() {
           </div>
         )}
 
-        {/* Notification Settings */}
         {activeTab === "notifications" && (
           <div className="space-y-6">
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
@@ -242,24 +242,29 @@ function Settings() {
                   <p className="text-gray-700 dark:text-gray-300">
                     New followers
                   </p>
-                  <ToggleSwitch enabled={true} setEnabled={() => {}} />
+                  <ToggleSwitch
+                    enabled={newFollowers}
+                    setEnabled={setnewFollowers}
+                  />
                 </div>
                 <div className="flex items-center justify-between">
                   <p className="text-gray-700 dark:text-gray-300">
                     Comments on your posts
                   </p>
-                  <ToggleSwitch enabled={true} setEnabled={() => {}} />
+                  <ToggleSwitch
+                    enabled={commentsOnPost}
+                    setEnabled={setcommentsOnPost}
+                  />
                 </div>
                 <div className="flex items-center justify-between">
                   <p className="text-gray-700 dark:text-gray-300">Mentions</p>
-                  <ToggleSwitch enabled={true} setEnabled={() => {}} />
+                  <ToggleSwitch enabled={Mentions} setEnabled={setMentions} />
                 </div>
               </div>
             </div>
           </div>
         )}
 
-        {/* Content Permissions */}
         {activeTab === "content" && (
           <div className="space-y-6">
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
@@ -335,7 +340,6 @@ function Settings() {
           </div>
         )}
 
-        {/* Account Ownership */}
         {activeTab === "ownership" && (
           <div className="space-y-6">
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
@@ -451,7 +455,6 @@ function Settings() {
   );
 }
 
-// Reusable components (same as before)
 function SettingItem({ icon, title, description, action, lastItem }) {
   return (
     <div

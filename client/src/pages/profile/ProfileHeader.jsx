@@ -1,5 +1,6 @@
 import React, { memo, useEffect, useState } from "react";
 import people from "../../assets/images/people.jpg";
+import Shareing from "../../component/models/Share";
 import {
   Dot,
   Calendar,
@@ -13,15 +14,20 @@ import {
   Globe,
 } from "lucide-react";
 function ProfileHeader(props) {
+  const [shareActive, setshareActive] = useState(false);
   const [profileCompletion, setprofileCompletion] = useState();
   const [user, setuser] = useState({});
   useEffect(() => {
     setprofileCompletion(props.profileCompletion);
     setuser(props.user);
   }, [props]);
+  const handleShare = (e) => {
+    e.preventDefault();
+    setshareActive(!shareActive);
+  };
   return (
     <div className="bg-white dark:bg-gray-900 p-5 rounded-xl shadow-sm">
-      <div className="flex flex-col sm:flex-row py-3 items-start sm:items-center justify-between border-b border-gray-200 dark:border-gray-700 gap-4">
+      <div className=" relative flex flex-col sm:flex-row py-3 items-start sm:items-center justify-between border-b border-gray-200 dark:border-gray-700 gap-4">
         <div className="flex items-center gap-4">
           <div className="relative">
             <img
@@ -56,11 +62,19 @@ function ProfileHeader(props) {
             <Edit className="w-4 h-4" />
             Edit Profile
           </button>
-          <button className="flex items-center gap-2 text-sm bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 px-4 py-2 rounded-lg transition-colors">
+          <button
+            onClick={handleShare}
+            className="flex items-center gap-2 text-sm bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 px-4 py-2 rounded-lg transition-colors"
+          >
             <Share2 className="w-4 h-4" />
             Share
           </button>
         </div>
+        {shareActive && (
+          <div className=" top-[90%] right-0 absolute">
+            <Shareing />
+          </div>
+        )}
       </div>
       <div className="py-3 text-sm flex flex-wrap items-center justify-between gap-y-4">
         <div className="flex items-center gap-3">

@@ -11,8 +11,8 @@ import {
 function ProgramInsights(props) {
   const { activeTab, performanceData } = props;
   return (
-    <div className="mt-12 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700">
-      <div className="flex justify-between items-center mb-6">
+    <div className="mt-12 bg-white dark:bg-gray-800 rounded-xl shadow-lg px-2 py-4 sm:p-6 border border-gray-200 dark:border-gray-700">
+      <div className="flex flex-col sm:flex-row gap-y-4 sm:gap-y-0 justify-between items-center mb-6">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
           Performance Insights
         </h3>
@@ -59,15 +59,18 @@ function ProgramInsights(props) {
                   <div className="flex items-center gap-3 mt-1">
                     <p className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
                       <Eye size={12} />
-                      {item.views.toLocaleString()} views
+                      {item.views.toLocaleString()}{" "}
+                      <span className=" hidden sm:inline-block">views</span>
                     </p>
                     <p className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
                       <Heart size={12} />
-                      {item.likes.toLocaleString()} likes
+                      {item.likes.toLocaleString()}{" "}
+                      <span className=" hidden sm:inline-block">likes</span>
                     </p>
                     <p className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
                       <MessageSquare size={12} />
-                      {item.comments.toLocaleString()} comments
+                      {item.comments.toLocaleString()}{" "}
+                      <span className=" hidden sm:inline-block">comments</span>
                     </p>
                   </div>
                 </div>
