@@ -1,4 +1,4 @@
-import Auth from "../pages/Auth/Auth";
+import Authntication from "../pages/Auth/Authntication.jsx";
 import IsAuthRoutes from "./Auth-Routes/IsAuthRoutes";
 import Layout from "../layout/Layout";
 import Pagenotfound from "../pages/Pagenotfound";
@@ -101,7 +101,7 @@ const routes = [
   },
   {
     path: "/login",
-    component: Auth,
+    component: Authntication,
   },
   {
     path: "*",
