@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { IsAuthnticate } from "../../context/Auth/IsAuth";
 
 function Login() {
-  const SERVER_URL = process.env.REACT_APP_API_URL;
   const [passEye, setpassEye] = useState(false);
   const [loading, setLoading] = useState(false);
   const [data, setdata] = useState({
@@ -27,7 +26,7 @@ function Login() {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axios.post(`${SERVER_URL}/login`, {
+      const res = await axios.post(`/api/login`, {
         userEmail: data.email,
         userPassword: data.password,
       });

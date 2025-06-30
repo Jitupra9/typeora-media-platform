@@ -17,7 +17,6 @@ function Signup(props) {
     Mailverifyed: false,
     allfillup: false,
   });
-  const SERVER_URL = process.env.REACT_APP_API_URL;
 
   const handlechange = (e) => {
     const { name, value } = e.target;
@@ -46,7 +45,7 @@ function Signup(props) {
     }
     try {
       setisloading(true);
-      const result = await axios.post(`${SERVER_URL}/sendOTP`, {
+      const result = await axios.post(`/api/sendOTP`, {
         email: datas.email,
       });
       if (result) {

@@ -21,7 +21,6 @@ import {
 } from "lucide-react";
 
 function MyActions() {
-  // Sample data for different action types
   const interactions = {
     engagements: [
       {
@@ -82,8 +81,6 @@ function MyActions() {
       },
     ],
   };
-
-  // Stats for quick overview
   const stats = [
     {
       name: "Total Engagements",
@@ -114,7 +111,6 @@ function MyActions() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header with quick actions */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">
           <div>
             <h1 className="text-3xl font-bold flex items-center gap-3">
@@ -140,8 +136,6 @@ function MyActions() {
             </button>
           </div>
         </div>
-
-        {/* Stats Overview */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {stats.map((stat, index) => (
             <div
@@ -166,12 +160,8 @@ function MyActions() {
             </div>
           ))}
         </div>
-
-        {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Engagements Column */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Engagements Section */}
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
               <div className="p-5 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/30">
                 <h2 className="text-xl font-semibold flex items-center gap-3">

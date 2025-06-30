@@ -1,4 +1,4 @@
-import Auth from "../pages/Auth/Auth";
+import Authntication from "../pages/Auth/Authntication.jsx";
 import IsAuthRoutes from "./Auth-Routes/IsAuthRoutes";
 import Layout from "../layout/Layout";
 import Pagenotfound from "../pages/Pagenotfound";
@@ -17,7 +17,7 @@ import Settings from "../pages/Setting";
 import Report from "../pages/Report";
 import Feedback from "../pages/FeedBack";
 import MyActions from "../pages/MyActions";
-import MyContent from "../pages/MyContent";
+import MyContent from "../pages/MyContent/MyContent";
 import visitedProfileContent from "../pages/visitedProfileContent";
 const routes = [
   {
@@ -101,7 +101,7 @@ const routes = [
   },
   {
     path: "/login",
-    component: Auth,
+    component: Authntication,
   },
   {
     path: "*",
