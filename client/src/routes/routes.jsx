@@ -8,7 +8,7 @@ import Saved from "../pages/saved/Saved";
 import StreamDetails from "../pages/VIdeo/StreamDetails";
 import Opinion from "../pages/opinion/Opinion";
 import SpecialDay from "../pages/special/SpecialDay";
-import History from "../pages/Histrory";
+import History from "../pages/History/Histrory.jsx";
 import Profile from "../pages/profile/Profile";
 import ArticleDetails from "../pages/Article/ArticleDetails";
 import About from "../pages/About";
