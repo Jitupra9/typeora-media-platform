@@ -1,113 +1,128 @@
 import { Pencil } from "lucide-react";
 import { memo } from "react";
+
 function Personalinfo() {
   return (
-    <div className=" ">
-      <div className=" flex justify-between border-b border-gray-200 dark:border-gray-800 py-2 text-lg">
-        <h3>Basic details</h3>
-        <p className=" cursor-pointer dark:bg-gray-700 bg-gray-200 px-2    rounded-md flex items-center justify-center gap-2 text-sm">
-          <Pencil className=" w-3 h-3" />
+    <div className="space-y-6">
+      <div className="flex justify-between items-center border-b border-gray-200 dark:border-gray-800 pb-3">
+        <h3 className="text-lg font-medium">Basic details</h3>
+        <button className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md text-sm bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
+          <Pencil className="w-3 h-3" />
           Edit
-        </p>
+        </button>
       </div>
-      <div className="flex  *:w-full *:sm:w-[48%] *:md:w-[32%] justify-between flex-wrap gap-y-9 py-5 mt-5">
-        <div className="">
-          <p>First name</p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div className="space-y-1">
+          <label htmlFor="firstName" className="text-sm font-medium">
+            First name
+          </label>
           <input
-            className=" w-full bg-transparent outline-none py-2 border-b border-gray-600 text-sm"
+            id="firstName"
+            className="w-full bg-transparent outline-none py-2 border-b border-gray-600 focus:border-blue-500 transition-colors"
             type="text"
             name="firstName"
             placeholder="Abc"
           />
         </div>
-        <div className="">
-          <p>Last Name</p>
+        <div className="space-y-1">
+          <label htmlFor="lastName" className="text-sm font-medium">
+            Last Name
+          </label>
           <input
-            className=" w-full bg-transparent outline-none py-2   border-b border-gray-600 text-sm"
+            id="lastName"
+            className="w-full bg-transparent outline-none py-2 border-b border-gray-600 focus:border-blue-500 transition-colors"
             type="text"
             name="lastName"
-            id=""
             placeholder="Xyz"
           />
         </div>
-        <div className="">
-          <p>Gender</p>
+        <div className="space-y-1">
+          <label htmlFor="gender" className="text-sm font-medium">
+            Gender
+          </label>
           <select
-            className=" w-full  border-b outline-none py-2 border-gray-600 text-sm bg-black  bg-transparent"
-            name=""
-            id=""
+            id="gender"
+            className="w-full bg-transparent dark:bg-gray-900 outline-none py-2 border-b border-gray-600 focus:border-blue-500 transition-colors"
+            name="gender"
           >
-            <option value="Male" className=" text-gray-700">
-              Male
-            </option>
-            <option value="Femaile" className=" text-gray-700">
-              Female
-            </option>
-            <option value="Other" className=" text-gray-700">
-              Other
-            </option>
+            <option value="">Select gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
           </select>
         </div>
-        <div className="">
-          <p>Role</p>
+        <div className="space-y-1">
+          <label htmlFor="role" className="text-sm font-medium">
+            Role
+          </label>
           <input
-            className=" w-full bg-transparent outline-none py-2   border-b border-gray-600 text-sm"
-            type=" text"
+            id="role"
+            className="w-full bg-transparent outline-none py-2 border-b border-gray-600 focus:border-blue-500 transition-colors"
+            type="text"
             name="role"
-            id=""
-            placeholder=""
             value="User"
+            readOnly
           />
         </div>
-        <div className=" ">
-          <p>Phone no.</p>
+        <div className="space-y-1">
+          <label htmlFor="phoneNo" className="text-sm font-medium">
+            Phone no.
+          </label>
           <input
-            className="  w-full bg-transparent outline-none py-2   border-b border-gray-600 text-sm"
-            type=" text"
+            id="phoneNo"
+            className="w-full bg-transparent outline-none py-2 border-b border-gray-600 focus:border-blue-500 transition-colors"
+            type="tel"
             name="phoneNo"
-            id=""
             placeholder="9876543210"
           />
         </div>
-        <div className="">
-          <p>Secondary email</p>
+        <div className="space-y-1">
+          <label htmlFor="secondaryEmail" className="text-sm font-medium">
+            Secondary email
+          </label>
           <input
-            className="  w-full bg-transparent outline-none py-2 border-b border-gray-600 text-sm"
-            type="text"
-            name="abc@gmail.com"
+            id="secondaryEmail"
+            className="w-full bg-transparent outline-none py-2 border-b border-gray-600 focus:border-blue-500 transition-colors"
+            type="email"
+            name="secondaryEmail"
             placeholder="Abc@gmail.com"
           />
         </div>
-
-        <div className=" ">
-          <p>Website</p>
+        <div className="space-y-1">
+          <label htmlFor="website" className="text-sm font-medium">
+            Website
+          </label>
           <input
-            className=" w-full bg-transparent outline-none py-2  border-b border-gray-600 text-sm"
-            type="text"
-            name="location"
+            id="website"
+            className="w-full bg-transparent outline-none py-2 border-b border-gray-600 focus:border-blue-500 transition-colors"
+            type="url"
+            name="website"
             placeholder="https://xyz.com"
-            id=""
           />
         </div>
-        <div className="">
-          <p>Location</p>
+        <div className="space-y-1">
+          <label htmlFor="location" className="text-sm font-medium">
+            Location
+          </label>
           <input
-            className=" w-full bg-transparent outline-none py-2  border-b border-gray-600 text-sm"
+            id="location"
+            className="w-full bg-transparent outline-none py-2 border-b border-gray-600 focus:border-blue-500 transition-colors"
             type="text"
             name="location"
-            placeholder="Berhamour,Odisha"
-            id=""
+            placeholder="Berhamour, Odisha"
           />
         </div>
       </div>
-      <div className="">
-        <p>About the User</p>
+      <div className="space-y-2">
+        <label htmlFor="about" className="text-sm font-medium">
+          About the User
+        </label>
         <textarea
-          className=" w-full bg-transparent outline-none py-2  border border-gray-600 text-sm rounded-md mt-3 p-3"
-          name=""
-          id=""
-          rows="8"
-          placeholder="abcd xyz pqrs...."
+          id="about"
+          className="w-full bg-transparent outline-none p-3 border border-gray-600 rounded-md focus:border-blue-500 transition-colors"
+          name="about"
+          rows={5}
+          placeholder="Tell us about yourself..."
         ></textarea>
       </div>
     </div>

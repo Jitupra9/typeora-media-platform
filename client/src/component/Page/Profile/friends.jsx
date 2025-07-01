@@ -152,7 +152,7 @@ const Friends = () => {
     });
 
   return (
-    <div className="p-4 max-w-6xl mx-auto">
+    <div className="sm:p-4 max-w-6xl mx-auto">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
         <div>
           <h2 className="text-2xl font-bold text-gray-800 dark:text-white flex items-center gap-2">
@@ -177,8 +177,6 @@ const Friends = () => {
           </div>
         </div>
       </div>
-
-      {/* Tabs */}
       <div className="flex overflow-x-auto pb-2 mb-6 scrollbar-hide">
         <div className="flex gap-1">
           <button
@@ -244,8 +242,6 @@ const Friends = () => {
           </button>
         </div>
       </div>
-
-      {/* Contacts List */}
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow border border-gray-100 dark:border-gray-700 overflow-hidden">
         {filteredContacts.length === 0 ? (
           <div className="p-8 text-center">
@@ -266,13 +262,13 @@ const Friends = () => {
             </p>
           </div>
         ) : (
-          <div className="divide-y divide-gray-100 dark:divide-gray-700">
+          <div className=" divide-y divide-gray-100 dark:divide-gray-700">
             {filteredContacts.map((contact) => (
               <div
                 key={contact.id}
-                className="p-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                className=" p-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
               >
-                <div className="flex items-start gap-4">
+                <div className=" flex flex-col sm:flex-row items-start gap-4">
                   <div className="relative flex-shrink-0">
                     <img
                       src={contact.avatar}
@@ -290,13 +286,13 @@ const Friends = () => {
                     )}
                   </div>
 
-                  <div className="flex-1 min-w-0">
+                  <div className="flex flex-col   w-full">
                     <div className="flex items-center justify-between">
                       <div>
                         <h3 className="font-semibold text-gray-800 dark:text-white">
                           {contact.name}
                         </h3>
-                        <p className="text-sm text-gray-600 dark:text-gray-300">
+                        <p className="text-sm text-gray-600 dark:text-gray-300 truncate">
                           {contact.role} • {contact.company}
                         </p>
                       </div>
@@ -356,8 +352,6 @@ const Friends = () => {
                         </span>
                       </div>
                     </div>
-
-                    {/* Expanded Details */}
                     {expandedUser === contact.id && (
                       <div className="mt-3 pt-3 border-t border-gray-100 dark:border-gray-700 space-y-2">
                         <div className="flex items-center gap-2 text-sm">
@@ -448,7 +442,7 @@ const Friends = () => {
                         </button>
                       </>
                     ) : contact.status === "connected" ? (
-                      <>
+                      <div className=" flex sm:flex-col gap-2">
                         <button className="flex items-center justify-center gap-1 bg-blue-50 dark:bg-gray-700 hover:bg-blue-100 dark:hover:bg-gray-600 text-blue-600 dark:text-gray-300 px-3 py-1.5 rounded-lg text-sm whitespace-nowrap">
                           <MessageSquare className="w-4 h-4" />
                           Message
@@ -457,7 +451,7 @@ const Friends = () => {
                           <Star className="w-4 h-4" />
                           Favorite
                         </button>
-                      </>
+                      </div>
                     ) : contact.status === "suggestion" ? (
                       <button className="flex items-center justify-center gap-1 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-sm whitespace-nowrap">
                         <UserPlus className="w-4 h-4" />
