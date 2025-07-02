@@ -1,6 +1,7 @@
 import React, { useContext, useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Headers } from "../context/utils/Headercontext";
+import { Headers } from "../../context/utils/Headercontext";
+import StatCard from "./statecard";
 import {
   User,
   Lock,
@@ -51,7 +52,6 @@ function Settings() {
   return (
     <div className="min-h-screen  dark:text-gray-300">
       <div className="max-w-7xl mx-auto">
-        {/* Header with breadcrumbs */}
         <div className="mb-6">
           <nav className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-2">
             <span className="hover:text-gray-700 dark:hover:text-gray-300 cursor-pointer">
@@ -71,9 +71,7 @@ function Settings() {
             Manage your account settings and preferences
           </p>
         </div>
-
-        {/* Stats Cards Row */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <StatCard
             icon={<User className="w-5 h-5" />}
             title="Account Status"
@@ -101,7 +99,6 @@ function Settings() {
           />
         </div>
 
-        {/* Security Alert */}
         {!twoFactorAuth && (
           <div className="bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-400 dark:border-yellow-500 p-4 mb-8 rounded-r-lg flex items-start gap-3">
             <AlertCircle className="w-5 h-5 text-yellow-500 dark:text-yellow-400 mt-0.5 flex-shrink-0" />
@@ -116,10 +113,7 @@ function Settings() {
             </div>
           </div>
         )}
-
-        {/* Grid Layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* 🔐 Account Settings Card */}
           <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 p-6">
             <h2 className="text-xl font-semibold mb-4 flex items-center gap-3">
               <Lock className="w-5 h-5" /> Account Security
@@ -151,8 +145,6 @@ function Settings() {
               />
             </div>
           </div>
-
-          {/* 👤 Profile Settings Card */}
           <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 p-6">
             <h2 className="text-xl font-semibold mb-4 flex items-center gap-3">
               <User className="w-5 h-5" /> Profile Information
@@ -189,8 +181,6 @@ function Settings() {
               />
             </div>
           </div>
-
-          {/* 🌐 Preferences Card */}
           <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 p-6">
             <h2 className="text-xl font-semibold mb-4 flex items-center gap-3">
               <Globe className="w-5 h-5" /> Preferences
@@ -222,8 +212,6 @@ function Settings() {
               />
             </div>
           </div>
-
-          {/* 🔔 Notifications Card */}
           <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 p-6">
             <h2 className="text-xl font-semibold mb-4 flex items-center gap-3">
               <Bell className="w-5 h-5" /> Notifications
@@ -256,7 +244,6 @@ function Settings() {
             </div>
           </div>
 
-          {/* 🔒 Privacy Card */}
           <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 p-6">
             <h2 className="text-xl font-semibold mb-4 flex items-center gap-3">
               <Shield className="w-5 h-5" /> Privacy
@@ -289,7 +276,6 @@ function Settings() {
             </div>
           </div>
 
-          {/* ⚙️ Advanced Card */}
           <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 p-6">
             <h2 className="text-xl font-semibold mb-4 flex items-center gap-3">
               <SettingsIcon className="w-5 h-5" /> Advanced
@@ -425,76 +411,6 @@ function Select({ options }) {
         <option key={index}>{option}</option>
       ))}
     </select>
-  );
-}
-
-function StatCard({ icon, title, value, variant, progress }) {
-  const variantClasses = {
-    success:
-      "bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200",
-    warning:
-      "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200",
-    danger: "bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200",
-    info: "bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200",
-    neutral: "bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200",
-  };
-
-  const progressColors = {
-    success: "bg-green-500",
-    warning: "bg-yellow-500",
-    danger: "bg-red-500",
-    info: "bg-blue-500",
-    neutral: "bg-gray-500",
-  };
-
-  return (
-    <div className={`rounded-lg p-4 ${variantClasses[variant]}`}>
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="p-2 rounded-lg bg-white dark:bg-gray-900/50">
-            {React.cloneElement(icon, { className: "w-4 h-4" })}
-          </div>
-          <div>
-            <div className="text-sm font-medium">{title}</div>
-            <div className="text-lg font-semibold">{value}</div>
-          </div>
-        </div>
-        {progress !== undefined && (
-          <div className="w-10 h-10 relative">
-            <svg className="w-full h-full" viewBox="0 0 36 36">
-              <path
-                d="M18 2.0845
-                  a 15.9155 15.9155 0 0 1 0 31.831
-                  a 15.9155 15.9155 0 0 1 0 -31.831"
-                fill="none"
-                stroke="#e5e7eb"
-                strokeWidth="3"
-              />
-              <path
-                d="M18 2.0845
-                  a 15.9155 15.9155 0 0 1 0 31.831
-                  a 15.9155 15.9155 0 0 1 0 -31.831"
-                fill="none"
-                stroke={progressColors[variant].replace("bg-", "stroke-")}
-                strokeWidth="3"
-                strokeDasharray={`${progress}, 100`}
-              />
-            </svg>
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-xs font-medium">
-              {progress}%
-            </div>
-          </div>
-        )}
-      </div>
-      {progress !== undefined && (
-        <div className="mt-2 w-full bg-white dark:bg-gray-900/50 rounded-full h-1.5">
-          <div
-            className={`h-1.5 rounded-full ${progressColors[variant]}`}
-            style={{ width: `${progress}%` }}
-          ></div>
-        </div>
-      )}
-    </div>
   );
 }
 

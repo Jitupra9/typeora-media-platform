@@ -19,7 +19,7 @@ import {
 
 function Profile() {
   const { setheaders } = useContext(Headers);
-  const [isactive, setisactive] = useState("Friends");
+  const [isactive, setisactive] = useState("Personal");
   const { Auth } = useContext(IsAuthnticate);
   const [profileCompletion, setProfileCompletion] = useState(75);
 
