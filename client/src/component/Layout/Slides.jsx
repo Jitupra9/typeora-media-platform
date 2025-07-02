@@ -270,6 +270,21 @@ function Slides() {
           </div>
           <div
             className={` ${
+              isActive("/about")
+                ? "bg-blue-50 text-cyan-600 px-4 border-l-4 border-blue-500 dark:bg-gray-700 dark:text-white dark:border-blue-50"
+                : "text-gray-500  px-5 hover:bg-gray-100 dark:hover:bg-gray-800"
+            }`}
+          >
+            <Link
+              to="/about"
+              className="py-3 w-full flex items-center justify-start pl-3 gap-3 text-sm font-medium cursor-pointer"
+            >
+              <Flag size={18} />
+              <span>About</span>
+            </Link>
+          </div>
+          <div
+            className={` ${
               isActive("/help")
                 ? "bg-blue-50 text-cyan-600 px-4 border-l-4 border-blue-500 dark:bg-gray-700 dark:text-white dark:border-blue-50"
                 : "text-gray-500 hover:bg-gray-100 px-5 dark:hover:bg-gray-800"

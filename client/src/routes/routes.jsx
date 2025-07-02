@@ -13,7 +13,7 @@ import Profile from "../pages/profile/Profile";
 import ArticleDetails from "../pages/Article/ArticleDetails";
 import About from "../pages/About";
 import Support from "../pages/Support";
-import Settings from "../pages/Setting";
+import Settings from "../pages/settings/Setting.jsx";
 import Report from "../pages/Report";
 import Feedback from "../pages/FeedBack";
 import MyActions from "../pages/Actions/MyActions";
