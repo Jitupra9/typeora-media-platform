@@ -14,7 +14,7 @@ import {
   Tag,
 } from "lucide-react";
 
-function NewArticle() {
+function NewArticle(props) {
   const [newArticle, setNewArticle] = useState({
     fileUrl: "",
     title: "",
@@ -26,7 +26,9 @@ function NewArticle() {
   const [newTag, setNewTag] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [isPublished, setIsPublished] = useState(false);
-
+  const handleArticle = () => {
+    props.setnewArticle(false);
+  };
   const { uploadImage } = CloudinaryUpload();
 
   const handleChange = (e) => {
@@ -62,7 +64,6 @@ function NewArticle() {
       const newFileUrl = await uploadImage(newArticle.fileUrl);
       if (newFileUrl) {
         console.log("File uploaded successfully:", newFileUrl);
-        // Simulate API call
         setTimeout(() => {
           setIsUploading(false);
           setIsPublished(true);
@@ -77,15 +78,19 @@ function NewArticle() {
 
   return (
     <form onSubmit={handleSubmit} className="max-w-6xl mx-auto p-4">
-      <div className="border-b border-gray-200 dark:border-gray-700 pb-4 mb-6">
-        <h2 className="text-2xl font-bold flex items-center gap-3 text-blue-600 dark:text-blue-400">
+      <div className="text-blue-600 dark:text-blue-400 flex justify-between items-center border-b border-gray-200 dark:border-gray-700 pb-4 mb-6">
+        <h2 className="text-2xl font-bold flex items-center gap-3 ">
           <FileText className="w-6 h-6" />
           Create a New Article
         </h2>
+        <X
+          onClick={handleArticle}
+          className=" cursor-pointer hover:bg-gray-600 bg-opacity-35 rounded-full p-1 w-9 h-9"
+        />
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-6">
-        <div className="w-full lg:w-1/2">
+      <div className=" grid grid-cols-1 sm:grid-cols-2 gap-4 ">
+        <div className="">
           <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-gray-800 dark:to-gray-900 border border-blue-200 dark:border-gray-700 rounded-2xl p-4 sm:p-6 shadow-sm">
             <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 text-center">
               <div className="flex items-center justify-center gap-2 mb-3">
@@ -153,7 +158,7 @@ function NewArticle() {
           </div>
         </div>
 
-        <div className="w-full lg:w-1/2">
+        <div className="">
           <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-5 shadow-sm">
             <div className="space-y-5">
               <div>

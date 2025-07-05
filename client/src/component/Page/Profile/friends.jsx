@@ -12,7 +12,7 @@ import {
   ThumbsUp,
   UserCog,
 } from "lucide-react";
-
+import People from "../../../assets/images/people.jpg";
 const Friends = () => {
   const [activeTab, setActiveTab] = useState("connected");
   const [searchQuery, setSearchQuery] = useState("");
@@ -23,7 +23,6 @@ const Friends = () => {
   };
 
   const contactsData = [
-    // Connected Contacts
     {
       id: 1,
       name: "Jitu Pradhan",
@@ -77,7 +76,6 @@ const Friends = () => {
       pending: true,
     },
 
-    // Suggestions
     {
       id: 4,
       name: "Ananya Das",
@@ -109,7 +107,6 @@ const Friends = () => {
       pending: false,
     },
 
-    // Sent Requests
     {
       id: 6,
       name: "Neha Gupta",
@@ -130,7 +127,6 @@ const Friends = () => {
 
   const filteredContacts = contactsData
     .filter((contact) => {
-      // Filter by tab
       if (activeTab === "connected") return contact.status === "connected";
       if (activeTab === "suggestions") return contact.status === "suggestion";
       if (activeTab === "requested") return contact.status === "requested";
@@ -138,7 +134,6 @@ const Friends = () => {
       return true;
     })
     .filter((contact) => {
-      // Filter by search
       if (!searchQuery) return true;
       return (
         contact.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -271,7 +266,7 @@ const Friends = () => {
                 <div className=" flex flex-col sm:flex-row items-start gap-4">
                   <div className="relative flex-shrink-0">
                     <img
-                      src={contact.avatar}
+                      src={People || contact.avatar}
                       alt={contact.name}
                       className="w-14 h-14 rounded-full object-cover border-2 border-white dark:border-gray-700 shadow-sm"
                     />
