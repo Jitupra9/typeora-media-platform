@@ -126,7 +126,7 @@ function IncidentTracker() {
   });
 
   return (
-    <div className="dark:text-white ">
+    <div className="dark:text-white pb-10">
       <HeaderSpecial
         incident={incidents}
         searchQuery={filters.searchQuery}
@@ -137,7 +137,9 @@ function IncidentTracker() {
         onFilterChange={handleFilterChange}
       />
       <main className=" py-8">
-        <StatsCards incidents={incidents} />
+        <div className="">
+          <StatsCards incidents={incidents} />
+        </div>
         <div className="mb-6 flex items-center justify-between">
           <h2 className="text-xl font-semibold">
             {filteredIncidents.length} Incidents Found
