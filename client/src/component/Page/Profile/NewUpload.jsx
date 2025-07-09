@@ -1,4 +1,4 @@
-import { memo, useState } from "react";
+import { memo, useState, useEffect } from "react";
 import CloudinaryUpload from "../../utils/CloudinaryUpload";
 import {
   Upload,
@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 
 function NewArticle(props) {
+  const type = props.type;
   const [newArticle, setNewArticle] = useState({
     fileUrl: "",
     title: "",
@@ -23,11 +24,14 @@ function NewArticle(props) {
     tags: [],
     category: "",
   });
+  useEffect(() => {
+    console.log("newupload component render");
+  });
   const [newTag, setNewTag] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [isPublished, setIsPublished] = useState(false);
   const handleArticle = () => {
-    props.setnewArticle(false);
+    props.setUploadActive(false);
   };
   const { uploadImage } = CloudinaryUpload();
 
@@ -81,24 +85,27 @@ function NewArticle(props) {
       <div className="text-blue-600 dark:text-blue-400 flex justify-between items-center border-b border-gray-200 dark:border-gray-700 pb-4 mb-6">
         <h2 className="text-2xl font-bold flex items-center gap-3 ">
           <FileText className="w-6 h-6" />
-          Create a New Article
+          Create a New {type === "article" ? "Article" : "Video"}
         </h2>
         <X
           onClick={handleArticle}
-          className=" cursor-pointer hover:bg-gray-600 bg-opacity-35 rounded-full p-1 w-9 h-9"
+          className=" cursor-pointer hover:dark:bg-gray-600 hover:bg-gray-300 bg-opacity-35 rounded-full p-1 w-9 h-9"
         />
       </div>
 
       <div className=" grid grid-cols-1 sm:grid-cols-2 gap-4 ">
         <div className="">
-          <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-gray-800 dark:to-gray-900 border border-blue-200 dark:border-gray-700 rounded-2xl p-4 sm:p-6 shadow-sm">
+          <div className=" bg-gray-200 dark:bg-gray-700 border border-blue-200 dark:border-gray-700 rounded-3xl p-4 sm:p-6 shadow-sm">
             <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 text-center">
               <div className="flex items-center justify-center gap-2 mb-3">
                 <ImageIcon className="w-5 h-5 text-blue-500" />
                 <h3 className="text-xl font-bold">Upload your cover image</h3>
               </div>
               <p className="text-gray-500 dark:text-gray-400 mb-6">
-                Supports JPG, PNG up to 15MB
+                Supports{" "}
+                {type === "article"
+                  ? " JPG, PNG up to 15MB"
+                  : " MP4,HEVC up to 1GB"}
               </p>
 
               <div
@@ -150,7 +157,7 @@ function NewArticle(props) {
                   onChange={handleChange}
                   name="fileUrl"
                   id="files"
-                  accept="image/*"
+                  accept={type === "article" ? "image/*" : "video/*"}
                   className="hidden"
                 />
               </div>
@@ -158,9 +165,9 @@ function NewArticle(props) {
           </div>
         </div>
 
-        <div className="">
+        <div className=" ">
           <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-5 shadow-sm">
-            <div className="space-y-5">
+            <div className="space-y-5 h-96 overflow-hidden overflow-y-scroll hidel_slide_roler">
               <div>
                 <label className=" text-sm font-medium mb-2 flex items-center gap-2 text-gray-700 dark:text-gray-300">
                   <Type className="w-4 h-4 text-blue-500" />
@@ -293,7 +300,7 @@ function NewArticle(props) {
                 ) : (
                   <>
                     <FileText className="w-4 h-4" />
-                    Publish Article
+                    Publish {type === "article" ? "Article" : "Video"}
                   </>
                 )}
               </button>

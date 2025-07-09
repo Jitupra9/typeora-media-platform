@@ -28,22 +28,22 @@ function Slides() {
 
   const mainPages = [
     {
-      icon: <Tv size={18} />,
+      icon: <Tv size={18} className="text-blue-500" />,
       path: "/",
       name: "Videos",
     },
     {
-      icon: <Newspaper size={18} />,
+      icon: <Newspaper size={18} className="text-green-500" />,
       path: "/Articles",
       name: "Articles",
     },
     {
-      icon: <UserPen size={18} />,
+      icon: <UserPen size={18} className="text-purple-500" />,
       path: "/opinion",
       name: "Opinion",
     },
     {
-      icon: <CalendarCheck size={18} />,
+      icon: <CalendarCheck size={18} className="text-orange-500" />,
       path: "/events-calendar",
       name: "Special",
     },
@@ -52,23 +52,22 @@ function Slides() {
   const yourPages = Auth.islogined
     ? [
         {
-          icon: <FileText size={18} />,
+          icon: <FileText size={18} className="text-cyan-500" />,
           path: "/myContent",
           name: "Your Content",
         },
         {
-          icon: <Bookmark size={18} />,
+          icon: <Bookmark size={18} className="text-pink-500" />,
           path: "/saved",
           name: "Saved",
         },
         {
-          icon: <PlugZap size={18} />,
+          icon: <PlugZap size={18} className="text-yellow-500" />,
           path: "/Actions",
           name: "Actions",
         },
-
         {
-          icon: <History size={18} />,
+          icon: <History size={18} className="text-red-500" />,
           path: "/History",
           name: "History",
         },
@@ -129,7 +128,7 @@ function Slides() {
   };
 
   return (
-    <div className="h-[100vh] font-semibold overflow-hidden text-nowrap bg-white text-gray-500 dark:bg-gray-900 dark:text-gray-400 flex flex-col">
+    <div className="h-[100vh] font-semibold overflow-hidden text-nowrap bg-white text-gray-600 dark:text-gray-400 dark:bg-gray-900  flex flex-col">
       <div className="text-center py-4 text-2xl font-bold text-black dark:text-white">
         Typeora
       </div>
@@ -172,7 +171,7 @@ function Slides() {
               className={` ${
                 isActive(item.path)
                   ? "bg-blue-50 text-cyan-600 border-l-4 px-4 border-blue-500 dark:bg-gray-700 dark:text-white dark:border-blue-50"
-                  : "text-gray-500 px-5  hover:bg-gray-100 dark:hover:bg-gray-800"
+                  : "px-5  hover:bg-gray-100 dark:hover:bg-gray-800"
               }`}
             >
               <Link
@@ -189,16 +188,14 @@ function Slides() {
         {Auth.islogined && (
           <>
             <div className="py-3 flex flex-col gap-y-1 border-t border-gray-200 dark:border-gray-700">
-              <div className="px-5 text-lg font-bold text-gray-500 dark:text-gray-400">
-                You
-              </div>
+              <div className="px-5 text-lg font-bold  ">You</div>
               {yourPages.map((item, index) => (
                 <div
                   key={`user-${index}`}
                   className={` ${
                     isActive(item.path)
                       ? "bg-blue-50 text-cyan-600 border-l-4 px-4 border-blue-500 dark:bg-gray-700 dark:text-white dark:border-blue-50"
-                      : "text-gray-500 hover:bg-gray-100 px-5  dark:hover:bg-gray-800"
+                      : " hover:bg-gray-100 px-5  dark:hover:bg-gray-800"
                   }`}
                 >
                   <Link
@@ -213,9 +210,7 @@ function Slides() {
             </div>
 
             <div className="py-3 flex flex-col gap-y-1 border-t border-gray-200 dark:border-gray-700">
-              <div className="px-5 text-lg font-bold text-gray-500 dark:text-gray-400">
-                Following
-              </div>
+              <div className="px-5 text-lg font-bold ">Following</div>
               {followingPeople.map((person) => (
                 <div
                   key={`person-${person.id}`}
@@ -239,12 +234,12 @@ function Slides() {
                   </Link>
                 </div>
               ))}
-              <div className="text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800">
+              <div className=" hover:bg-gray-100 dark:hover:bg-gray-800">
                 <Link
                   to="/following"
                   className="py-3 w-full flex items-center justify-start pl-3 gap-3 text-sm font-medium cursor-pointer"
                 >
-                  <ChevronDown size={18} />
+                  <ChevronDown size={18} className="text-gray-500" />
                   <span>See all following</span>
                 </Link>
               </div>
@@ -257,14 +252,17 @@ function Slides() {
             className={` ${
               isActive("/settings")
                 ? "bg-blue-50 text-cyan-600 px-4 border-l-4 border-blue-500 dark:bg-gray-700 dark:text-white dark:border-blue-50"
-                : "text-gray-500  px-5 hover:bg-gray-100 dark:hover:bg-gray-800"
+                : " px-5 hover:bg-gray-100 dark:hover:bg-gray-800"
             }`}
           >
             <Link
               to="/settings"
               className="py-3 w-full flex items-center justify-start pl-3 gap-3 text-sm font-medium cursor-pointer"
             >
-              <Settings size={18} />
+              <Settings
+                size={18}
+                className="text-gray-600 dark:text-gray-300"
+              />
               <span>Settings</span>
             </Link>
           </div>
@@ -272,14 +270,14 @@ function Slides() {
             className={` ${
               isActive("/about")
                 ? "bg-blue-50 text-cyan-600 px-4 border-l-4 border-blue-500 dark:bg-gray-700 dark:text-white dark:border-blue-50"
-                : "text-gray-500  px-5 hover:bg-gray-100 dark:hover:bg-gray-800"
+                : " px-5 hover:bg-gray-100 dark:hover:bg-gray-800"
             }`}
           >
             <Link
               to="/about"
               className="py-3 w-full flex items-center justify-start pl-3 gap-3 text-sm font-medium cursor-pointer"
             >
-              <Flag size={18} />
+              <Flag size={18} className="text-red-500" />
               <span>About</span>
             </Link>
           </div>
@@ -287,14 +285,14 @@ function Slides() {
             className={` ${
               isActive("/help")
                 ? "bg-blue-50 text-cyan-600 px-4 border-l-4 border-blue-500 dark:bg-gray-700 dark:text-white dark:border-blue-50"
-                : "text-gray-500 hover:bg-gray-100 px-5 dark:hover:bg-gray-800"
+                : " hover:bg-gray-100 px-5 dark:hover:bg-gray-800"
             }`}
           >
             <Link
               to="/help"
               className="py-3 w-full flex items-center justify-start pl-3 gap-3 text-sm font-medium cursor-pointer"
             >
-              <LifeBuoy size={18} />
+              <LifeBuoy size={18} className="text-blue-400" />
               <span>Help</span>
             </Link>
           </div>
@@ -302,14 +300,14 @@ function Slides() {
             className={` ${
               isActive("/report-history")
                 ? "bg-blue-50 text-cyan-600 px-4 border-l-4 border-blue-500 dark:bg-gray-700 dark:text-white dark:border-blue-50"
-                : "text-gray-500 hover:bg-gray-100 px-5 dark:hover:bg-gray-800"
+                : " hover:bg-gray-100 px-5 dark:hover:bg-gray-800"
             }`}
           >
             <Link
               to="/report-history"
               className="py-3 w-full flex items-center justify-start pl-3 gap-3 text-sm font-medium cursor-pointer"
             >
-              <Flag size={18} />
+              <Flag size={18} className="text-orange-400" />
               <span>Report</span>
             </Link>
           </div>
@@ -317,29 +315,29 @@ function Slides() {
             className={` ${
               isActive("/feedback")
                 ? "bg-blue-50 text-cyan-600 border-l-4 px-4 border-blue-500 dark:bg-gray-700 dark:text-white dark:border-blue-50"
-                : "text-gray-500 hover:bg-gray-100 px-5 dark:hover:bg-gray-800"
+                : " hover:bg-gray-100 px-5 dark:hover:bg-gray-800"
             }`}
           >
             <Link
               to="/feedback"
               className="py-3 w-full px-5 flex items-center justify-start pl-3 gap-3 text-sm font-medium cursor-pointer"
             >
-              <Mail size={18} />
+              <Mail size={18} className="text-green-500" />
               <span>Feedback</span>
             </Link>
           </div>
           <div className="">
             {Auth.islogined ? (
               <div
-                className=" py-3 w-full flex items-center justify-start  px-8 gap-3 text-sm font-medium cursor-pointer text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800"
+                className=" py-3 w-full flex items-center justify-start  px-8 gap-3 text-sm font-medium cursor-pointer  hover:bg-gray-100 dark:hover:bg-gray-800"
                 onClick={handleLogout}
               >
-                <UserRoundX size={18} />
+                <UserRoundX size={18} className="text-red-500" />
                 <span>Logout</span>
               </div>
             ) : (
-              <div className="py-3 w-full flex items-center justify-start px-8  gap-3 text-sm font-medium cursor-pointer text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800">
-                <User2 size={18} />
+              <div className="py-3 w-full flex items-center justify-start px-8  gap-3 text-sm font-medium cursor-pointer  hover:bg-gray-100 dark:hover:bg-gray-800">
+                <User2 size={18} className="text-blue-500" />
                 <span>
                   <Link to="/login">Login</Link>
                 </span>

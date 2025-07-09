@@ -1,5 +1,5 @@
-import React, { memo } from "react";
-
+import React, { memo, useState } from "react";
+import NewUpload from "../../component/Page/Profile/NewUpload";
 import people from "../../assets/images/people.jpg";
 import sports from "../../assets/images/sports.jpg";
 import Grid from "../../component/Layout/card/Grid";
@@ -14,8 +14,10 @@ import {
 import { Link } from "react-router-dom";
 
 function Article() {
+  const [UploadType, setUploadType] = useState("article");
+  const [UploadActive, setUploadActive] = useState(false);
   return (
-    <div className=" min-h-[88vh] lg:min-h-[85vh]">
+    <div className=" relative min-h-[88vh] lg:min-h-[85vh] dark:text-gray-400">
       <div className="max-w-7xl mx-auto">
         <div className="flex  items-center justify-between my-3 sm:my-6 sm:mt-2">
           <div className="flex items-center space-x-3">
@@ -39,7 +41,12 @@ function Article() {
           </div>
 
           <div className="flex items-center space-x-2 sm:space-x-4">
-            <button className="flex items-center space-x-1 bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 text-white px-3 py-1.5 rounded-lg transition-colors">
+            <button
+              onClick={() => {
+                setUploadActive(true);
+              }}
+              className="flex items-center space-x-1 bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 text-white px-3 py-1.5 rounded-lg transition-colors"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-4 w-4"
@@ -211,6 +218,13 @@ function Article() {
           </button>
         </div>
       </div>
+      {UploadActive && (
+        <div className="w-full h-full z-20 bg-gray-100 dark:bg-black dark:bg-opacity-50 bg-opacity-50 flex  justify-center absolute top-0  rounded-2xl">
+          <div className=" w-max h-max bg-white dark:bg-gray-800 sm:p-2 rounded-2xl">
+            <NewUpload type={UploadType} setUploadActive={setUploadActive} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

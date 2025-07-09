@@ -71,13 +71,13 @@ function Header(props) {
               )}
             </div>
           </div>
-          <div className="lg:hidden cursor-pointer border border-gray-300 border-opacity-30 rounded-full p-1 flex items-center justify-center shadow-sm">
-            <AlignRight
-              className=" w-7 h-7 sm:w-4 sm:h-4"
-              onClick={() => {
-                props.sidebar.setsidebarActive(!props.sidebar.sidebarActive);
-              }}
-            />
+          <div
+            onClick={() => {
+              props.sidebar.setsidebarActive(!props.sidebar.sidebarActive);
+            }}
+            className="lg:hidden cursor-pointer border border-gray-300 border-opacity-30 rounded-full p-1 flex items-center justify-center shadow-sm"
+          >
+            <AlignRight className=" w-7 h-7 sm:w-4 sm:h-4" />
           </div>
           <div className="flex sm:hidden lg:flex items-center border border-gray-300 rounded-lg px-3 py-2 text-sm">
             <input

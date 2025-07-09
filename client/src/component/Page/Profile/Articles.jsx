@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import RenderGridItem from "../../Layout/card/Grid";
 import ListGrid from "../../Layout/card/List";
 import Masonry from "../../Layout/card/Masonry";
@@ -11,7 +11,9 @@ const ProfileArticles = (props) => {
   const [layout, setLayout] = useState("grid");
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = 5;
-
+  useEffect(() => {
+    console.log("article component render");
+  });
   const demoArticles = [
     {
       id: 1,
@@ -61,7 +63,8 @@ const ProfileArticles = (props) => {
   ];
 
   const handleArticle = () => {
-    props.setnewArticle(!props.newArticle);
+    props.setUploadType("article");
+    props.setUploadActive(!props.UploadActive);
   };
   return (
     <div className="">
