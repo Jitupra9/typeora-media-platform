@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import RenderGridItem from "../../Layout/card/Grid";
 import ListGrid from "../../Layout/card/List";
 import Masonry from "../../Layout/card/Masonry";
@@ -7,11 +7,13 @@ import { Link } from "react-router-dom";
 import { Plus, Grid, List, LayoutGrid } from "lucide-react";
 import sports from "../../../assets/images/sports.jpg";
 
-const ProfileArticles = () => {
+const ProfileArticles = (props) => {
   const [layout, setLayout] = useState("grid");
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = 5;
-
+  useEffect(() => {
+    console.log("article component render");
+  });
   const demoArticles = [
     {
       id: 1,
@@ -60,6 +62,10 @@ const ProfileArticles = () => {
     },
   ];
 
+  const handleArticle = () => {
+    props.setUploadType("article");
+    props.setUploadActive(!props.UploadActive);
+  };
   return (
     <div className="">
       <div className="flex flex-col sm:flex-row gap-y-4 sm:gap-y-0 justify-between items-center mb-6">
@@ -138,7 +144,10 @@ const ProfileArticles = () => {
               />
             </svg>
           </Link>
-          <button className="flex items-center space-x-1 bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 text-white px-3 py-1.5 rounded-lg text-sm">
+          <button
+            onClick={handleArticle}
+            className="flex items-center space-x-1 bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 text-white px-3 py-1.5 rounded-lg text-sm"
+          >
             <Plus className="h-4 w-4" />
             <span>New</span>
           </button>

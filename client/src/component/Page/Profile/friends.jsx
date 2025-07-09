@@ -12,7 +12,7 @@ import {
   ThumbsUp,
   UserCog,
 } from "lucide-react";
-
+import People from "../../../assets/images/people.jpg";
 const Friends = () => {
   const [activeTab, setActiveTab] = useState("connected");
   const [searchQuery, setSearchQuery] = useState("");
@@ -23,7 +23,6 @@ const Friends = () => {
   };
 
   const contactsData = [
-    // Connected Contacts
     {
       id: 1,
       name: "Jitu Pradhan",
@@ -77,7 +76,6 @@ const Friends = () => {
       pending: true,
     },
 
-    // Suggestions
     {
       id: 4,
       name: "Ananya Das",
@@ -109,7 +107,6 @@ const Friends = () => {
       pending: false,
     },
 
-    // Sent Requests
     {
       id: 6,
       name: "Neha Gupta",
@@ -130,7 +127,6 @@ const Friends = () => {
 
   const filteredContacts = contactsData
     .filter((contact) => {
-      // Filter by tab
       if (activeTab === "connected") return contact.status === "connected";
       if (activeTab === "suggestions") return contact.status === "suggestion";
       if (activeTab === "requested") return contact.status === "requested";
@@ -138,7 +134,6 @@ const Friends = () => {
       return true;
     })
     .filter((contact) => {
-      // Filter by search
       if (!searchQuery) return true;
       return (
         contact.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -268,26 +263,48 @@ const Friends = () => {
                 key={contact.id}
                 className=" p-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
               >
-                <div className=" flex flex-col sm:flex-row items-start gap-4">
-                  <div className="relative flex-shrink-0">
-                    <img
-                      src={contact.avatar}
-                      alt={contact.name}
-                      className="w-14 h-14 rounded-full object-cover border-2 border-white dark:border-gray-700 shadow-sm"
-                    />
-                    {contact.status === "connected" && (
-                      <div
-                        className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white dark:border-gray-800 ${
-                          contact.lastActive.includes("min")
-                            ? "bg-green-500"
-                            : "bg-gray-400"
-                        }`}
-                      ></div>
-                    )}
+                <div className=" flex flex-col sm:flex-row items-start gap-2 sm:gap-7">
+                  <div className=" flex  w-full sm:w-max gap-5 ">
+                    <div className="relative flex-shrink-0">
+                      <img
+                        src={People || contact.avatar}
+                        alt={contact.name}
+                        className="w-14 h-14 rounded-full object-cover border-2 border-white dark:border-gray-700 shadow-sm"
+                      />
+                      {contact.status === "connected" && (
+                        <div
+                          className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white dark:border-gray-800 ${
+                            contact.lastActive.includes("min")
+                              ? "bg-green-500"
+                              : "bg-gray-400"
+                          }`}
+                        ></div>
+                      )}
+                    </div>
+                    <div className="flex sm:hidden items-center ">
+                      <div>
+                        <h3 className="font-semibold text-gray-800 dark:text-white">
+                          {contact.name}
+                        </h3>
+                        <p className="text-sm text-gray-600 dark:text-gray-300 truncate">
+                          {contact.role} • {contact.company}
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => toggleExpand(contact.id)}
+                        className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600"
+                      >
+                        <ChevronDown
+                          className={`w-5 h-5 text-gray-500 transition-transform ${
+                            expandedUser === contact.id ? "rotate-180" : ""
+                          }`}
+                        />
+                      </button>
+                    </div>
                   </div>
 
-                  <div className="flex flex-col   w-full">
-                    <div className="flex items-center justify-between">
+                  <div className="flex flex-col  w-full">
+                    <div className=" hidden sm:flex items-center ">
                       <div>
                         <h3 className="font-semibold text-gray-800 dark:text-white">
                           {contact.name}
@@ -308,7 +325,7 @@ const Friends = () => {
                       </button>
                     </div>
 
-                    <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+                    <div className="mt-2 hidden sm:grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
                       <div className="flex items-start gap-1">
                         <svg
                           className="h-4 w-4 text-gray-400 mt-0.5"
@@ -354,15 +371,6 @@ const Friends = () => {
                     </div>
                     {expandedUser === contact.id && (
                       <div className="mt-3 pt-3 border-t border-gray-100 dark:border-gray-700 space-y-2">
-                        <div className="flex items-center gap-2 text-sm">
-                          <span className="font-medium text-gray-700 dark:text-gray-300">
-                            Availability:
-                          </span>
-                          <span className="text-gray-600 dark:text-gray-400">
-                            {contact.availability}
-                          </span>
-                        </div>
-
                         {contact.status === "connected" && (
                           <>
                             <div className="flex items-center gap-2 text-sm">
@@ -429,10 +437,10 @@ const Friends = () => {
                     )}
                   </div>
 
-                  <div className="flex flex-col gap-2 min-w-[120px]">
+                  <div className="flex flex-col gap-2 w-full sm:w-max">
                     {contact.status === "requested" ? (
-                      <>
-                        <button className="flex items-center justify-center gap-1 bg-green-500 hover:bg-green-600 text-white px-3 py-1.5 rounded-lg text-sm whitespace-nowrap">
+                      <div className=" flex items-center gap-2 sm:flex-col">
+                        <button className="flex  items-center justify-center gap-1 bg-green-500 hover:bg-green-600 text-white px-3 py-1.5 rounded-lg text-sm whitespace-nowrap">
                           <UserCheck className="w-4 h-4" />
                           Accept
                         </button>
@@ -440,7 +448,7 @@ const Friends = () => {
                           <UserX className="w-4 h-4" />
                           Decline
                         </button>
-                      </>
+                      </div>
                     ) : contact.status === "connected" ? (
                       <div className=" flex sm:flex-col gap-2">
                         <button className="flex items-center justify-center gap-1 bg-blue-50 dark:bg-gray-700 hover:bg-blue-100 dark:hover:bg-gray-600 text-blue-600 dark:text-gray-300 px-3 py-1.5 rounded-lg text-sm whitespace-nowrap">

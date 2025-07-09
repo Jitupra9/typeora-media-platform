@@ -25,8 +25,11 @@ function ProfileHeader(props) {
     e.preventDefault();
     setshareActive(!shareActive);
   };
+  const handleEdit = () => {
+    props.setisactive("Personal");
+  };
   return (
-    <div className="bg-white dark:bg-gray-900 p-5 rounded-xl shadow-sm">
+    <div className="bg-white dark:bg-gray-900 px-5 py-2 rounded-xl shadow-sm">
       <div className=" relative flex flex-col sm:flex-row py-3 items-start sm:items-center justify-between border-b border-gray-200 dark:border-gray-700 gap-4">
         <div className="flex items-center gap-4">
           <div className="relative">
@@ -38,13 +41,13 @@ function ProfileHeader(props) {
             <div className="absolute bottom-0 right-0 bg-green-500 rounded-full w-4 h-4 border-2 border-white dark:border-gray-900"></div>
           </div>
           <div>
-            <h3 className="font-bold text-xl">
-              {user.userFirstname + " " + user.userFirstname}
+            <h3 className="font-bold text-2xl">
+              {user.userFirstname + " " + user.userLastName}
               <span className="ml-2 text-sm bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 px-2 py-1 rounded-full">
                 Pro
               </span>
             </h3>
-            <p className=" flex flex-col lg:flex-row   text-gray-500 dark:text-gray-400 text-sm ">
+            <p className=" flex flex-col lg:flex-row gap-1  text-gray-500 dark:text-gray-400 text-sm ">
               <div className=" flex items-center">
                 <Briefcase className="w-4 h-4 mr-1" />
                 Senior Full Stack Developer
@@ -58,7 +61,10 @@ function ProfileHeader(props) {
           </div>
         </div>
         <div className="flex gap-3  justify-between w-full sm:w-max sm:justify-normal ">
-          <button className="flex items-center gap-2 text-sm bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors">
+          <button
+            onClick={handleEdit}
+            className="flex items-center gap-2 text-sm bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors"
+          >
             <Edit className="w-4 h-4" />
             Edit Profile
           </button>

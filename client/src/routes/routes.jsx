@@ -42,19 +42,35 @@ const routes = [
       },
       {
         path: "myContent",
-        component: MyContent,
+        component: () => (
+          <IsAuthRoutes>
+            <MyContent />
+          </IsAuthRoutes>
+        ),
       },
       {
         path: "visited",
-        component: visitedProfileContent,
+        component: () => (
+          <IsAuthRoutes>
+            <visitedProfileContent />
+          </IsAuthRoutes>
+        ),
       },
       {
         path: "saved",
-        component: Saved,
+        component: () => (
+          <IsAuthRoutes>
+            <Saved />
+          </IsAuthRoutes>
+        ),
       },
       {
         path: "Actions",
-        component: MyActions,
+        component: () => (
+          <IsAuthRoutes>
+            <MyActions />
+          </IsAuthRoutes>
+        ),
       },
       {
         path: "opinion",
@@ -83,7 +99,11 @@ const routes = [
       },
       {
         path: "history",
-        component: History,
+        component: () => (
+          <IsAuthRoutes>
+            <History />
+          </IsAuthRoutes>
+        ),
       },
       {
         path: "settings",

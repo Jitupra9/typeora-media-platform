@@ -1,129 +1,289 @@
-import { Pencil } from "lucide-react";
-import { memo } from "react";
+import {
+  Pencil,
+  User,
+  Mail,
+  Phone,
+  Globe,
+  MapPin,
+  Info,
+  Save,
+  X,
+} from "lucide-react";
+import { memo, useState } from "react";
 
 function Personalinfo() {
+  const [isEditing, setIsEditing] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: "John",
+    lastName: "Doe",
+    gender: "Male",
+    phoneNo: "+1 (555) 123-4567",
+    secondaryEmail: "john.doe@example.com",
+    website: "https://example.com",
+    location: "New York, USA",
+    role: "User",
+    about:
+      "I'm a software engineer passionate about building user-friendly applications...",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSave = () => {
+    setIsEditing(false);
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
+  };
+
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center border-b border-gray-200 dark:border-gray-800 pb-3">
-        <h3 className="text-lg font-medium">Basic details</h3>
-        <button className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md text-sm bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
-          <Pencil className="w-3 h-3" />
-          Edit
-        </button>
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        <div className="space-y-1">
-          <label htmlFor="firstName" className="text-sm font-medium">
-            First name
-          </label>
-          <input
-            id="firstName"
-            className="w-full bg-transparent outline-none py-2 border-b border-gray-600 focus:border-blue-500 transition-colors"
-            type="text"
-            name="firstName"
-            placeholder="Abc"
-          />
+    <div className="space-y-8 bg-white dark:bg-gray-900 rounded-lg ">
+      <div className="flex justify-between items-center">
+        <div>
+          <h2 className="text-2xl font-bold text-blue-400 dark:text-blue-400 flex items-center gap-2">
+            <User className="w-6 h-6 text-pink-500" />
+            Personal Information
+          </h2>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            {isEditing
+              ? "Edit your personal details"
+              : "View your personal details"}
+          </p>
         </div>
-        <div className="space-y-1">
-          <label htmlFor="lastName" className="text-sm font-medium">
-            Last Name
-          </label>
-          <input
-            id="lastName"
-            className="w-full bg-transparent outline-none py-2 border-b border-gray-600 focus:border-blue-500 transition-colors"
-            type="text"
-            name="lastName"
-            placeholder="Xyz"
-          />
-        </div>
-        <div className="space-y-1">
-          <label htmlFor="gender" className="text-sm font-medium">
-            Gender
-          </label>
-          <select
-            id="gender"
-            className="w-full bg-transparent dark:bg-gray-900 outline-none py-2 border-b border-gray-600 focus:border-blue-500 transition-colors"
-            name="gender"
+        {!isEditing ? (
+          <button
+            onClick={() => setIsEditing(true)}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 transition-colors"
           >
-            <option value="">Select gender</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-        <div className="space-y-1">
-          <label htmlFor="role" className="text-sm font-medium">
-            Role
-          </label>
-          <input
-            id="role"
-            className="w-full bg-transparent outline-none py-2 border-b border-gray-600 focus:border-blue-500 transition-colors"
-            type="text"
-            name="role"
-            value="User"
-            readOnly
-          />
-        </div>
-        <div className="space-y-1">
-          <label htmlFor="phoneNo" className="text-sm font-medium">
-            Phone no.
-          </label>
-          <input
-            id="phoneNo"
-            className="w-full bg-transparent outline-none py-2 border-b border-gray-600 focus:border-blue-500 transition-colors"
-            type="tel"
-            name="phoneNo"
-            placeholder="9876543210"
-          />
-        </div>
-        <div className="space-y-1">
-          <label htmlFor="secondaryEmail" className="text-sm font-medium">
-            Secondary email
-          </label>
-          <input
-            id="secondaryEmail"
-            className="w-full bg-transparent outline-none py-2 border-b border-gray-600 focus:border-blue-500 transition-colors"
-            type="email"
-            name="secondaryEmail"
-            placeholder="Abc@gmail.com"
-          />
-        </div>
-        <div className="space-y-1">
-          <label htmlFor="website" className="text-sm font-medium">
-            Website
-          </label>
-          <input
-            id="website"
-            className="w-full bg-transparent outline-none py-2 border-b border-gray-600 focus:border-blue-500 transition-colors"
-            type="url"
-            name="website"
-            placeholder="https://xyz.com"
-          />
-        </div>
-        <div className="space-y-1">
-          <label htmlFor="location" className="text-sm font-medium">
-            Location
-          </label>
-          <input
-            id="location"
-            className="w-full bg-transparent outline-none py-2 border-b border-gray-600 focus:border-blue-500 transition-colors"
-            type="text"
-            name="location"
-            placeholder="Berhamour, Odisha"
-          />
-        </div>
+            <Pencil className="w-4 h-4 text-yellow-300" />
+            Edit <span className=" hidden sm:inline-block">Profile</span>
+          </button>
+        ) : (
+          <div className="flex gap-2">
+            <button
+              onClick={handleSave}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm bg-green-600 text-white hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-600 transition-colors"
+            >
+              <Save className="w-4 h-4 text-white" />
+              Save <span className=" hidden sm:inline-block"> Changes</span>
+            </button>
+            <button
+              onClick={handleCancel}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm bg-red-600 text-white hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-600 transition-colors"
+            >
+              <X className="w-4 h-4 text-white" />
+              <span className=" hidden sm:inline-block">Cancel</span>
+            </button>
+          </div>
+        )}
       </div>
-      <div className="space-y-2">
-        <label htmlFor="about" className="text-sm font-medium">
-          About the User
-        </label>
-        <textarea
-          id="about"
-          className="w-full bg-transparent outline-none p-3 border border-gray-600 rounded-md focus:border-blue-500 transition-colors"
-          name="about"
-          rows={5}
-          placeholder="Tell us about yourself..."
-        ></textarea>
+
+      <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
+        <div className="mb-8">
+          <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
+            <User className="w-5 h-5 text-purple-500" />
+            Basic Information
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="space-y-2">
+              <label
+                htmlFor="firstName"
+                className="text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
+                First name
+              </label>
+              <div className="relative">
+                <input
+                  id="firstName"
+                  className="w-full bg-gray-50 dark:bg-gray-800 outline-none p-3 rounded-lg border border-gray-300 dark:border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-700 transition-colors"
+                  type="text"
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleInputChange}
+                  readOnly={!isEditing}
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label
+                htmlFor="lastName"
+                className="text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
+                Last Name
+              </label>
+              <input
+                id="lastName"
+                className="w-full bg-gray-50 dark:bg-gray-800 outline-none p-3 rounded-lg border border-gray-300 dark:border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-700 transition-colors"
+                type="text"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleInputChange}
+                readOnly={!isEditing}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label
+                htmlFor="gender"
+                className="text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
+                Gender
+              </label>
+              <select
+                id="gender"
+                className="w-full bg-gray-50 dark:bg-gray-800 outline-none p-3 rounded-lg border border-gray-300 dark:border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-700 transition-colors"
+                name="gender"
+                value={formData.gender}
+                onChange={handleInputChange}
+                disabled={!isEditing}
+              >
+                <option value="">Select gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        {/* Contact Information Section */}
+        <div className="mb-8">
+          <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
+            <Mail className="w-5 h-5 text-blue-500" />
+            Contact Information
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="space-y-2">
+              <label
+                htmlFor="phoneNo"
+                className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-1"
+              >
+                <Phone className="w-4 h-4 text-green-500" />
+                Phone number
+              </label>
+              <input
+                id="phoneNo"
+                className="w-full bg-gray-50 dark:bg-gray-800 outline-none p-3 rounded-lg border border-gray-300 dark:border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-700 transition-colors"
+                type="tel"
+                name="phoneNo"
+                value={formData.phoneNo}
+                onChange={handleInputChange}
+                readOnly={!isEditing}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label
+                htmlFor="secondaryEmail"
+                className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-1"
+              >
+                <Mail className="w-4 h-4 text-blue-400" />
+                Secondary email
+              </label>
+              <input
+                id="secondaryEmail"
+                className="w-full bg-gray-50 dark:bg-gray-800 outline-none p-3 rounded-lg border border-gray-300 dark:border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-700 transition-colors"
+                type="email"
+                name="secondaryEmail"
+                value={formData.secondaryEmail}
+                onChange={handleInputChange}
+                readOnly={!isEditing}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="mb-8">
+          <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
+            <Globe className="w-5 h-5 text-teal-500" />
+            Additional Information
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="space-y-2">
+              <label
+                htmlFor="website"
+                className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-1"
+              >
+                <Globe className="w-4 h-4 text-teal-400" />
+                Website
+              </label>
+              <input
+                id="website"
+                className="w-full bg-gray-50 dark:bg-gray-800 outline-none p-3 rounded-lg border border-gray-300 dark:border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-700 transition-colors"
+                type="url"
+                name="website"
+                value={formData.website}
+                onChange={handleInputChange}
+                readOnly={!isEditing}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label
+                htmlFor="location"
+                className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-1"
+              >
+                <MapPin className="w-4 h-4 text-red-500" />
+                Location
+              </label>
+              <input
+                id="location"
+                className="w-full bg-gray-50 dark:bg-gray-800 outline-none p-3 rounded-lg border border-gray-300 dark:border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-700 transition-colors"
+                type="text"
+                name="location"
+                value={formData.location}
+                onChange={handleInputChange}
+                readOnly={!isEditing}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label
+                htmlFor="role"
+                className="text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
+                Role
+              </label>
+              <input
+                id="role"
+                className="w-full bg-gray-100 dark:bg-gray-700 outline-none p-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 cursor-not-allowed"
+                type="text"
+                name="role"
+                value={formData.role}
+                readOnly
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* About Section */}
+        <div>
+          <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
+            <Info className="w-5 h-5 text-amber-500" />
+            About
+          </h3>
+          <div className="space-y-2">
+            <label
+              htmlFor="about"
+              className="text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
+              Tell us about yourself
+            </label>
+            <textarea
+              id="about"
+              className="w-full bg-gray-50 dark:bg-gray-800 outline-none p-3 rounded-lg border border-gray-300 dark:border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-700 transition-colors"
+              name="about"
+              rows={4}
+              value={formData.about}
+              onChange={handleInputChange}
+              readOnly={!isEditing}
+            ></textarea>
+          </div>
+        </div>
       </div>
     </div>
   );

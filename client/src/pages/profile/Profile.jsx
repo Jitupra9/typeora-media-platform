@@ -6,7 +6,7 @@ import Videos from "../../component/Page/Profile/Videos";
 import Friends from "../../component/Page/Profile/friends";
 import Setting from "../../component/Page/Profile/Settings";
 import Personalinfo from "../../component/Page/Profile/Personalinfo";
-import NewArticle from "../../component/Page/Profile/NewArticle";
+import NewUpload from "../../component/Page/Profile/NewUpload";
 import { Headers } from "../../context/utils/Headercontext";
 import { IsAuthnticate } from "../../context/Auth/IsAuth";
 import {
@@ -20,6 +20,8 @@ import {
 function Profile() {
   const { setheaders } = useContext(Headers);
   const [isactive, setisactive] = useState("Personal");
+  const [UploadType, setUploadType] = useState(null);
+  const [UploadActive, setUploadActive] = useState(false);
   const { Auth } = useContext(IsAuthnticate);
   const [profileCompletion, setProfileCompletion] = useState(75);
 
@@ -38,12 +40,22 @@ function Profile() {
     switch (componentName) {
       case "Personal":
         return <Personalinfo />;
-      case "NewArticle":
-        return <NewArticle />;
       case "Article":
-        return <Articles />;
+        return (
+          <Articles
+            setUploadType={setUploadType}
+            UploadActive={UploadActive}
+            setUploadActive={setUploadActive}
+          />
+        );
       case "Videos":
-        return <Videos />;
+        return (
+          <Videos
+            setUploadType={setUploadType}
+            UploadActive={UploadActive}
+            setUploadActive={setUploadActive}
+          />
+        );
       case "Friends":
         return <Friends />;
       case "Settings":
@@ -57,17 +69,21 @@ function Profile() {
   }, [setheaders, categories]);
 
   return (
-    <div className="p-1  font-semibold flex flex-col lg:flex-row justify-between text-gray-700 dark:text-gray-200 gap-5 mb-20">
-      <div className="w-full lg:w-[68%] space-y-5">
-        <ProfileHeader profileCompletion={profileCompletion} user={Auth.user} />
+    <div className="relative py-1 font-semibold flex flex-col lg:flex-row justify-between text-gray-700 dark:text-gray-200 gap-5 mb-20 sm:mb-0">
+      <div className="w-full sm:h-[86vh] sm:overflow-y-scroll hidel_slide_roler lg:w-[68%] space-y-5">
+        <ProfileHeader
+          profileCompletion={profileCompletion}
+          user={Auth.user}
+          setisactive={setisactive}
+        />
         <div className="bg-white dark:bg-gray-900 p-5 rounded-xl shadow-sm">
           <ul className="flex overflow-x-auto gap-1 pb-2 hidel_slide_roler">
             {[
-              { name: "Friends", icon: FriendsIcon },
               { name: "Personal", icon: User },
+              { name: "Friends", icon: FriendsIcon },
+
               { name: "Article", icon: BookOpen },
               { name: "Videos", icon: Video },
-              { name: "Lives", icon: Video },
               { name: "Settings", icon: Settings },
             ].map((item) => (
               <li
@@ -84,12 +100,19 @@ function Profile() {
               </li>
             ))}
           </ul>
-          <div className="mt-5 bg-white dark:bg-gray-900 rounded-xl py-4">
+          <div className=" mt-5 bg-white dark:bg-gray-900 rounded-xl py-4">
             {components(isactive)}
           </div>
         </div>
       </div>
       <ProfileSidebar />
+      {UploadActive && (
+        <div className="w-full h-full bg-gray-100 dark:bg-black dark:bg-opacity-50 bg-opacity-50 flex  justify-center absolute top-0  rounded-2xl">
+          <div className=" w-max h-max bg-white dark:bg-gray-800 sm:p-2 rounded-2xl">
+            <NewUpload type={UploadType} setUploadActive={setUploadActive} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

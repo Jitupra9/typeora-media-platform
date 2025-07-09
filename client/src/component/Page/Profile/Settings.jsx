@@ -166,7 +166,7 @@ function Settings() {
               />
             </div>
 
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-3 sm:p-6">
               <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                 Active Sessions
               </h2>
@@ -416,7 +416,6 @@ function Settings() {
           </div>
         )}
 
-        {/* Danger Zone */}
         <div className="mt-12 border border-red-200 dark:border-red-900 rounded-lg p-6 bg-red-50 dark:bg-red-900/20">
           <h2 className="text-lg font-semibold text-red-700 dark:text-red-400 mb-3">
             Danger Zone
@@ -445,7 +444,7 @@ function Settings() {
                 </p>
               </div>
               <button className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md text-sm font-medium transition-colors">
-                Delete Account
+                Delete <span className=" hidden sm:inline-block">Account</span>
               </button>
             </div>
           </div>

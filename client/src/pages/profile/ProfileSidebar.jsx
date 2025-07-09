@@ -5,7 +5,7 @@ import ProfileStats from "../../component/Page/Profile/ProfileStats";
 import { Share2, Github, Twitter, Linkedin } from "lucide-react";
 function ProfileSidebar() {
   return (
-    <div className="w-full lg:w-[30%] space-y-5">
+    <div className="w-full sm:h-[86vh] hidel_slide_roler sm:overflow-hidden sm:overflow-y-scroll lg:w-[30%] space-y-5">
       <ProfileCheckList />
       <ProfileSkils />
       <ProfileStats />

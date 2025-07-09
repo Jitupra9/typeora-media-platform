@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import React, { memo, useState, useEffect } from "react";
 import RenderGridItem from "../../Layout/card/Grid";
 import Masonry from "../../Layout/card/Masonry";
 import ListCard from "../../Layout/card/List";
@@ -7,11 +7,17 @@ import { Link } from "react-router-dom";
 import { Plus, Grid, List, LayoutGrid } from "lucide-react";
 import videoThumbnail from "../../../assets/images/sports.jpg";
 
-const Videos = () => {
+const Videos = (props) => {
   const [layout, setLayout] = useState("grid");
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = 5;
-
+  const handleUpload = () => {
+    props.setUploadType("videos");
+    props.setUploadActive(!props.UploadActive);
+  };
+  useEffect(() => {
+    console.log("video component render");
+  });
   const demoVideos = [
     {
       id: 1,
@@ -137,7 +143,10 @@ const Videos = () => {
               />
             </svg>
           </Link>
-          <button className="flex items-center space-x-1 bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 text-white px-3 py-1.5 rounded-lg text-sm">
+          <button
+            onClick={handleUpload}
+            className="flex items-center space-x-1 bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 text-white px-3 py-1.5 rounded-lg text-sm"
+          >
             <Plus className="h-4 w-4" />
             <span>Upload</span>
           </button>
