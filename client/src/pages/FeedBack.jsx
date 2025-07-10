@@ -187,7 +187,7 @@ function Feedback() {
   };
 
   return (
-    <div className="min-h-screen p-4 text-black dark:text-gray-200 ">
+    <div className="min-h-screen py-2 sm:p-4 text-black dark:text-gray-200 mb-16">
       <div className=" mx-auto">
         <div className="flex flex-col md:flex-row gap-6">
           <div className="flex-1">
@@ -262,7 +262,12 @@ function Feedback() {
                               }`}
                             >
                               <Bug className="w-5 h-5 mb-1 text-red-500" />
-                              <span>Bug Report</span>
+                              <span>
+                                Bug{" "}
+                                <span className=" hidden sm:inline-block">
+                                  Report
+                                </span>
+                              </span>
                             </button>
                             <button
                               type="button"
@@ -274,7 +279,12 @@ function Feedback() {
                               }`}
                             >
                               <Gift className="w-5 h-5 mb-1 text-purple-500" />
-                              <span>Feature Request</span>
+                              <span>
+                                Feature{" "}
+                                <span className=" hidden sm:inline-block">
+                                  Request
+                                </span>
+                              </span>
                             </button>
                           </div>
                         </div>
@@ -284,8 +294,8 @@ function Feedback() {
                             <label className="block text-sm font-medium mb-2">
                               How would you rate your experience?
                             </label>
-                            <div className=" flex items-center gap-3 my-3">
-                              <div className="flex  flex-col sm:flex-row justify-center gap-1">
+                            <div className=" flex flex-col sm:flex-row items-center gap-3 my-3">
+                              <div className="flex  flex-row justify-center gap-1">
                                 {renderStars()}
                               </div>
                               <p className="text-center text-gray-500 dark:text-gray-400">
@@ -540,7 +550,10 @@ function Feedback() {
                             className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center gap-2 transition-colors shadow-lg hover:shadow-blue-500/20"
                           >
                             <Send className="w-4 h-4" />
-                            Submit Feedback
+                            Submit{" "}
+                            <span className=" hidden sm:inline-block">
+                              Feedback
+                            </span>
                           </button>
                         </div>
                       </form>

@@ -137,14 +137,14 @@ function IncidentTracker() {
         onFilterChange={handleFilterChange}
       />
       <main className=" py-8">
-        <div className="">
+        <div className=" hidden sm:block">
           <StatsCards incidents={incidents} />
         </div>
         <div className="mb-6 flex items-center justify-between">
           <h2 className="text-xl font-semibold">
             {filteredIncidents.length} Incidents Found
           </h2>
-          <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
+          <button className=" hidden sm:flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
             <Plus className="w-4 h-4" />
             <span>Report Incident</span>
           </button>

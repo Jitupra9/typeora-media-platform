@@ -52,12 +52,12 @@ function IncidentCard(props) {
                 <Verified className="w-4 h-4 text-blue-500 dark:text-blue-400" />
               )}
             </div>
-            <div className="flex items-center mt-1 space-x-3">
-              <span className="flex items-center text-xs text-gray-500 dark:text-gray-400">
-                <MapPin className="w-3 h-3 mr-1" />
+            <div className="flex items-center mt-1 space-x-3 justify-between sm:justify-normal">
+              <span className="flex items-center text-xs text-gray-500 dark:text-gray-400 truncate">
+                <MapPin className="w-3 h-3 mr-1 " />
                 {incident.location}
               </span>
-              <span className="flex items-center text-xs text-gray-500 dark:text-gray-400">
+              <span className="flex items-center text-xs text-gray-500 dark:text-gray-400 truncate">
                 <Clock className="w-3 h-3 mr-1" />
                 {incident.date} • {incident.time}
               </span>

@@ -157,19 +157,19 @@ function LiveReports() {
                   href="/"
                   className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
-                  Videos
+                  New
                 </a>
                 <a
                   href="/"
                   className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
-                  Articles
+                  Trending
                 </a>
                 <a
                   href="/"
                   className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
-                  Podcasts
+                  Popular
                 </a>
               </div>
             </div>
@@ -278,7 +278,7 @@ function LiveReports() {
                 d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
               />
             </svg>
-            <span className="hidden sm:block">Upload</span>
+            <span className="hidden sm:block font-semibold">Upload</span>
           </button>
 
           <div className="flex items-center space-x-1 bg-red-100 dark:bg-red-800 dark:bg-opacity-50 px-2 py-1 rounded-md">

@@ -101,23 +101,22 @@ function Report() {
   };
 
   return (
-    <div className="min-h-screen text-black dark:text-gray-300 ">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen text-black dark:text-gray-300 mb-20">
+      <div className="max-w-7xl mx-auto">
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-3xl font-bold flex items-center gap-3">
             <Flag className="w-8 h-8 text-red-500" /> Report Center
           </h1>
-          <div className="flex items-center gap-2 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300 px-3 py-1 rounded-full">
-            <Shield className="w-5 h-5" />
-            <span className="font-medium">Protected by SafeReport™</span>
+          <div className="flex items-center gap-2 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300 px-3 py-1 rounded-lg sm:rounded-full">
+            <Shield className=" w-10 sm:w-5 sm:h-5" />
+            <span className="font-medium text-center sm:text-left">
+              Protected by SafeReport™
+            </span>
           </div>
         </div>
 
-        {/* Main Grid Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Report Issue Section */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Report Form */}
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
               <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
                 <AlertTriangle className="w-5 h-5 text-red-500" /> Submit New
@@ -215,7 +214,8 @@ function Report() {
                     type="submit"
                     className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg flex items-center gap-2"
                   >
-                    <Flag className="w-4 h-4" /> Submit Report
+                    <Flag className="w-4 h-4" /> Submit{" "}
+                    <span className=" hidden sm:inline-block">Report</span>
                   </button>
                 </div>
               </form>

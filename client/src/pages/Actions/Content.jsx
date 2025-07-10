@@ -24,11 +24,11 @@ function Content(props) {
   return (
     <div className="lg:col-span-2 space-y-6">
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
-        <div className="p-5 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/30">
+        <div className="  p-5 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/30">
           <h2 className="text-xl font-semibold flex items-center gap-3">
             <Heart className="h-5 w-5 text-pink-500" />
             Your Engagements
-            <span className="ml-auto text-sm bg-indigo-100 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-200 px-2 py-1 rounded-full">
+            <span className=" truncate ml-auto text-sm bg-indigo-100 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-200 px-2 py-1 rounded-full">
               {interactions.engagements.length} activities
             </span>
           </h2>

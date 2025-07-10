@@ -123,8 +123,6 @@ function Support() {
           <p className="text-xl text-blue-100 max-w-3xl mx-auto">
             Get answers to your questions or contact our support teams directly.
           </p>
-
-          {/* Search Bar */}
           <div className="mt-8 max-w-2xl mx-auto relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <Search className="w-5 h-5 text-gray-400" />
@@ -141,8 +139,7 @@ function Support() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 py-16">
-        {/* Support Teams Grid */}
+      <div className="max-w-7xl mx-auto pb-15 sm:pb-20 py-12">
         <section className="mb-20">
           <div className="text-center mb-12">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
