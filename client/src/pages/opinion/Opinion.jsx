@@ -162,7 +162,7 @@ function Opinion() {
   };
 
   return (
-    <div className="min-h-screen text-gray-900 dark:text-gray-100 py-4 px-4">
+    <div className=" text-gray-900 dark:text-gray-100 pt-4 sm:px-4 ">
       <div className="">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-cyan-400 to-cyan-600 bg-clip-text text-transparent">
@@ -174,10 +174,10 @@ function Opinion() {
           </p>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-8 relative">
+        <div className="flex flex-col lg:flex-row gap-8 relative ">
           <div className="hidden lg:block absolute left-[70%] top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-gray-300 dark:via-gray-600 to-transparent"></div>
 
-          <div className="lg:w-[70%]">
+          <div className="lg:w-[70%] lg:h-[65vh] lg:overflow-hidden lg:overflow-y-scroll hidel_slide_roler lg:pb-8 lg:rounded-xl">
             <div className="flex flex-wrap gap-3 mb-6 overflow-x-auto pb-2">
               {categories.map((category) => (
                 <button
@@ -399,7 +399,7 @@ function Opinion() {
               setCurrentPage={setCurrentPage}
             />
           </div>
-          <div className="lg:w-[29%] space-y-6 ">
+          <div className="lg:w-[29%] lg:h-[65vh] lg:overflow-y-scroll lg:overflow-hidden space-y-6 hidel_slide_roler pb-20 sm:rounded-t-xl">
             <CommunityStats
               totalOpinions={totalOpinions}
               totalEngagement={totalEngagement}

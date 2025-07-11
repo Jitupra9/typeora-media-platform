@@ -2,7 +2,9 @@ import React, { memo, useState } from "react";
 import NewUpload from "../../component/Page/Profile/NewUpload";
 import people from "../../assets/images/people.jpg";
 import sports from "../../assets/images/sports.jpg";
-import Grid from "../../component/Layout/card/Grid";
+import Shared from "../../component/models/Share";
+import Filter from "../..//component/Page/Articles/Filter";
+// import Grid from "../../component/Layout/card/Grid";
 import {
   Bookmark,
   Share2,
@@ -15,7 +17,17 @@ import { Link } from "react-router-dom";
 
 function Article() {
   const [UploadType, setUploadType] = useState("article");
+  const [filterActive, setfilterActive] = useState(false);
   const [UploadActive, setUploadActive] = useState(false);
+  const [Shaerd, setShared] = useState(null);
+  const handleShare = (e, i) => {
+    e.preventDefault();
+    setShared(i === Shaerd ? null : i);
+  };
+  const OpenFilter = (e) => {
+    e.preventDefault();
+    setfilterActive(!filterActive);
+  };
   return (
     <div className=" relative min-h-[88vh] lg:min-h-[85vh] dark:text-gray-400">
       <div className="max-w-7xl mx-auto">
@@ -66,7 +78,10 @@ function Article() {
               </span>
             </button>
             <div className="relative group">
-              <button className="flex items-center space-x-1 border border-gray-300 dark:border-gray-600 px-3 py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+              <button
+                onClick={OpenFilter}
+                className="flex items-center space-x-1 border border-gray-300 dark:border-gray-600 px-3 py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-4 w-4 text-gray-600 dark:text-gray-300"
@@ -141,12 +156,14 @@ function Article() {
             </div>
           </div>
         </div>
+        {filterActive && <Filter />}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {[...Array(12)].map((_, i) => (
+            // <Grid />
             <Link
               to={`/ArticleDetails?id=${i}`}
               key={i}
-              className="group overflow-hidden rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 bg-white dark:bg-gray-800 dark:border-gray-700"
+              className=" relative group overflow-hidden rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 bg-white dark:bg-gray-800 dark:border-gray-700"
             >
               <div className="relative h-48 overflow-hidden">
                 <img
@@ -159,10 +176,16 @@ function Article() {
                   <button className="p-2 bg-white/80 dark:bg-gray-800/80 rounded-full hover:bg-white dark:hover:bg-gray-700 transition-colors">
                     <Bookmark className="w-4 h-4 text-gray-700 dark:text-gray-300" />
                   </button>
-                  <button className="p-2 bg-white/80 dark:bg-gray-800/80 rounded-full hover:bg-white dark:hover:bg-gray-700 transition-colors">
+                  <button
+                    onClick={(e) => {
+                      handleShare(e, i);
+                    }}
+                    className="p-2 bg-white/80 dark:bg-gray-800/80 rounded-full hover:bg-white dark:hover:bg-gray-700 transition-colors"
+                  >
                     <Share2 className="w-4 h-4 text-gray-700 dark:text-gray-300" />
                   </button>
                 </div>
+
                 <span className="absolute bottom-3 left-3 px-3 py-1 bg-blue-600 text-white text-xs font-medium rounded-full">
                   {["Business", "Sports", "Tech", "Health"][i % 4]}
                 </span>
@@ -209,6 +232,11 @@ function Article() {
                   </span>
                 </div>
               </div>
+              {i === Shaerd && (
+                <div className="top-12 right-5 border border-gray-400 dark:border-gray-600 rounded-xl absolute ">
+                  <Shared />
+                </div>
+              )}
             </Link>
           ))}
         </div>

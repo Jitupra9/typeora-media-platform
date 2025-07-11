@@ -14,8 +14,8 @@ import {
 
 function About() {
   return (
-    <div className="min-h-screen  text-gray-800 dark:text-gray-200">
-      <div className="bg-gradient-to-r from-sky-400 to-sky-600 dark:from-blue-900 dark:to-blue-950 text-white py-16 px-6">
+    <div className="min-h-screen  text-gray-800 dark:text-gray-200 pb-5">
+      <div className="bg-gradient-to-r from-sky-400 to-sky-600 dark:from-blue-900 dark:to-blue-950 text-white py-16 px-6 rounded-md sm:rounded-none">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center gap-3 mb-4">
             <div className="bg-white/20 p-2 rounded-lg backdrop-blur-sm">
@@ -35,8 +35,7 @@ function About() {
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-6 py-12">
-        {/* Mission Section */}
+      <div className="max-w-6xl mx-auto sm:px-6 py-12">
         <section className="mb-16 relative">
           <div className="absolute -left-8 top-0 h-full w-1 bg-gradient-to-b from-blue-500 to-blue-300 dark:from-blue-600 dark:to-blue-400 rounded-full hidden md:block"></div>
           <div className="bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800 p-8 relative overflow-hidden">

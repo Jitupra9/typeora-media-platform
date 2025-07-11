@@ -155,7 +155,7 @@ function MyContent() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto py-4 sm:p-4 dark:text-white ">
+    <div className="max-w-7xl mx-auto py-4 pb-16 sm:pb-16 sm:p-4 dark:text-white ">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">

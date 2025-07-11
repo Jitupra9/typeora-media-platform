@@ -22,7 +22,9 @@ function HeaderSpecial(props) {
   } = props;
   const incidents = props.incident;
   const allTags = [...new Set(incidents.flatMap((incident) => incident.tags))];
-  const allTypes = [...new Set(incidents.map((incident) => incident.type))];
+  const allTypes = [
+    ...new Set(incidents.map((incident) => incident.catogories)),
+  ];
   const allSeverities = ["high", "medium", "low"];
 
   return (

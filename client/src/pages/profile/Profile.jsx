@@ -70,7 +70,7 @@ function Profile() {
 
   return (
     <div className="relative py-1 font-semibold flex flex-col lg:flex-row justify-between text-gray-700 dark:text-gray-200 gap-5 mb-20 sm:mb-0">
-      <div className="w-full sm:h-[86vh] sm:overflow-y-scroll hidel_slide_roler lg:w-[68%] space-y-5">
+      <div className="w-full sm:h-[86vh] sm:overflow-y-scroll hidel_slide_roler lg:w-[68%] space-y-5 sm:rounded-xl">
         <ProfileHeader
           profileCompletion={profileCompletion}
           user={Auth.user}
