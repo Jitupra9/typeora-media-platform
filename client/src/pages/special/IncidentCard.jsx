@@ -11,6 +11,11 @@ import {
   Eye,
   Clock,
   ChevronDown,
+  Book,
+  Video,
+  BookOpen,
+  Videotape,
+  MessageCircle,
 } from "lucide-react";
 function IncidentCard(props) {
   const [expanded, setExpanded] = useState(false);
@@ -34,14 +39,16 @@ function IncidentCard(props) {
         <div className="flex items-start space-x-3">
           <div
             className={`p-2 rounded-lg ${
-              incident.type === "fire"
+              incident.catogories === "fire"
                 ? "bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-300"
-                : incident.type === "accident"
+                : incident.catogories === "accident"
                 ? "bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-300"
                 : "bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300"
             }`}
           >
-            {typeIcons[incident.type] || <AlertTriangle className="w-5 h-5" />}
+            {typeIcons[incident.catogories] || (
+              <AlertTriangle className="w-5 h-5" />
+            )}
           </div>
           <div>
             <div className="flex items-center space-x-2">
@@ -87,19 +94,30 @@ function IncidentCard(props) {
         </div>
         {incident.updates && incident.updates.length > 0 && (
           <div className="mb-3">
-            <button
-              onClick={() => setExpanded(!expanded)}
-              className="flex items-center text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline"
-            >
-              <ChevronDown
-                className={`w-3 h-3 mr-1 transition-transform ${
-                  expanded ? "rotate-180" : ""
-                }`}
-              />
-              {expanded
-                ? "Hide updates"
-                : `Show updates (${incident.updates.length})`}
-            </button>
+            <div className=" flex justify-between items-center">
+              <button
+                onClick={() => setExpanded(!expanded)}
+                className="flex items-center text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline"
+              >
+                <ChevronDown
+                  className={`w-3 h-3 mr-1 transition-transform ${
+                    expanded ? "rotate-180" : ""
+                  }`}
+                />
+                {expanded
+                  ? "Hide updates"
+                  : `Show updates (${incident.updates.length})`}
+              </button>
+              <div className=" *:w-5 *:text-blue-400">
+                {incident.ContentType === "Article" ? (
+                  <BookOpen className="" />
+                ) : incident.ContentType === "Videos" ? (
+                  <Videotape />
+                ) : (
+                  <MessageCircle />
+                )}
+              </div>
+            </div>
 
             {expanded && (
               <div className="mt-2 pl-4 border-l-2 border-gray-200 dark:border-gray-700 space-y-3">
@@ -135,7 +153,7 @@ function IncidentCard(props) {
               {incident.views.toLocaleString()}
             </span>
             <button className="text-xs text-blue-600 dark:text-blue-400 hover:underline">
-              Subscribe
+              Follow
             </button>
           </div>
         </div>

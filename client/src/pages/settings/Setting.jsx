@@ -50,7 +50,7 @@ function Settings() {
   ];
 
   return (
-    <div className="min-h-screen  dark:text-gray-300">
+    <div className="min-h-screen  dark:text-gray-300 mb-20">
       <div className="max-w-7xl mx-auto">
         <div className="mb-6">
           <nav className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-2">

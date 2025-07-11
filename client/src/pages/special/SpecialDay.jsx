@@ -2,13 +2,14 @@ import React, { memo, useState } from "react";
 import HeaderSpecial from "./HeaderSpecial";
 import IncidentCard from "./IncidentCard";
 import StatsCards from "./StatsCards";
-import { AlertTriangle, Plus } from "lucide-react";
+import { AlertTriangle, ChevronDown, Dot, Plus } from "lucide-react";
 
 const incidents = [
   {
     id: 1,
     title: "Forest Fire in Simlipal National Park",
-    type: "fire",
+    catogories: "fire",
+    ContentType: "Article",
     severity: "high",
     tags: ["forest", "wildlife", "emergency"],
     verified: true,
@@ -28,8 +29,9 @@ const incidents = [
   {
     id: 2,
     title: "Major Road Accident on NH16 Near Visakhapatnam",
-    type: "accident",
+    catogories: "accident",
     severity: "medium",
+    ContentType: "Videos",
     tags: ["highway", "collision", "injury"],
     verified: false,
     location: "Andhra Pradesh, India",
@@ -48,8 +50,9 @@ const incidents = [
   {
     id: 3,
     title: "Power Grid Failure Affecting 5 Districts",
-    type: "utility",
+    catogories: "utility",
     severity: "high",
+    ContentType: "Opinion",
     tags: ["electricity", "outage", "infrastructure"],
     verified: true,
     location: "Tamil Nadu, India",
@@ -111,7 +114,7 @@ function IncidentTracker() {
     const matchesTag =
       filters.tagFilter === "" || incident.tags.includes(filters.tagFilter);
     const matchesType =
-      filters.typeFilter === "" || incident.type === filters.typeFilter;
+      filters.typeFilter === "" || incident.catogories === filters.typeFilter;
     const matchesSeverity =
       filters.severityFilter === "" ||
       incident.severity === filters.severityFilter;
@@ -141,9 +144,33 @@ function IncidentTracker() {
           <StatsCards incidents={incidents} />
         </div>
         <div className="mb-6 flex items-center justify-between">
-          <h2 className="text-xl font-semibold">
-            {filteredIncidents.length} Incidents Found
-          </h2>
+          <div className=" flex items-center gap-2">
+            <h2 className="text-xl font-semibold">
+              {filteredIncidents.length} Incidents Found
+            </h2>
+            <Dot />
+            <div className="group relative">
+              <p className="flex items-center gap-2 text-gray-500 cursor-pointer">
+                Content Type <ChevronDown className="w-5" />
+              </p>
+              <div className="hidden group-hover:block absolute top-full left-0 bg-white dark:bg-gray-800 shadow-md rounded-md mt-1 min-w-[150px] z-10">
+                <ul className="">
+                  <li className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
+                    All Types
+                  </li>
+                  <li className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
+                    Article
+                  </li>
+                  <li className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
+                    Videos
+                  </li>
+                  <li className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
+                    Opinion
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
           <button className=" hidden sm:flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
             <Plus className="w-4 h-4" />
             <span>Report Incident</span>

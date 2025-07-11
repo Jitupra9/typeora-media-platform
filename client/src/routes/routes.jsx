@@ -18,7 +18,7 @@ import Report from "../pages/Report";
 import Feedback from "../pages/FeedBack";
 import MyActions from "../pages/Actions/MyActions";
 import MyContent from "../pages/MyContent/MyContent";
-import visitedProfileContent from "../pages/visitedProfileContent";
+import VisitedProfileContent from "../pages/visitedProfileContent";
 const routes = [
   {
     path: "/",
@@ -52,7 +52,7 @@ const routes = [
         path: "visited",
         component: () => (
           <IsAuthRoutes>
-            <visitedProfileContent />
+            <VisitedProfileContent />
           </IsAuthRoutes>
         ),
       },
