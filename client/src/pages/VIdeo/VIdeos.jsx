@@ -6,7 +6,7 @@ import NewUpload from "../../component/Page/Profile/NewUpload";
 import bgimg from "../../assets/images/videos.jpg";
 import logo from "../../assets/images/logo.png";
 import poster from "../../assets/images/videos2.jpg";
-import { Dot, EllipsisVertical } from "lucide-react";
+import { Dot, EllipsisVertical, Play, Video } from "lucide-react";
 function LiveReports() {
   const [UploadType, setUploadType] = useState("videos");
   const [UploadActive, setUploadActive] = useState(false);
@@ -39,7 +39,7 @@ function LiveReports() {
     setModelOpen((prev) => (prev === key ? null : key));
   };
   return (
-    <div className=" relative text-gray-200 dark:text-gray-400 ">
+    <div className=" relative text-gray-200 dark:text-gray-400 mb-10">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-3">
           <h1 className="hidden sm:block dark:text-white text-black text-xl font-bold">
@@ -338,7 +338,7 @@ function LiveReports() {
             className=" relative w-full cursor-pointer sm:w-[48%] lg:w-[24%] px-2 box-border "
           >
             <div className=" rounded-lg overflow-hidden ">
-              <div className=" relative images mb-3">
+              <div className=" relative images mb-3  group">
                 <img
                   src={poster}
                   alt="Poster"
@@ -347,14 +347,17 @@ function LiveReports() {
                 <div className=" absolute bg-black opacity-75 px-2 text-xs py-1 rounded-md right-5 bottom-3">
                   10:12
                 </div>
+                <div className=" hidden group-hover:flex absolute top-0 left-0 w-full h-full  items-center justify-center">
+                  <Play className=" fill-white w-10 h-10 stroke-white" />
+                </div>
               </div>
-              <div className="textareas flex gap-3 px-2 pb-3 text-sm">
+              <div className="textareas flex gap-3 px-2 pb-3 text-sm ">
                 <img
                   src={poster}
                   alt="Logo"
                   className="w-8 h-8 rounded-full object-cover"
                 />
-                <div className="flex flex-col w-full text-gray-800 dark:text-gray-400">
+                <div className="flex flex-col w-full text-gray-800 dark:text-gray-400 ">
                   <div className=" flex">
                     <h3 className="font-semibold  dark:text-white">
                       Full Video: Raajhan | Do Patti | Kriti Sanon, Shaheer
