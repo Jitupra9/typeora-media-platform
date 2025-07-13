@@ -1,42 +1,47 @@
-import React, { memo } from "react";
-import Plyr from "plyr-react";
-import "../../assets/css/videoplayer.css";
-import "plyr-react/plyr.css";
-import Live from "../../assets/video/Live_stream.mp4";
-// import imge from "../../assets/images/news_three.jpg";
-function Videoplayer() {
-  const plyrProps = {
-    source: {
-      type: "video",
-      sources: [
-        {
-          src: Live,
-          type: "video/mp4",
-        },
-      ],
-      // poster: imge,
-    },
-    options: {
-      controls: [
-        "rewind",
-        "play",
-        "fast-forward",
-        "mute",
-        "current-time",
-        "progress",
-        "settings",
-        "pip",
-        "fullscreen",
-      ],
-      speed: { selected: 1, options: [0.5, 1, 1.5, 2] },
-    },
-  };
+import React, { memo, useEffect, useRef } from "react";
+import "../../assets/css/video.css";
+import videojs from "video.js";
+import "video.js/dist/video-js.css";
+import "videojs-contrib-quality-levels";
+import "videojs-http-source-selector";
+function Videoplayer({ options, onReady }) {
+  const playerRef = useRef(null);
+  const videoRef = useRef(null);
+  useEffect(() => {
+    if (!videoRef.current) return;
+    if (!playerRef.current) {
+      const videoElement = document.createElement("video-js");
+      videoElement.classList.add("vjs-big-play-centered", "video-js");
+      videoRef.current.appendChild(videoElement);
+      const player = (playerRef.current = videojs(videoElement, options, () => {
+        videojs.log("player is ready");
+        onReady && onReady(player);
+      }));
 
+      player.ready(() => {
+        if (typeof player.httpSourceSelector === "function") {
+          player.httpSourceSelector({
+            default: "auto",
+          });
+        }
+      });
+      playerRef.current = player;
+    }
+  }, [options, onReady]);
+  useEffect(() => {
+    return () => {
+      if (playerRef.current && !playerRef.current.isDisposed()) {
+        playerRef.current.dispose();
+        playerRef.current = null;
+      }
+    };
+  }, []);
   return (
-    <div className="  sm:rounded-3xl  overflow-hidden shadow-md shadow-gray-900 ">
-      <div className="w-full">
-        <Plyr {...plyrProps} />
-      </div>
+    <div
+      data-vjs-player
+      className="relative h-[200px] sm:h-[400px] lg:h-[430px] sm:rounded-3xl overflow-hidden shadow-md shadow-gray-900"
+    >
+      <div ref={videoRef} className="" />
     </div>
   );
 }
