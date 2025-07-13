@@ -20,30 +20,42 @@ import {
   ChevronDown,
   User2,
   PlugZap,
+  Sparkles,
 } from "lucide-react";
 
 function Slides() {
   const { Auth, setAuth } = useContext(IsAuthnticate);
   const location = useLocation();
 
+  // Professional color palette
+  const iconColors = {
+    primary: "text-gray-600 dark:text-gray-300",
+    accent: "text-blue-600 dark:text-blue-400",
+    success: "text-emerald-600 dark:text-emerald-400",
+    warning: "text-amber-600 dark:text-amber-400",
+    danger: "text-rose-600 dark:text-rose-400",
+    info: "text-cyan-600 dark:text-cyan-400",
+    purple: "text-violet-600 dark:text-violet-400",
+  };
+
   const mainPages = [
     {
-      icon: <Tv size={18} className="text-blue-500" />,
+      icon: <Tv size={18} className={iconColors.accent} />,
       path: "/",
       name: "Videos",
     },
     {
-      icon: <Newspaper size={18} className="text-green-500" />,
+      icon: <Newspaper size={18} className={iconColors.info} />,
       path: "/Articles",
       name: "Articles",
     },
     {
-      icon: <UserPen size={18} className="text-purple-500" />,
+      icon: <UserPen size={18} className={iconColors.purple} />,
       path: "/opinion",
       name: "Opinion",
     },
     {
-      icon: <CalendarCheck size={18} className="text-orange-500" />,
+      icon: <CalendarCheck size={18} className={iconColors.warning} />,
       path: "/events-calendar",
       name: "Special",
     },
@@ -52,22 +64,22 @@ function Slides() {
   const yourPages = Auth.islogined
     ? [
         {
-          icon: <FileText size={18} className="text-cyan-500" />,
+          icon: <FileText size={18} className={iconColors.info} />,
           path: "/myContent",
           name: "Your Content",
         },
         {
-          icon: <Bookmark size={18} className="text-pink-500" />,
+          icon: <Bookmark size={18} className={iconColors.warning} />,
           path: "/saved",
           name: "Saved",
         },
         {
-          icon: <PlugZap size={18} className="text-yellow-500" />,
+          icon: <PlugZap size={18} className={iconColors.success} />,
           path: "/Actions",
           name: "Actions",
         },
         {
-          icon: <History size={18} className="text-red-500" />,
+          icon: <History size={18} className={iconColors.primary} />,
           path: "/History",
           name: "History",
         },
@@ -128,58 +140,89 @@ function Slides() {
   };
 
   return (
-    <div className="h-[100vh] font-semibold overflow-hidden text-nowrap bg-white text-gray-600 dark:text-gray-400 dark:bg-gray-900  flex flex-col">
-      <div className="text-center py-4 text-2xl font-bold text-black dark:text-white">
-        Typeora
+    <div className="h-[100vh] font-medium overflow-hidden text-nowrap bg-white text-gray-700 dark:text-gray-200 dark:bg-gray-900 flex flex-col border-r sm:border-none border-gray-700 ">
+      <div className="text-center py-4">
+        <Link to="/" className="flex items-center justify-center gap-2">
+          <Sparkles size={24} className="text-blue-600 dark:text-blue-400" />
+          <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-violet-600 dark:from-cyan-400 dark:to-purple-400 bg-clip-text text-transparent">
+            Typeora
+          </span>
+        </Link>
       </div>
 
-      <div className="px-2 py-3 ">
-        {Auth.islogined === true ? (
+      <div className="px-3 py-3">
+        {Auth.islogined ? (
           <Link
             to="/profile"
-            className="bg-blue-400 text-white dark:bg-gray-500 dark:bg-opacity-60  cursor-pointer flex items-center justify-center gap-2 border py-2 px-3 rounded-md"
+            className="bg-gradient-to-r border border-gray-300 from-blue-50 to-blue-100 dark:from-gray-800 dark:to-gray-700 cursor-pointer flex items-center gap-3 rounded-lg py-2 px-3 transition-all hover:shadow-sm"
           >
             <div className="images">
-              <img src={people} alt="" className="w-10 rounded-full" />
+              <img
+                src={people}
+                alt=""
+                className="w-10 h-10 rounded-full object-cover border-2 border-white dark:border-gray-700 shadow-sm"
+              />
             </div>
             <div className="textarea">
-              <h3 className="text-md font-bold">
+              <h3 className="text-md font-semibold text-gray-800 dark:text-white">
                 {Auth.user &&
                   `${Auth.user.userFirstname} ${Auth.user.userLastName}`}
               </h3>
-              <p className="text-xs">Premium Plan</p>
+              <p className="text-xs text-blue-600 dark:text-blue-400 font-medium">
+                Premium Member
+              </p>
             </div>
           </Link>
         ) : (
-          <div className="dark:bg-gray-700 dark:text-gray-300 bg-gray-100 text-gray-600 opacity-90 flex items-center justify-center gap-5 border py-2 px-3 rounded-md cursor-not-allowed">
-            <div className="images bg-white rounded-full p-2 border border-gray-200">
-              <User className="text-gray-400" />
+          <div className="bg-gray-50 dark:bg-gray-800 flex items-center justify-center gap-3 rounded-lg py-2 px-3 border border-gray-200 dark:border-gray-700">
+            <div className="bg-white dark:bg-gray-700 rounded-full p-2 border border-gray-200 dark:border-gray-600">
+              <User className="text-gray-500 dark:text-gray-400" size={18} />
             </div>
-            <div className="textarea opacity-60">
-              <h3 className="text-md font-semibold">Login</h3>
-              <p className="text-xs">Access Denied</p>
+            <div className="textarea">
+              <h3 className="text-md font-semibold text-gray-700 dark:text-gray-300">
+                <Link
+                  to="/login"
+                  className="hover:text-blue-600 dark:hover:text-blue-400"
+                >
+                  Sign In
+                </Link>
+              </h3>
+              <p className="text-xs text-gray-500 dark:text-gray-400">
+                Access your account
+              </p>
             </div>
           </div>
         )}
       </div>
 
-      <div className="flex-1 hidel_slide_roler overflow-hidden overflow-y-scroll">
-        <div className="py-3 flex flex-col gap-y-1">
+      <div className="flex-1 hidel_slide_roler overflow-y-auto custom-scrollbar">
+        <div className="py-2 flex flex-col">
+          <div className="px-3 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+            Discover
+          </div>
           {mainPages.map((item, index) => (
             <div
               key={`main-${index}`}
-              className={` ${
+              className={`mx-2 my-1 rounded-lg transition-colors ${
                 isActive(item.path)
-                  ? "bg-blue-50 text-cyan-600 border-l-4 px-4 border-blue-500 dark:bg-gray-700 dark:text-white dark:border-blue-50"
-                  : "px-5  hover:bg-gray-100 dark:hover:bg-gray-800"
+                  ? "bg-blue-50 text-blue-600 dark:bg-gray-800 dark:text-blue-400 shadow-inner"
+                  : "hover:bg-gray-50 dark:hover:bg-gray-800"
               }`}
             >
               <Link
                 to={item.path}
-                className="py-3 w-full flex items-center justify-start pl-3 gap-3 text-sm font-medium cursor-pointer"
+                className="py-2.5 px-3 flex items-center gap-3 text-sm cursor-pointer"
               >
-                {item.icon}
-                <span>{item.name}</span>
+                <span
+                  className={`${
+                    isActive(item.path) ? "opacity-100" : "opacity-80"
+                  }`}
+                >
+                  {item.icon}
+                </span>
+                <span className={isActive(item.path) ? "font-semibold" : ""}>
+                  {item.name}
+                </span>
               </Link>
             </div>
           ))}
@@ -187,168 +230,205 @@ function Slides() {
 
         {Auth.islogined && (
           <>
-            <div className="py-3 flex flex-col gap-y-1 border-t border-gray-200 dark:border-gray-700">
-              <div className="px-5 text-lg font-bold  ">You</div>
+            <div className="py-2 flex flex-col border-t border-gray-100 dark:border-gray-800">
+              <div className="px-3 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                Your Space
+              </div>
               {yourPages.map((item, index) => (
                 <div
                   key={`user-${index}`}
-                  className={` ${
+                  className={`mx-2 my-1 rounded-lg transition-colors ${
                     isActive(item.path)
-                      ? "bg-blue-50 text-cyan-600 border-l-4 px-4 border-blue-500 dark:bg-gray-700 dark:text-white dark:border-blue-50"
-                      : " hover:bg-gray-100 px-5  dark:hover:bg-gray-800"
+                      ? "bg-blue-50 text-blue-600 dark:bg-gray-800 dark:text-blue-400 shadow-inner"
+                      : "hover:bg-gray-50 dark:hover:bg-gray-800"
                   }`}
                 >
                   <Link
                     to={item.path}
-                    className="py-3 w-full flex items-center justify-start pl-3 gap-3 text-sm font-medium cursor-pointer"
+                    className="py-2.5 px-3 flex items-center gap-3 text-sm cursor-pointer"
                   >
-                    {item.icon}
-                    <span>{item.name}</span>
+                    <span
+                      className={`${
+                        isActive(item.path) ? "opacity-100" : "opacity-80"
+                      }`}
+                    >
+                      {item.icon}
+                    </span>
+                    <span
+                      className={isActive(item.path) ? "font-semibold" : ""}
+                    >
+                      {item.name}
+                    </span>
                   </Link>
                 </div>
               ))}
             </div>
 
-            <div className="py-3 flex flex-col gap-y-1 border-t border-gray-200 dark:border-gray-700">
-              <div className="px-5 text-lg font-bold ">Following</div>
+            <div className="py-2 flex flex-col border-t border-gray-100 dark:border-gray-800">
+              <div className="px-3 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                Following
+              </div>
               {followingPeople.map((person) => (
                 <div
                   key={`person-${person.id}`}
-                  className="px-5 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800"
+                  className="mx-2 my-1 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
                 >
                   <Link
                     to={`/visited?${person.id}`}
-                    className="py-3 w-full flex items-center justify-start pl-3 gap-3 text-sm font-medium cursor-pointer"
+                    className="py-2.5 px-3 flex items-center gap-3 text-sm cursor-pointer"
                   >
                     <img
                       src={person.avatar}
                       alt={person.name}
-                      className="w-6 h-6 rounded-full object-cover"
+                      className="w-6 h-6 rounded-full object-cover border border-gray-200 dark:border-gray-700"
                     />
                     <div className="flex flex-col">
-                      <span>{person.name}</span>
-                      <span className="text-xs text-gray-400">
+                      <span className="text-gray-800 dark:text-gray-200">
+                        {person.name}
+                      </span>
+                      <span className="text-xs text-gray-500 dark:text-gray-400">
                         {person.role}
                       </span>
                     </div>
                   </Link>
                 </div>
               ))}
-              <div className=" hover:bg-gray-100 dark:hover:bg-gray-800">
+              <div className="mx-2 my-1 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
                 <Link
                   to="/following"
-                  className="py-3 w-full flex items-center justify-start pl-3 gap-3 text-sm font-medium cursor-pointer"
+                  className="py-2.5 px-3 flex items-center gap-3 text-sm cursor-pointer text-gray-600 dark:text-gray-300"
                 >
-                  <ChevronDown size={18} className="text-gray-500" />
-                  <span>See all following</span>
+                  <ChevronDown size={18} className="opacity-70" />
+                  <span>View all</span>
                 </Link>
               </div>
             </div>
           </>
         )}
 
-        <div className=" py-3 flex flex-col gap-y-1 border-t border-gray-200 dark:border-gray-700">
+        <div className="py-2 flex flex-col border-t border-gray-100 dark:border-gray-800">
+          <div className="px-3 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+            Account
+          </div>
           <div
-            className={` ${
+            className={`mx-2 my-1 rounded-lg transition-colors ${
               isActive("/settings")
-                ? "bg-blue-50 text-cyan-600 px-4 border-l-4 border-blue-500 dark:bg-gray-700 dark:text-white dark:border-blue-50"
-                : " px-5 hover:bg-gray-100 dark:hover:bg-gray-800"
+                ? "bg-blue-50 text-blue-600 dark:bg-gray-800 dark:text-blue-400 shadow-inner"
+                : "hover:bg-gray-50 dark:hover:bg-gray-800"
             }`}
           >
             <Link
               to="/settings"
-              className="py-3 w-full flex items-center justify-start pl-3 gap-3 text-sm font-medium cursor-pointer"
+              className="py-2.5 px-3 flex items-center gap-3 text-sm cursor-pointer"
             >
-              <Settings
-                size={18}
-                className="text-gray-600 dark:text-gray-300"
-              />
+              <Settings size={18} className="opacity-80" />
               <span>Settings</span>
             </Link>
           </div>
           <div
-            className={` ${
+            className={`mx-2 my-1 rounded-lg transition-colors ${
               isActive("/about")
-                ? "bg-blue-50 text-cyan-600 px-4 border-l-4 border-blue-500 dark:bg-gray-700 dark:text-white dark:border-blue-50"
-                : " px-5 hover:bg-gray-100 dark:hover:bg-gray-800"
+                ? "bg-blue-50 text-blue-600 dark:bg-gray-800 dark:text-blue-400 shadow-inner"
+                : "hover:bg-gray-50 dark:hover:bg-gray-800"
             }`}
           >
             <Link
               to="/about"
-              className="py-3 w-full flex items-center justify-start pl-3 gap-3 text-sm font-medium cursor-pointer"
+              className="py-2.5 px-3 flex items-center gap-3 text-sm cursor-pointer"
             >
-              <Flag size={18} className="text-red-500" />
+              <Flag
+                size={18}
+                className="text-rose-600 dark:text-rose-400 opacity-80"
+              />
               <span>About</span>
             </Link>
           </div>
           <div
-            className={` ${
+            className={`mx-2 my-1 rounded-lg transition-colors ${
               isActive("/help")
-                ? "bg-blue-50 text-cyan-600 px-4 border-l-4 border-blue-500 dark:bg-gray-700 dark:text-white dark:border-blue-50"
-                : " hover:bg-gray-100 px-5 dark:hover:bg-gray-800"
+                ? "bg-blue-50 text-blue-600 dark:bg-gray-800 dark:text-blue-400 shadow-inner"
+                : "hover:bg-gray-50 dark:hover:bg-gray-800"
             }`}
           >
             <Link
               to="/help"
-              className="py-3 w-full flex items-center justify-start pl-3 gap-3 text-sm font-medium cursor-pointer"
+              className="py-2.5 px-3 flex items-center gap-3 text-sm cursor-pointer"
             >
-              <LifeBuoy size={18} className="text-blue-400" />
-              <span>Help</span>
+              <LifeBuoy
+                size={18}
+                className="text-emerald-600 dark:text-emerald-400 opacity-80"
+              />
+              <span>Help Center</span>
             </Link>
           </div>
           <div
-            className={` ${
+            className={`mx-2 my-1 rounded-lg transition-colors ${
               isActive("/report-history")
-                ? "bg-blue-50 text-cyan-600 px-4 border-l-4 border-blue-500 dark:bg-gray-700 dark:text-white dark:border-blue-50"
-                : " hover:bg-gray-100 px-5 dark:hover:bg-gray-800"
+                ? "bg-blue-50 text-blue-600 dark:bg-gray-800 dark:text-blue-400 shadow-inner"
+                : "hover:bg-gray-50 dark:hover:bg-gray-800"
             }`}
           >
             <Link
               to="/report-history"
-              className="py-3 w-full flex items-center justify-start pl-3 gap-3 text-sm font-medium cursor-pointer"
+              className="py-2.5 px-3 flex items-center gap-3 text-sm cursor-pointer"
             >
-              <Flag size={18} className="text-orange-400" />
-              <span>Report</span>
+              <Flag
+                size={18}
+                className="text-amber-600 dark:text-amber-400 opacity-80"
+              />
+              <span>Report Issue</span>
             </Link>
           </div>
           <div
-            className={` ${
+            className={`mx-2 my-1 rounded-lg transition-colors ${
               isActive("/feedback")
-                ? "bg-blue-50 text-cyan-600 border-l-4 px-4 border-blue-500 dark:bg-gray-700 dark:text-white dark:border-blue-50"
-                : " hover:bg-gray-100 px-5 dark:hover:bg-gray-800"
+                ? "bg-blue-50 text-blue-600 dark:bg-gray-800 dark:text-blue-400 shadow-inner"
+                : "hover:bg-gray-50 dark:hover:bg-gray-800"
             }`}
           >
             <Link
               to="/feedback"
-              className="py-3 w-full px-5 flex items-center justify-start pl-3 gap-3 text-sm font-medium cursor-pointer"
+              className="py-2.5 px-3 flex items-center gap-3 text-sm cursor-pointer"
             >
-              <Mail size={18} className="text-green-500" />
+              <Mail
+                size={18}
+                className="text-cyan-600 dark:text-cyan-400 opacity-80"
+              />
               <span>Feedback</span>
             </Link>
           </div>
-          <div className="">
+          <div className="mx-2 my-1 rounded-lg transition-colors hover:bg-gray-50 dark:hover:bg-gray-800">
             {Auth.islogined ? (
               <div
-                className=" py-3 w-full flex items-center justify-start  px-8 gap-3 text-sm font-medium cursor-pointer  hover:bg-gray-100 dark:hover:bg-gray-800"
+                className="py-2.5 px-3 flex items-center gap-3 text-sm cursor-pointer"
                 onClick={handleLogout}
               >
-                <UserRoundX size={18} className="text-red-500" />
-                <span>Logout</span>
+                <UserRoundX
+                  size={18}
+                  className="text-rose-600 dark:text-rose-400 opacity-80"
+                />
+                <span>Log Out</span>
               </div>
             ) : (
-              <div className="py-3 w-full flex items-center justify-start px-8  gap-3 text-sm font-medium cursor-pointer  hover:bg-gray-100 dark:hover:bg-gray-800">
-                <User2 size={18} className="text-blue-500" />
-                <span>
-                  <Link to="/login">Login</Link>
-                </span>
-              </div>
+              <Link
+                to="/login"
+                className="py-2.5 px-3 flex items-center gap-3 text-sm cursor-pointer"
+              >
+                <User2
+                  size={18}
+                  className="text-blue-600 dark:text-blue-400 opacity-80"
+                />
+                <span>Sign In</span>
+              </Link>
             )}
           </div>
         </div>
-        <div className="px-4 py-3 text-xs text-gray-500 dark:text-gray-400">
+
+        <div className="px-4 py-4 text-xs text-gray-500 dark:text-gray-400 border-t border-gray-100 dark:border-gray-800">
           <div>
-            © 2025 Typeora International. <br />
-            <br /> All copyrights reserved.
+            © 2025 Typeora International
+            <br />
+            All rights reserved.
           </div>
         </div>
       </div>
