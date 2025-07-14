@@ -10,3 +10,6 @@
 .vjs-tech {
   object-fit: cover !important;
 }
+.vjs-http-source-selector {
+  font-size: 13px !important;
+}

@@ -1,9 +1,9 @@
 import React, { memo, useContext, useEffect, useMemo, useState } from "react";
 import AllOptions from "../../component/models/AllOptions";
+import { IsAuthnticate } from "../../context/Auth/IsAuth";
 import { Headers } from "../../context/utils/Headercontext";
 import { Link } from "react-router-dom";
 import NewUpload from "../../component/Page/Profile/NewUpload";
-import bgimg from "../../assets/images/videos.jpg";
 import logo from "../../assets/images/logo.png";
 import poster from "../../assets/images/videos2.jpg";
 import { Dot, EllipsisVertical, Play, Video } from "lucide-react";
@@ -38,6 +38,7 @@ function LiveReports() {
     e.preventDefault();
     setModelOpen((prev) => (prev === key ? null : key));
   };
+  const { Auth, LoginAlert } = useContext(IsAuthnticate);
   return (
     <div className=" relative text-gray-200 dark:text-gray-400 mb-10">
       <div className="flex items-center justify-between mb-6">
@@ -198,22 +199,29 @@ function LiveReports() {
           <Link
             key={key}
             to={`/watch?id=${key}`}
-            className=" border border-gray-800 relative overflow-hidden p-5 flex flex-col   justify-end w-full sm:w-[49%] lg:w-[32%] h-60 rounded-md bg-cover bg-center"
-            style={{ backgroundImage: `url(${bgimg})` }}
+            className=" group border border-gray-800 relative overflow-hidden  flex flex-col   justify-end w-full sm:w-[49%] lg:w-[32%] h-60 rounded-md bg-cover bg-center"
           >
-            <div
-              className="absolute bottom-0 inset-0 z-0"
-              style={{
-                backgroundImage:
-                  "linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0))",
-              }}
-            >
+            <div className="absolute bottom-0 inset-0 z-0">
               <div className=" absolute bg-black opacity-75 px-2 text-xs py-1 rounded-md right-5 top-3">
                 10:12
               </div>
             </div>
 
-            <div className=" z-10 flex flex-col gap-y-2 text-xs">
+            <video
+              className="absolute top-0 left-0 w-full h-full object-cover"
+              muted
+              loop
+              playsInline
+              preload="auto"
+              onMouseEnter={(e) => e.target.play()}
+              onMouseLeave={(e) => {
+                e.target.pause();
+                e.target.currentTime = 0;
+              }}
+              src="https://res.cloudinary.com/do1ui12rk/video/upload/v1752467010/4623276-uhd_3840_2160_24fps_gqoi4j.mp4"
+            />
+
+            <div className="p-5 bg-gradient-to-t from-black to-transparent   group-hover:hidden z-10 flex flex-col gap-y-2 text-xs">
               <h3 className=" font-semibold text-sm  text-white dark:text-gray-300">
                 QUEZY-AGAIN | Artist Spotlight
               </h3>
@@ -259,10 +267,16 @@ function LiveReports() {
 
         <div className="flex items-center space-x-2 sm:space-x-4">
           <button
-            onClick={() => {
-              setUploadActive(true);
-            }}
-            className="flex items-center space-x-1 bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 text-white px-3 py-1.5 rounded-lg transition-colors text-sm"
+            onClick={
+              Auth.islogined
+                ? () => {
+                    setUploadActive(true);
+                  }
+                : LoginAlert
+            }
+            className={`flex items-center space-x-1 
+              bg-blue-600 hover:bg-blue-700
+             text-white px-3 py-1.5 rounded-lg transition-colors text-sm`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -339,16 +353,23 @@ function LiveReports() {
           >
             <div className=" rounded-lg overflow-hidden ">
               <div className=" relative images mb-3  group">
-                <img
-                  src={poster}
-                  alt="Poster"
+                <video
+                  muted
+                  loop
                   className="rounded-lg w-full h-auto object-cover"
-                />
-                <div className=" absolute bg-black opacity-75 px-2 text-xs py-1 rounded-md right-5 bottom-3">
+                  src="https://res.cloudinary.com/do1ui12rk/video/upload/v1752468726/11574636-hd_1280_720_30fps_xp8fbs.mp4"
+                  onMouseEnter={(e) => e.target.play()}
+                  onMouseLeave={(e) => {
+                    e.target.pause();
+                    e.target.currentTime = 0;
+                  }}
+                  // poster={poster}
+                ></video>
+                <div className=" absolute  bg-black opacity-75 px-2 text-xs py-1 rounded-md right-5 bottom-3">
                   10:12
                 </div>
-                <div className=" hidden group-hover:flex absolute top-0 left-0 w-full h-full  items-center justify-center">
-                  <Play className=" fill-white w-10 h-10 stroke-white" />
+                <div className=" flex group-hover:hidden  absolute top-0 left-0 w-full h-full  items-center justify-center">
+                  <Play className=" fill-white w-8 h-8 stroke-white " />
                 </div>
               </div>
               <div className="textareas flex gap-3 px-2 pb-3 text-sm ">

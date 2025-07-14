@@ -99,7 +99,9 @@ function NewArticle(props) {
             <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 text-center">
               <div className="flex items-center justify-center gap-2 mb-3">
                 <ImageIcon className="w-5 h-5 text-blue-500" />
-                <h3 className="text-xl font-bold">Upload your cover image</h3>
+                <h3 className="text-xl font-bold">
+                  Upload your cover {type === "article" ? "image" : "video"}
+                </h3>
               </div>
               <p className="text-gray-500 dark:text-gray-400 mb-6">
                 Supports{" "}

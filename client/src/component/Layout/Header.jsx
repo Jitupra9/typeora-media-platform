@@ -27,15 +27,18 @@ function Header(props) {
     <div className="relative w-full bg-white text-gray-500 font-semibold shadow-sm dark:shadow-gray-800 dark:bg-gray-900 dark:text-gray-400">
       <nav className="flex flex-col sm:flex-row justify-between items-center px-3 text-xs">
         <div className="flex items-center gap-x-6">
-          {/* <Link to="/" className="flex items-center gap-2 py-3 group">
+          <Link
+            to="/"
+            className=" hidden  sm:flex lg:hidden items-center gap-2 py-3 group"
+          >
             <Sparkles
               size={20}
               className="text-cyan-600 dark:text-cyan-400 group-hover:rotate-12 transition-transform"
             />
             <span className="text-lg font-bold bg-gradient-to-r from-cyan-600 to-purple-600 bg-clip-text text-transparent dark:from-cyan-400 dark:to-purple-400">
-              Lumina
+              Typeora
             </span>
-          </Link> */}
+          </Link>
 
           {/* Navigation Items */}
           <ul className="hidden sm:flex items-center gap-x-6 *:py-3 *:tracking-wide *:cursor-pointer">
