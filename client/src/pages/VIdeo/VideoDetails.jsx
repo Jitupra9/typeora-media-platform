@@ -1,9 +1,8 @@
-import React, { memo, useEffect, useState } from "react";
-
+import React, { memo, useEffect, useState, useRef } from "react";
 import Shared from "../../component/models/Share";
 import Reportfedbacks from "../../component/models/report-fedbacks";
 import Videoplayer from "../../component/utils/videoplayer";
-// import sports from "../../assets/images/sports.jpg";
+import sports from "../../assets/images/sports.jpg";
 import {
   ThumbsUp,
   ThumbsDown,
@@ -19,14 +18,68 @@ import img from "../../assets/images/people.jpg";
 function LiveStream() {
   const [isSaharedOpen, setisSaharedOpen] = useState(false);
   const [isReoprtModel, setisReoprtModel] = useState(false);
+  const playerRef = useRef(null);
   useEffect(() => {
     console.log("live stream lender");
   });
+  const videoJsOptions = {
+    autoplay: true,
+    controls: true,
+    loop: true,
+    playbackRates: [0.5, 1, 1.5, 2, 4],
+    muted: true,
+    responsive: true,
+    fluid: true,
+    language: "en",
+    controlBar: {
+      volumePanel: true,
+      pictureInPictureToggle: false,
+      children: [
+        "playToggle",
+        "volumePanel",
+        "currentTimeDisplay",
+        "timeDivider",
+        "durationDisplay",
+        "progressControl",
+        "remainingTimeDisplay",
+        "playbackRateMenuButton",
+        "fullscreenToggle",
+      ],
+    },
+    sources: [
+      {
+        src: "http://content.jwplatform.com/manifests/vM7nH0Kl.m3u8",
+        type: "application/x-mpegURL",
+      },
+    ],
+    tracks: [
+      {
+        kind: "subtitles",
+        src: "subs.vtt",
+        srclang: "en",
+        label: "English",
+        default: true,
+      },
+    ],
+  };
+  const handlePlayerReady = (player) => {
+    playerRef.current = player;
+
+    player.on("waiting", () => {
+      console.log("player is waiting");
+    });
+
+    player.on("dispose", () => {
+      console.log("player will dispose");
+    });
+  };
+
   return (
     <div className=" text-black  dark:text-white ">
       <div className="  w-full streaming  rounded-xl  ">
-        <Videoplayer />
-
+        <div className=" sticky sm:relative -top-2 sm:top-auto z-10">
+          <Videoplayer options={videoJsOptions} onReady={handlePlayerReady} />
+        </div>
         <p className=" Video-title lg:hidden mt-5  text-xl  font-bold dark:text-white text-black">
           Basic how to ride your skateboard comfortly and Basic Equipment to
           play skateboard safely
