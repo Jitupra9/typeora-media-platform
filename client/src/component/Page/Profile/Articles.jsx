@@ -156,8 +156,8 @@ const ProfileArticles = (props) => {
 
       {layout === "grid" && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {demoArticles.map((article) => (
-            <RenderGridItem data={article} page="article" />
+          {demoArticles.map((article, key) => (
+            <RenderGridItem data={article} key={key} page="article" />
           ))}
         </div>
       )}

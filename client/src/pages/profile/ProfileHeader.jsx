@@ -27,6 +27,7 @@ function ProfileHeader(props) {
   };
   const handleEdit = () => {
     props.setisactive("Personal");
+    props.handleEdit();
   };
   return (
     <div className="bg-white dark:bg-gray-900 px-5 py-2 rounded-xl shadow-sm">
@@ -52,7 +53,7 @@ function ProfileHeader(props) {
                 <Briefcase className="w-4 h-4 mr-1" />
                 Senior Full Stack Developer
               </div>
-              <Dot className="mx-1 hidden md:block" />
+              <Dot className=" hidden sm:block lg:hidden xl:block" />
               <div className=" flex items-center">
                 <Mail className="w-4 h-4 mr-1" />
                 {user.userEmail}
@@ -66,7 +67,10 @@ function ProfileHeader(props) {
             className="flex items-center gap-2 text-sm bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors"
           >
             <Edit className="w-4 h-4" />
-            Edit <span className=" lg:hidden xl:inline-block">Profile</span>
+            Edit{" "}
+            <span className=" sm:hidden md:inline-block lg:hidden xl:inline-block">
+              Profile
+            </span>
           </button>
           <button
             onClick={handleShare}

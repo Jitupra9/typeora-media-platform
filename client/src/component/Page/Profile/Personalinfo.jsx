@@ -8,10 +8,11 @@ import {
   Info,
   Save,
   X,
+  Briefcase,
 } from "lucide-react";
-import { memo, useState } from "react";
+import { memo, useEffect, useState } from "react";
 
-function Personalinfo() {
+function Personalinfo({ Isedit, setIsedit }) {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "John",
@@ -19,12 +20,19 @@ function Personalinfo() {
     gender: "Male",
     phoneNo: "+1 (555) 123-4567",
     secondaryEmail: "john.doe@example.com",
-    website: "https://example.com",
+    Company: "Web Bocket",
     location: "New York, USA",
     role: "User",
     about:
       "I'm a software engineer passionate about building user-friendly applications...",
   });
+  useEffect(() => {
+    if (Isedit) {
+      setIsEditing(true);
+    } else {
+      setIsEditing(false);
+    }
+  }, [Isedit]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -36,6 +44,7 @@ function Personalinfo() {
   };
 
   const handleCancel = () => {
+    setIsedit(false);
     setIsEditing(false);
   };
 
@@ -59,7 +68,7 @@ function Personalinfo() {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 transition-colors"
           >
             <Pencil className="w-4 h-4 text-yellow-300" />
-            Edit <span className=" hidden sm:inline-block">Profile</span>
+            Edit<span className=" hidden sm:inline-block">Profile</span>
           </button>
         ) : (
           <div className="flex gap-2">
@@ -205,18 +214,18 @@ function Personalinfo() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="space-y-2">
               <label
-                htmlFor="website"
+                htmlFor="Company"
                 className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-1"
               >
-                <Globe className="w-4 h-4 text-teal-400" />
-                Website
+                <Briefcase className="w-4 h-4 text-purple-400" />
+                Company
               </label>
               <input
-                id="website"
+                id="Company"
                 className="w-full bg-gray-50 dark:bg-gray-800 outline-none p-3 rounded-lg border border-gray-300 dark:border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-700 transition-colors"
                 type="url"
-                name="website"
-                value={formData.website}
+                name="Company"
+                value={formData.Company}
                 onChange={handleInputChange}
                 readOnly={!isEditing}
               />
