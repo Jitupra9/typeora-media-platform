@@ -7,7 +7,7 @@ function Layout() {
   const [sidebarActive, setsidebarActive] = useState(false);
   return (
     <Headercontext>
-      <div className="flex w-[100vw] h-[100vh] fixed top-0 bg-gray-200 bg-opacity-50 dark:bg-gray-950 ">
+      <div className="flex w-[100vw] h-[100vh] fixed top-0 bg-gray-200 bg-opacity-50 dark:bg-gray-950">
         <div className="w-[16%] hidden lg:block">
           <Slides className="" />
         </div>

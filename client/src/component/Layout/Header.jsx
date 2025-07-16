@@ -24,7 +24,7 @@ function Header(props) {
   };
 
   return (
-    <div className="relative w-full bg-white text-gray-500 font-semibold shadow-sm dark:shadow-gray-800 dark:bg-gray-900 dark:text-gray-400">
+    <div className="relative w-full bg-white text-gray-500 font-semibold  dark:bg-gray-900 border-b border-gray-200  dark:border-gray-900 dark:border-opacity-70 dark:text-gray-400">
       <nav className="flex flex-col sm:flex-row justify-between items-center px-3 text-xs">
         <div className="flex items-center gap-x-6">
           <Link
