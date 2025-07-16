@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import { IsAuthnticate } from "../../../context/Auth/IsAuth";
 import {
   Pencil,
   User,
@@ -12,19 +14,20 @@ import {
 } from "lucide-react";
 import { memo, useEffect, useState } from "react";
 
-function Personalinfo({ Isedit, setIsedit }) {
+function Personalinfo({ Isedit, setIsedit, userdata }) {
   const [isEditing, setIsEditing] = useState(false);
+  const [user, setuser] = useState(userdata);
+  const { setAuth } = useContext(IsAuthnticate);
   const [formData, setFormData] = useState({
-    firstName: "John",
-    lastName: "Doe",
-    gender: "Male",
-    phoneNo: "+1 (555) 123-4567",
-    secondaryEmail: "john.doe@example.com",
-    Company: "Web Bocket",
-    location: "New York, USA",
-    role: "User",
-    about:
-      "I'm a software engineer passionate about building user-friendly applications...",
+    firstName: user.userFirstname,
+    lastName: user.userLastName,
+    gender: user.userGender,
+    phoneNo: user.userphoneNo,
+    secondaryEmail: user.userSecondaryEmail,
+    Company: user.userCompany,
+    location: user.userlocation,
+    role: user.userrole,
+    about: user.userAbout,
   });
   useEffect(() => {
     if (Isedit) {
@@ -201,6 +204,7 @@ function Personalinfo({ Isedit, setIsedit }) {
                 value={formData.secondaryEmail}
                 onChange={handleInputChange}
                 readOnly={!isEditing}
+                placeholder="Enter the secondary email"
               />
             </div>
           </div>
@@ -225,6 +229,7 @@ function Personalinfo({ Isedit, setIsedit }) {
                 className="w-full bg-gray-50 dark:bg-gray-800 outline-none p-3 rounded-lg border border-gray-300 dark:border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-700 transition-colors"
                 type="url"
                 name="Company"
+                placeholder="Enter the company"
                 value={formData.Company}
                 onChange={handleInputChange}
                 readOnly={!isEditing}
@@ -259,17 +264,17 @@ function Personalinfo({ Isedit, setIsedit }) {
               </label>
               <input
                 id="role"
-                className="w-full bg-gray-100 dark:bg-gray-700 outline-none p-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 cursor-not-allowed"
+                className="w-full bg-gray-50 dark:bg-gray-800 outline-none p-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300"
                 type="text"
                 name="role"
+                placeholder="Enter Your Profetion"
                 value={formData.role}
-                readOnly
+                readOnly={!isEditing}
               />
             </div>
           </div>
         </div>
 
-        {/* About Section */}
         <div>
           <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
             <Info className="w-5 h-5 text-amber-500" />
@@ -286,6 +291,7 @@ function Personalinfo({ Isedit, setIsedit }) {
               id="about"
               className="w-full bg-gray-50 dark:bg-gray-800 outline-none p-3 rounded-lg border border-gray-300 dark:border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-700 transition-colors"
               name="about"
+              placeholder="Enter the About"
               rows={4}
               value={formData.about}
               onChange={handleInputChange}

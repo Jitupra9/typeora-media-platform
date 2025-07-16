@@ -43,7 +43,13 @@ function Profile() {
   const components = (componentName) => {
     switch (componentName) {
       case "Personal":
-        return <Personalinfo Isedit={Isedit} setIsedit={setIsedit} />;
+        return (
+          <Personalinfo
+            Isedit={Isedit}
+            setIsedit={setIsedit}
+            userdata={Auth.user}
+          />
+        );
       case "Article":
         return (
           <Articles

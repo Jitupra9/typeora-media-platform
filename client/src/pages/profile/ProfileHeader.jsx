@@ -49,11 +49,15 @@ function ProfileHeader(props) {
               </span>
             </h3>
             <p className=" flex flex-wrap  gap-1  text-gray-500 dark:text-gray-400 text-sm ">
-              <div className=" flex items-center">
-                <Briefcase className="w-4 h-4 mr-1" />
-                Senior Full Stack Developer
-              </div>
-              <Dot className=" hidden sm:block lg:hidden xl:block" />
+              {user.userRole && (
+                <div className=" flex items-center">
+                  <Briefcase className="w-4 h-4 mr-1" />
+                  {user.userRole}
+                </div>
+              )}
+              {user.userRole && (
+                <Dot className=" hidden sm:block lg:hidden xl:block" />
+              )}{" "}
               <div className=" flex items-center">
                 <Mail className="w-4 h-4 mr-1" />
                 {user.userEmail}
@@ -106,7 +110,9 @@ function ProfileHeader(props) {
           </div>
           <div>
             <p className="text-gray-400">Company</p>
-            <h3 className="font-semibold">Web Bocket</h3>
+            <h3 className="font-semibold">
+              {user.company ? user.company : "Not Mention"}
+            </h3>
           </div>
         </div>
 
