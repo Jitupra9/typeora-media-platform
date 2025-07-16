@@ -43,7 +43,7 @@ function ProfileHeader(props) {
           </div>
           <div>
             <h3 className="font-bold text-2xl">
-              {user.userFirstname + " " + user.userLastName}
+              {user.Firstname + " " + user.LastName}
               <span className="ml-2 text-sm bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 px-2 py-1 rounded-full">
                 Pro
               </span>
@@ -52,7 +52,7 @@ function ProfileHeader(props) {
               {user.userRole && (
                 <div className=" flex items-center">
                   <Briefcase className="w-4 h-4 mr-1" />
-                  {user.userRole}
+                  {user.Role}
                 </div>
               )}
               {user.userRole && (
@@ -60,7 +60,7 @@ function ProfileHeader(props) {
               )}{" "}
               <div className=" flex items-center">
                 <Mail className="w-4 h-4 mr-1" />
-                {user.userEmail}
+                {user.Email}
               </div>
             </p>
           </div>
@@ -99,7 +99,7 @@ function ProfileHeader(props) {
             <p className="text-gray-400">Location</p>
             <h3 className="font-semibold flex items-center gap-1">
               <Globe className="w-4 h-4" />
-              {user.userlocation}
+              {user.Location}
             </h3>
           </div>
         </div>
@@ -145,7 +145,13 @@ function ProfileHeader(props) {
             Profile Completion:
             {profileCompletion}%
           </span>
-          <span className="text-xs text-blue-500">Complete Profile</span>
+          <span
+            className={`text-xs ${
+              profileCompletion === 100 ? "text-green-500" : "text-blue-500"
+            }`}
+          >
+            Complete Profile
+          </span>
         </div>
         <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
           <div

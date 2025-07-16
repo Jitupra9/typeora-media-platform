@@ -154,12 +154,17 @@ function Signup(props) {
     try {
       console.log("submited data is ", datas);
       const res = await axios.post(`api/signup`, {
-        userEmail: datas.email,
-        userPassword: datas.password,
-        userFirstname: datas.firstName,
-        userLastName: datas.lastName,
-        userphoneNo: datas.phoneNo,
-        userlocation: datas.location,
+        Email: datas.email,
+        Password: datas.password,
+        Firstname: datas.firstName,
+        LastName: datas.lastName,
+        PhoneNo: datas.phoneNo,
+        Gender: null,
+        SecondaryEmail: null,
+        company: null,
+        Role: null,
+        About: null,
+        Location: datas.location,
       });
       if (res.data.success) {
         toast.success("signup successfully");

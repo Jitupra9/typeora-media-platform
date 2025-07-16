@@ -7,6 +7,7 @@ function IsAuth({ children }) {
     user: [""],
     islogined: false,
     loading: true,
+    token: null,
   });
 
   const fetchUser = () => {
@@ -18,6 +19,7 @@ function IsAuth({ children }) {
         islogined: true, // change it TRUE if successfully login
         user: result?.user,
         loading: false,
+        token: result?.token,
       }));
     } else {
       setAuth((prev) => ({

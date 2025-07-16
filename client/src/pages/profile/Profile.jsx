@@ -24,11 +24,36 @@ function Profile() {
   const [Isedit, setIsedit] = useState(false);
   const [UploadActive, setUploadActive] = useState(false);
   const { Auth } = useContext(IsAuthnticate);
-  const [profileCompletion, setProfileCompletion] = useState(75);
+  const [profileCompletion, setProfileCompletion] = useState(0);
+  const [formData, setFormData] = useState(() => {
+    const u = Auth?.user ?? {};
+    return {
+      FirstName: u.Firstname ?? "",
+      LastName: u.LastName ?? "",
+      Gender: u.Gender?.[0] ?? "",
+      PhoneNo: u.PhoneNo ?? "",
+      SecondaryEmail: u.SecondaryEmail ?? "",
+      Company: u.Company ?? "",
+      Location: u.Location ?? "",
+      Role: u.Role ?? "",
+      About: u.About ?? "",
+    };
+  });
+  const calcCompletion = (dataObj) => {
+    const values = Object.values(dataObj);
+    const total = values.length;
+    const filled = values.reduce((acc, v) => {
+      if (v === null || v === undefined) return acc;
+      if (typeof v === "string" && v.trim() === "") return acc;
+      return acc + 1;
+    }, 0);
+    return Math.round((filled / total) * 100);
+  };
 
   useEffect(() => {
-    setProfileCompletion(60);
-  }, []);
+    setProfileCompletion(calcCompletion(formData));
+  }, [formData]);
+
   const categories = useMemo(
     () => [
       { path: "/profile", name: "Profile" },
@@ -48,6 +73,7 @@ function Profile() {
             Isedit={Isedit}
             setIsedit={setIsedit}
             userdata={Auth.user}
+            setProfileCompletion={setFormData}
           />
         );
       case "Article":

@@ -166,8 +166,7 @@ function Slides() {
               </div>
               <div className="textarea">
                 <h3 className="text-md font-semibold text-gray-800 dark:text-white">
-                  {Auth.user &&
-                    `${Auth.user.userFirstname} ${Auth.user.userLastName}`}
+                  {Auth.user && `${Auth.user.Firstname} ${Auth.user.LastName}`}
                 </h3>
                 <p className="text-xs text-blue-600 dark:text-blue-400 font-medium">
                   Premium Member

@@ -1,9 +1,11 @@
 import { useContext } from "react";
 import { IsAuthnticate } from "../../../context/Auth/IsAuth";
+import axios from "axios";
 import {
   Pencil,
   User,
   Mail,
+  Loader,
   Phone,
   Globe,
   MapPin,
@@ -13,21 +15,27 @@ import {
   Briefcase,
 } from "lucide-react";
 import { memo, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
-function Personalinfo({ Isedit, setIsedit, userdata }) {
+function Personalinfo({ Isedit, setIsedit, userdata, setProfileCompletion }) {
+  const [loading, setloading] = useState({
+    loading: false,
+    loadingName: null,
+  });
   const [isEditing, setIsEditing] = useState(false);
   const [user, setuser] = useState(userdata);
-  const { setAuth } = useContext(IsAuthnticate);
+  const { Auth, setAuth } = useContext(IsAuthnticate);
   const [formData, setFormData] = useState({
-    firstName: user.userFirstname,
-    lastName: user.userLastName,
-    gender: user.userGender,
-    phoneNo: user.userphoneNo,
-    secondaryEmail: user.userSecondaryEmail,
-    Company: user.userCompany,
-    location: user.userlocation,
-    role: user.userrole,
-    about: user.userAbout,
+    id: user._id,
+    FirstName: user?.Firstname || "",
+    LastName: user?.LastName || "",
+    Gender: user?.Gender?.[0] || "",
+    PhoneNo: user?.PhoneNo || "",
+    SecondaryEmail: user?.SecondaryEmail || "",
+    Company: user?.Company || "",
+    Location: user?.Location || "",
+    Role: user?.Role || "",
+    About: user?.About || "",
   });
   useEffect(() => {
     if (Isedit) {
@@ -42,8 +50,40 @@ function Personalinfo({ Isedit, setIsedit, userdata }) {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSave = () => {
-    setIsEditing(false);
+  const handleSave = async () => {
+    setloading((prev) => ({ ...prev, loading: true, loadingName: "saveing" }));
+    try {
+      const res = await axios.put("api/UpdateProfile", {
+        formData,
+        token: Auth.token,
+      });
+      if (res.data?.success) {
+        if (res.data?.user) {
+          console.log(res.data);
+          setAuth((prev) => ({
+            ...prev,
+            user: res.data.user,
+          }));
+          localStorage.setItem(
+            "userData",
+            JSON.stringify({
+              token: Auth.token,
+              user: res.data.user,
+            })
+          );
+          setProfileCompletion(Auth.user);
+        }
+      }
+    } catch (err) {
+      if (res.err?.message) {
+        toast.error(res.err.message);
+      } else {
+        toast.error("somthing wrong try later");
+      }
+    } finally {
+      setloading((prev) => ({ ...prev, loading: false, loadingName: "" }));
+      setIsEditing(false);
+    }
   };
 
   const handleCancel = () => {
@@ -76,11 +116,27 @@ function Personalinfo({ Isedit, setIsedit, userdata }) {
         ) : (
           <div className="flex gap-2">
             <button
+              disabled={loading.loading}
               onClick={handleSave}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm bg-green-600 text-white hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-600 transition-colors"
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm
+                ${
+                  loading.loading
+                    ? "bg-green-300 dark:bg-green-400 "
+                    : "bg-green-600 dark:bg-green-700 hover:bg-green-700  dark:hover:bg-green-600"
+                }
+                   text-white  transition-colors`}
             >
-              <Save className="w-4 h-4 text-white" />
-              Save <span className=" hidden sm:inline-block"> Changes</span>
+              {loading.loadingName === "saveing" && loading.loading ? (
+                <div className="flex items-center gap-2">
+                  <Loader className="w-4 h-4 animate-spin" />
+                  Saveing...
+                </div>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <Save className="w-4 h-4 text-white" />
+                  Save <span className=" hidden sm:inline-block"> Changes</span>
+                </div>
+              )}
             </button>
             <button
               onClick={handleCancel}
@@ -112,8 +168,8 @@ function Personalinfo({ Isedit, setIsedit, userdata }) {
                   id="firstName"
                   className="w-full bg-gray-50 dark:bg-gray-800 outline-none p-3 rounded-lg border border-gray-300 dark:border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-700 transition-colors"
                   type="text"
-                  name="firstName"
-                  value={formData.firstName}
+                  name="FirstName"
+                  value={formData.FirstName}
                   onChange={handleInputChange}
                   readOnly={!isEditing}
                 />
@@ -131,8 +187,8 @@ function Personalinfo({ Isedit, setIsedit, userdata }) {
                 id="lastName"
                 className="w-full bg-gray-50 dark:bg-gray-800 outline-none p-3 rounded-lg border border-gray-300 dark:border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-700 transition-colors"
                 type="text"
-                name="lastName"
-                value={formData.lastName}
+                name="LastName"
+                value={formData.LastName}
                 onChange={handleInputChange}
                 readOnly={!isEditing}
               />
@@ -148,8 +204,8 @@ function Personalinfo({ Isedit, setIsedit, userdata }) {
               <select
                 id="gender"
                 className="w-full bg-gray-50 dark:bg-gray-800 outline-none p-3 rounded-lg border border-gray-300 dark:border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-700 transition-colors"
-                name="gender"
-                value={formData.gender}
+                name="Gender"
+                value={formData.Gender}
                 onChange={handleInputChange}
                 disabled={!isEditing}
               >
@@ -162,7 +218,6 @@ function Personalinfo({ Isedit, setIsedit, userdata }) {
           </div>
         </div>
 
-        {/* Contact Information Section */}
         <div className="mb-8">
           <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
             <Mail className="w-5 h-5 text-blue-500" />
@@ -181,8 +236,8 @@ function Personalinfo({ Isedit, setIsedit, userdata }) {
                 id="phoneNo"
                 className="w-full bg-gray-50 dark:bg-gray-800 outline-none p-3 rounded-lg border border-gray-300 dark:border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-700 transition-colors"
                 type="tel"
-                name="phoneNo"
-                value={formData.phoneNo}
+                name="PhoneNo"
+                value={formData.PhoneNo}
                 onChange={handleInputChange}
                 readOnly={!isEditing}
               />
@@ -200,8 +255,8 @@ function Personalinfo({ Isedit, setIsedit, userdata }) {
                 id="secondaryEmail"
                 className="w-full bg-gray-50 dark:bg-gray-800 outline-none p-3 rounded-lg border border-gray-300 dark:border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-700 transition-colors"
                 type="email"
-                name="secondaryEmail"
-                value={formData.secondaryEmail}
+                name="SecondaryEmail"
+                value={formData.SecondaryEmail}
                 onChange={handleInputChange}
                 readOnly={!isEditing}
                 placeholder="Enter the secondary email"
@@ -248,8 +303,8 @@ function Personalinfo({ Isedit, setIsedit, userdata }) {
                 id="location"
                 className="w-full bg-gray-50 dark:bg-gray-800 outline-none p-3 rounded-lg border border-gray-300 dark:border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-700 transition-colors"
                 type="text"
-                name="location"
-                value={formData.location}
+                name="Location"
+                value={formData.Location}
                 onChange={handleInputChange}
                 readOnly={!isEditing}
               />
@@ -266,9 +321,10 @@ function Personalinfo({ Isedit, setIsedit, userdata }) {
                 id="role"
                 className="w-full bg-gray-50 dark:bg-gray-800 outline-none p-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300"
                 type="text"
-                name="role"
-                placeholder="Enter Your Profetion"
-                value={formData.role}
+                name="Role"
+                placeholder="Enter Your Profession"
+                value={formData.Role}
+                onChange={handleInputChange}
                 readOnly={!isEditing}
               />
             </div>
@@ -290,10 +346,10 @@ function Personalinfo({ Isedit, setIsedit, userdata }) {
             <textarea
               id="about"
               className="w-full bg-gray-50 dark:bg-gray-800 outline-none p-3 rounded-lg border border-gray-300 dark:border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-700 transition-colors"
-              name="about"
+              name="About"
               placeholder="Enter the About"
               rows={4}
-              value={formData.about}
+              value={formData.About}
               onChange={handleInputChange}
               readOnly={!isEditing}
             ></textarea>
