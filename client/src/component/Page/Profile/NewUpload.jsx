@@ -23,16 +23,21 @@ function NewArticle(props) {
     description: "",
     tags: [],
     category: "",
+    customCategory: "",
   });
+
   useEffect(() => {
     console.log("newupload component render");
   });
+
   const [newTag, setNewTag] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [isPublished, setIsPublished] = useState(false);
+
   const handleArticle = () => {
     props.setUploadActive(false);
   };
+
   const { uploadImage } = CloudinaryUpload();
 
   const handleChange = (e) => {
@@ -64,11 +69,22 @@ function NewArticle(props) {
     e.preventDefault();
     setIsUploading(true);
 
+    // Use customCategory if "other" is selected
+    const finalCategory =
+      newArticle.category === "other"
+        ? newArticle.customCategory
+        : newArticle.category;
+
+    const articleData = {
+      ...newArticle,
+      category: finalCategory,
+    };
+
     try {
-      const newFileUrl = await uploadImage(newArticle.fileUrl);
+      const newFileUrl = await uploadImage(articleData.fileUrl);
       if (newFileUrl) {
         console.log("File uploaded successfully:", newFileUrl);
-        console.log("submited data is ", newArticle);
+        console.log("Submitted data is ", articleData);
         setTimeout(() => {
           setIsUploading(false);
           setIsPublished(true);
@@ -84,19 +100,23 @@ function NewArticle(props) {
   return (
     <form onSubmit={handleSubmit} className="max-w-6xl mx-auto p-4">
       <div className="text-blue-600 dark:text-blue-400 flex justify-between items-center border-b border-gray-200 dark:border-gray-700 pb-4 mb-6">
-        <h2 className="text-2xl font-bold flex items-center gap-3 ">
+        <h2 className="text-2xl font-bold flex items-center gap-3">
           <FileText className="w-6 h-6" />
           Create a New {type === "article" ? "Article" : "Video"}
         </h2>
-        <X
+        <button
+          type="button"
           onClick={handleArticle}
-          className=" cursor-pointer hover:dark:bg-gray-600 hover:bg-gray-300 bg-opacity-35 rounded-full p-1 w-9 h-9"
-        />
+          aria-label="Close form"
+          className="cursor-pointer hover:dark:bg-gray-600 hover:bg-gray-300 bg-opacity-35 rounded-full p-1 w-9 h-9"
+        >
+          <X className="w-full h-full" />
+        </button>
       </div>
 
-      <div className=" grid grid-cols-1 sm:grid-cols-2 gap-4 ">
-        <div className="">
-          <div className=" bg-gray-200 dark:bg-gray-700 border border-blue-200 dark:border-gray-700 rounded-3xl p-4 sm:p-6 shadow-sm">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <div className="bg-gray-200 dark:bg-gray-700 border border-blue-200 dark:border-gray-700 rounded-3xl p-4 sm:p-6 shadow-sm">
             <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 text-center">
               <div className="flex items-center justify-center gap-2 mb-3">
                 <ImageIcon className="w-5 h-5 text-blue-500" />
@@ -107,8 +127,8 @@ function NewArticle(props) {
               <p className="text-gray-500 dark:text-gray-400 mb-6">
                 Supports{" "}
                 {type === "article"
-                  ? " JPG, PNG up to 15MB"
-                  : " MP4,HEVC up to 1GB"}
+                  ? "JPG, PNG up to 15MB"
+                  : "MP4, HEVC up to 1GB"}
               </p>
 
               <div
@@ -117,6 +137,9 @@ function NewArticle(props) {
                     ? "border-green-500 bg-green-50 dark:bg-green-900/20"
                     : "border-gray-300 dark:border-gray-600 hover:border-blue-500"
                 }`}
+                role="button"
+                aria-label="File upload area"
+                tabIndex={0}
               >
                 <label htmlFor="files" className="cursor-pointer">
                   <div className="flex flex-col items-center">
@@ -137,7 +160,7 @@ function NewArticle(props) {
                       {newArticle.fileUrl ? (
                         <>
                           <CheckCircle className="w-4 h-4" />
-                          Image Selected
+                          {type === "article" ? "Image" : "Video"} Selected
                         </>
                       ) : (
                         <>
@@ -150,7 +173,7 @@ function NewArticle(props) {
                       <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
                         {typeof newArticle.fileUrl === "object"
                           ? newArticle.fileUrl.name
-                          : "Image ready"}
+                          : "File ready"}
                       </p>
                     )}
                   </div>
@@ -168,11 +191,11 @@ function NewArticle(props) {
           </div>
         </div>
 
-        <div className=" ">
+        <div>
           <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-5 shadow-sm">
             <div className="space-y-5 h-96 overflow-hidden overflow-y-scroll hidel_slide_roler">
               <div>
-                <label className=" text-sm font-medium mb-2 flex items-center gap-2 text-gray-700 dark:text-gray-300">
+                <label className="text-sm font-medium mb-2 flex items-center gap-2 text-gray-700 dark:text-gray-300">
                   <Type className="w-4 h-4 text-blue-500" />
                   Title
                 </label>
@@ -188,7 +211,7 @@ function NewArticle(props) {
               </div>
 
               <div>
-                <label className=" text-sm font-medium mb-2 flex items-center gap-2 text-gray-700 dark:text-gray-300">
+                <label className="text-sm font-medium mb-2 flex items-center gap-2 text-gray-700 dark:text-gray-300">
                   <Heading2 className="w-4 h-4 text-blue-500" />
                   Subheading
                 </label>
@@ -203,7 +226,7 @@ function NewArticle(props) {
               </div>
 
               <div>
-                <label className=" text-sm font-medium mb-2 flex items-center gap-2 text-gray-700 dark:text-gray-300">
+                <label className="text-sm font-medium mb-2 flex items-center gap-2 text-gray-700 dark:text-gray-300">
                   <ChevronDown className="w-4 h-4 text-blue-500" />
                   Category
                 </label>
@@ -211,16 +234,42 @@ function NewArticle(props) {
                   name="category"
                   value={newArticle.category}
                   onChange={handleChange}
-                  className="w-full border border-gray-300 dark:border-gray-600 bg-transparent rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full border dark:text-gray-300 dark:*:bg-gray-900 border-gray-300 dark:border-gray-600 bg-transparent rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   required
                 >
                   <option value="">Select a category</option>
+                  <option value="accident">Accident</option>
+                  <option value="crime">Crime</option>
+                  <option value="disaster">Disaster</option>
+                  <option value="health">Health</option>
                   <option value="technology">Technology</option>
-                  <option value="programming">Programming</option>
-                  <option value="design">Design</option>
-                  <option value="business">Business</option>
+                  <option value="environmental">Environmental</option>
+                  <option value="violence">Violence</option>
+                  <option value="security">Security</option>
+                  <option value="transportation">Transportation</option>
+                  <option value="event">Event</option>
+                  <option value="other">Other</option>
                 </select>
               </div>
+
+              {newArticle.category === "other" && (
+                <div>
+                  <label className="text-sm font-medium mb-2 flex items-center gap-2 text-gray-700 dark:text-gray-300">
+                    <ChevronDown className="w-4 h-4 text-blue-500" />
+                    Custom Category
+                  </label>
+                  <input
+                    className="w-full border border-gray-300 dark:border-gray-600 bg-transparent rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    type="text"
+                    name="customCategory"
+                    value={newArticle.customCategory}
+                    onChange={handleChange}
+                    placeholder="Enter custom category"
+                    required={newArticle.category === "other"}
+                  />
+                </div>
+              )}
+
               <div>
                 <label className="text-sm font-medium mb-2 flex items-center gap-2 text-gray-700 dark:text-gray-300">
                   <Tag className="w-4 h-4 text-blue-500" />
@@ -239,6 +288,7 @@ function NewArticle(props) {
                     type="button"
                     onClick={addTag}
                     className="px-4 bg-blue-500 hover:bg-blue-600 text-white rounded-lg flex items-center"
+                    aria-label="Add tag"
                   >
                     <Plus className="w-4 h-4" />
                   </button>
@@ -255,6 +305,7 @@ function NewArticle(props) {
                           type="button"
                           onClick={() => removeTag(tag)}
                           className="text-blue-400 hover:text-blue-600 dark:hover:text-blue-200"
+                          aria-label={`Remove tag ${tag}`}
                         >
                           <X className="w-3 h-3" />
                         </button>
@@ -263,6 +314,7 @@ function NewArticle(props) {
                   </div>
                 )}
               </div>
+
               <div>
                 <label className="text-sm font-medium mb-2 flex items-center gap-2 text-gray-700 dark:text-gray-300">
                   <FileText className="w-4 h-4 text-blue-500" />

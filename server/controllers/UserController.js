@@ -3,9 +3,9 @@ const UserModel = require("../models/userModel");
 exports.UpdateUser = async (req, res) => {
   try {
     console.log(req.body.formData);
-    const { id, ...userData } = req.body.formData;
+    const { UserID, ...userData } = req.body.formData;
 
-    const result = await UserModel.findByIdAndUpdate(id, userData, {
+    const result = await UserModel.findByIdAndUpdate(UserID, userData, {
       new: true,
       runValidators: true,
       context: "query",
@@ -17,13 +17,11 @@ exports.UpdateUser = async (req, res) => {
         .json({ message: "User not found", success: false });
     }
 
-    res
-      .status(200)
-      .json({
-        message: "profile update successfuly",
-        success: true,
-        user: result,
-      });
+    res.status(200).json({
+      message: "profile update successfuly",
+      success: true,
+      user: result,
+    });
   } catch (err) {
     console.log(err.message);
     res.status(500).json({ message: "Not complete", success: false });

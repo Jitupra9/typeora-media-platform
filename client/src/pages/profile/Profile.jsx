@@ -28,7 +28,7 @@ function Profile() {
   const [formData, setFormData] = useState(() => {
     const u = Auth?.user ?? {};
     return {
-      id: u._id,
+      UserID: u._id,
       FirstName: u.Firstname ?? "",
       LastName: u.LastName ?? "",
       Gender: Array.isArray(u.Gender) ? u.Gender[0] ?? "" : u.Gender ?? "",
@@ -41,7 +41,7 @@ function Profile() {
     };
   });
   const calcCompletion = (dataObj) => {
-    const entries = Object.entries(dataObj).filter(([k]) => k !== "id");
+    const entries = Object.entries(dataObj).filter(([k]) => k !== "UserID");
 
     const total = entries.length;
     if (total === 0) return 0;

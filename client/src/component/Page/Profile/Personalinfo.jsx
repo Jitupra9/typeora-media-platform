@@ -22,23 +22,9 @@ function Personalinfo({ Isedit, setIsedit, formData, setFormData }) {
     loading: false,
     loadingName: null,
   });
-  // const tempData = formData;
   const [tempData, settempData] = useState(formData);
   const [isEditing, setIsEditing] = useState(false);
-  // const [user, setuser] = useState(userdata);
   const { Auth, setAuth } = useContext(IsAuthnticate);
-  // const [formData, setFormData] = useState({
-  //   id: user._id,
-  //   FirstName: user?.Firstname || "",
-  //   LastName: user?.LastName || "",
-  //   Gender: user?.Gender?.[0] || "",
-  //   PhoneNo: user?.PhoneNo || "",
-  //   SecondaryEmail: user?.SecondaryEmail || "",
-  //   Company: user?.Company || "",
-  //   Location: user?.Location || "",
-  //   Role: user?.Role || "",
-  //   About: user?.About || "",
-  // });
   useEffect(() => {
     if (Isedit) {
       setIsEditing(true);
