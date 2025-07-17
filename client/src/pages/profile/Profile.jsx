@@ -28,9 +28,10 @@ function Profile() {
   const [formData, setFormData] = useState(() => {
     const u = Auth?.user ?? {};
     return {
+      id: u._id,
       FirstName: u.Firstname ?? "",
       LastName: u.LastName ?? "",
-      Gender: u.Gender?.[0] ?? "",
+      Gender: Array.isArray(u.Gender) ? u.Gender[0] ?? "" : u.Gender ?? "",
       PhoneNo: u.PhoneNo ?? "",
       SecondaryEmail: u.SecondaryEmail ?? "",
       Company: u.Company ?? "",
@@ -40,19 +41,23 @@ function Profile() {
     };
   });
   const calcCompletion = (dataObj) => {
-    const values = Object.values(dataObj);
-    const total = values.length;
-    const filled = values.reduce((acc, v) => {
+    const entries = Object.entries(dataObj).filter(([k]) => k !== "id");
+
+    const total = entries.length;
+    if (total === 0) return 0;
+
+    const filled = entries.reduce((acc, [, v]) => {
       if (v === null || v === undefined) return acc;
       if (typeof v === "string" && v.trim() === "") return acc;
       return acc + 1;
     }, 0);
+
     return Math.round((filled / total) * 100);
   };
 
   useEffect(() => {
     setProfileCompletion(calcCompletion(formData));
-  }, [formData]);
+  }, [Auth.user]);
 
   const categories = useMemo(
     () => [
@@ -72,8 +77,8 @@ function Profile() {
           <Personalinfo
             Isedit={Isedit}
             setIsedit={setIsedit}
-            userdata={Auth.user}
-            setProfileCompletion={setFormData}
+            formData={formData}
+            setFormData={setFormData}
           />
         );
       case "Article":

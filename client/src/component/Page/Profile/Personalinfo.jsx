@@ -17,26 +17,28 @@ import {
 import { memo, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-function Personalinfo({ Isedit, setIsedit, userdata, setProfileCompletion }) {
+function Personalinfo({ Isedit, setIsedit, formData, setFormData }) {
   const [loading, setloading] = useState({
     loading: false,
     loadingName: null,
   });
+  // const tempData = formData;
+  const [tempData, settempData] = useState(formData);
   const [isEditing, setIsEditing] = useState(false);
-  const [user, setuser] = useState(userdata);
+  // const [user, setuser] = useState(userdata);
   const { Auth, setAuth } = useContext(IsAuthnticate);
-  const [formData, setFormData] = useState({
-    id: user._id,
-    FirstName: user?.Firstname || "",
-    LastName: user?.LastName || "",
-    Gender: user?.Gender?.[0] || "",
-    PhoneNo: user?.PhoneNo || "",
-    SecondaryEmail: user?.SecondaryEmail || "",
-    Company: user?.Company || "",
-    Location: user?.Location || "",
-    Role: user?.Role || "",
-    About: user?.About || "",
-  });
+  // const [formData, setFormData] = useState({
+  //   id: user._id,
+  //   FirstName: user?.Firstname || "",
+  //   LastName: user?.LastName || "",
+  //   Gender: user?.Gender?.[0] || "",
+  //   PhoneNo: user?.PhoneNo || "",
+  //   SecondaryEmail: user?.SecondaryEmail || "",
+  //   Company: user?.Company || "",
+  //   Location: user?.Location || "",
+  //   Role: user?.Role || "",
+  //   About: user?.About || "",
+  // });
   useEffect(() => {
     if (Isedit) {
       setIsEditing(true);
@@ -58,6 +60,8 @@ function Personalinfo({ Isedit, setIsedit, userdata, setProfileCompletion }) {
         token: Auth.token,
       });
       if (res.data?.success) {
+        setIsEditing(false);
+        toast.success(res.data.message);
         if (res.data?.user) {
           console.log(res.data);
           setAuth((prev) => ({
@@ -71,22 +75,24 @@ function Personalinfo({ Isedit, setIsedit, userdata, setProfileCompletion }) {
               user: res.data.user,
             })
           );
-          setProfileCompletion(Auth.user);
         }
       }
     } catch (err) {
-      if (res.err?.message) {
-        toast.error(res.err.message);
+      setIsEditing(false);
+      console.log(err);
+      if (err?.response?.data?.message) {
+        toast.error(err?.response?.data?.message);
       } else {
-        toast.error("somthing wrong try later");
+        toast.error("Server Not respond");
       }
     } finally {
       setloading((prev) => ({ ...prev, loading: false, loadingName: "" }));
-      setIsEditing(false);
     }
   };
 
   const handleCancel = () => {
+    setFormData(tempData);
+    console.log(tempData);
     setIsedit(false);
     setIsEditing(false);
   };

@@ -68,6 +68,7 @@ function NewArticle(props) {
       const newFileUrl = await uploadImage(newArticle.fileUrl);
       if (newFileUrl) {
         console.log("File uploaded successfully:", newFileUrl);
+        console.log("submited data is ", newArticle);
         setTimeout(() => {
           setIsUploading(false);
           setIsPublished(true);
@@ -127,7 +128,7 @@ function NewArticle(props) {
                     </p>
                     <label
                       htmlFor="files"
-                      className={`mt-3 px-5 py-2 rounded-lg text-white flex items-center gap-2 ${
+                      className={`mt-3 cursor-pointer px-5 py-2 rounded-lg text-white flex items-center gap-2 ${
                         newArticle.fileUrl
                           ? "bg-green-500 hover:bg-green-600"
                           : "bg-blue-500 hover:bg-blue-600"

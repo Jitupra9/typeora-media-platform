@@ -2,23 +2,56 @@ const mongoose = require("mongoose");
 
 const schema = new mongoose.Schema(
   {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     title: {
-      require: true,
       type: String,
+      required: true,
     },
     SubDescription: {
-      require: true,
       type: String,
+      required: true,
+    },
+    date: {
+      type: Date,
+      default: Date.now,
     },
     description: {
-      require: true,
       type: String,
+      required: true,
     },
     fileUrl: {
       type: String,
     },
+    categories: {
+      type: String,
+    },
+    like: {
+      type: Number,
+      default: 0,
+    },
+    dislike: {
+      type: Number,
+      default: 0,
+    },
+    shared: {
+      type: Number,
+      default: 0,
+    },
+    views: {
+      type: Number,
+      default: 0,
+    },
+    tags: {
+      type: [String],
+      default: [],
+    },
   },
-  { collection: "Articles" }
+  { collection: "Articles", timestamps: true }
 );
 
 const ArticleModel = mongoose.model("Articles", schema);
+module.exports = ArticleModel;

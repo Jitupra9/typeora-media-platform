@@ -48,7 +48,7 @@ function ProfileHeader(props) {
                 Pro
               </span>
             </h3>
-            <p className=" flex flex-wrap  gap-1  text-gray-500 dark:text-gray-400 text-sm ">
+            <div className=" flex flex-wrap  gap-1  text-gray-500 dark:text-gray-400 text-sm ">
               {user.userRole && (
                 <div className=" flex items-center">
                   <Briefcase className="w-4 h-4 mr-1" />
@@ -57,12 +57,12 @@ function ProfileHeader(props) {
               )}
               {user.userRole && (
                 <Dot className=" hidden sm:block lg:hidden xl:block" />
-              )}{" "}
+              )}
               <div className=" flex items-center">
                 <Mail className="w-4 h-4 mr-1" />
                 {user.Email}
               </div>
-            </p>
+            </div>
           </div>
         </div>
         <div className="flex gap-3  justify-between w-full sm:w-max sm:justify-normal ">
@@ -111,7 +111,7 @@ function ProfileHeader(props) {
           <div>
             <p className="text-gray-400">Company</p>
             <h3 className="font-semibold">
-              {user.company ? user.company : "Not Mention"}
+              {user?.Company ? user?.Company : "Not Mention"}
             </h3>
           </div>
         </div>
@@ -155,7 +155,9 @@ function ProfileHeader(props) {
         </div>
         <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
           <div
-            className="bg-blue-500 h-2 rounded-full"
+            className={`${
+              profileCompletion === 100 ? "bg-green-500" : "bg-blue-500"
+            } h-2 rounded-full`}
             style={{ width: `${profileCompletion}%` }}
           ></div>
         </div>

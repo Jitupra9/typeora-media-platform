@@ -19,7 +19,11 @@ exports.UpdateUser = async (req, res) => {
 
     res
       .status(200)
-      .json({ message: "update successfuly", success: true, user: result });
+      .json({
+        message: "profile update successfuly",
+        success: true,
+        user: result,
+      });
   } catch (err) {
     console.log(err.message);
     res.status(500).json({ message: "Not complete", success: false });
