@@ -21,6 +21,9 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    visibility: {
+      type: ["Public", "Private"],
+    },
     Gender: {
       type: ["male", "female", "other", ""],
       required: true,
@@ -41,6 +44,9 @@ const userSchema = new mongoose.Schema(
     Location: {
       type: String,
       required: true,
+    },
+    Social: {
+      type: [],
     },
   },
   { collection: "users" }

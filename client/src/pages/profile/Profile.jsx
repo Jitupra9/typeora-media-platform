@@ -110,8 +110,11 @@ function Profile() {
   }, [setheaders, categories]);
 
   return (
-    <div className="relative py-1 font-semibold flex flex-col lg:flex-row justify-between text-gray-700 dark:text-gray-200 gap-5 mb-20 sm:mb-0">
-      <div className="w-full sm:h-[86vh] sm:overflow-y-scroll hidel_slide_roler lg:w-[68%] space-y-5 sm:rounded-xl">
+    <div className="font-semibold flex flex-col lg:flex-row justify-between text-gray-700 dark:text-gray-200 gap-5 pb-20 lg:pb-0">
+      <div
+        className="w-full lg:h-[86vh] lg:overflow-y-scroll hidel_slide_roler lg:w-[68%] space-y-5 lg:rounded-xl"
+        style={{ willChange: "transform" }}
+      >
         <ProfileHeader
           profileCompletion={profileCompletion}
           user={Auth.user}
@@ -149,7 +152,7 @@ function Profile() {
       </div>
       <ProfileSidebar />
       {UploadActive && (
-        <div className="w-full h-full bg-gray-100 dark:bg-black dark:bg-opacity-50 bg-opacity-50 flex  justify-center absolute top-0  rounded-2xl">
+        <div className="w-[100vw] h-[100vh] sm:h-max sm:w-max lg:w-[100vw] lg:h-[100vh]  overflow-y-scroll left-0 top-0 bg-gray-100 dark:bg-black dark:bg-opacity-50 bg-opacity-50 flex  justify-center lg:items-center absolute  rounded-2xl">
           <div className=" w-max h-max bg-white dark:bg-gray-800 sm:p-2 rounded-2xl">
             <NewUpload type={UploadType} setUploadActive={setUploadActive} />
           </div>

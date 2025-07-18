@@ -1,5 +1,6 @@
-import { memo, useState, useEffect } from "react";
+import { memo, useState, useEffect, useContext } from "react";
 import CloudinaryUpload from "../../utils/CloudinaryUpload";
+import { IsAuthnticate } from "../../../context/Auth/IsAuth";
 import {
   Upload,
   Image as ImageIcon,
@@ -13,10 +14,13 @@ import {
   ChevronDown,
   Tag,
 } from "lucide-react";
+import axios from "axios";
 
 function NewArticle(props) {
+  const { Auth } = useContext(IsAuthnticate);
   const type = props.type;
   const [newArticle, setNewArticle] = useState({
+    userID: Auth.user?._id,
     fileUrl: "",
     title: "",
     subHeading: "",
@@ -24,10 +28,6 @@ function NewArticle(props) {
     tags: [],
     category: "",
     customCategory: "",
-  });
-
-  useEffect(() => {
-    console.log("newupload component render");
   });
 
   const [newTag, setNewTag] = useState("");
@@ -69,13 +69,12 @@ function NewArticle(props) {
     e.preventDefault();
     setIsUploading(true);
 
-    // Use customCategory if "other" is selected
     const finalCategory =
       newArticle.category === "other"
         ? newArticle.customCategory
         : newArticle.category;
 
-    const articleData = {
+    const { customCategory, ...articleData } = {
       ...newArticle,
       category: finalCategory,
     };
@@ -83,16 +82,21 @@ function NewArticle(props) {
     try {
       const newFileUrl = await uploadImage(articleData.fileUrl);
       if (newFileUrl) {
+        articleData.fileUrl = newFileUrl;
         console.log("File uploaded successfully:", newFileUrl);
         console.log("Submitted data is ", articleData);
-        setTimeout(() => {
-          setIsUploading(false);
+        const result = await axios.post("api/NewArticle", articleData);
+        if (result.data?.success) {
           setIsPublished(true);
-          setTimeout(() => setIsPublished(false), 3000);
-        }, 1500);
+          setTimeout(() => {
+            props.setUploadActive(false);
+          }, 1000);
+        }
       }
     } catch (error) {
       console.error("Upload failed:", error);
+      setIsUploading(false);
+    } finally {
       setIsUploading(false);
     }
   };
@@ -193,7 +197,7 @@ function NewArticle(props) {
 
         <div>
           <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-5 shadow-sm">
-            <div className="space-y-5 h-96 overflow-hidden overflow-y-scroll hidel_slide_roler">
+            <div className="space-y-5 sm:h-96 sm:overflow-hidden sm:overflow-y-scroll hidel_slide_roler">
               <div>
                 <label className="text-sm font-medium mb-2 flex items-center gap-2 text-gray-700 dark:text-gray-300">
                   <Type className="w-4 h-4 text-blue-500" />
@@ -248,6 +252,8 @@ function NewArticle(props) {
                   <option value="security">Security</option>
                   <option value="transportation">Transportation</option>
                   <option value="event">Event</option>
+                  <option value="Travel">Travel</option>
+
                   <option value="other">Other</option>
                 </select>
               </div>

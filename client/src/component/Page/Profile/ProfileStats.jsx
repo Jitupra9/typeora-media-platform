@@ -8,15 +8,7 @@ function ProfileStats() {
     following: 543,
     views: 12500,
   });
-  useEffect(() => {
-    setStats((prev) => ({
-      ...prev,
-      articles: 24,
-      followers: 1342,
-      following: 543,
-      views: 12500,
-    }));
-  }, []);
+
   return (
     <div className="p-5 bg-white dark:bg-gray-900 rounded-xl shadow-sm">
       <h3 className="flex items-center gap-3 font-semibold mb-4">
