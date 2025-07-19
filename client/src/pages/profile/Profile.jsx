@@ -19,6 +19,7 @@ import {
 
 function Profile() {
   const { setheaders } = useContext(Headers);
+  const [NewUploaddata, setNewUploaddata] = useState(false);
   const [isactive, setisactive] = useState("Personal");
   const [UploadType, setUploadType] = useState(null);
   const [Isedit, setIsedit] = useState(false);
@@ -85,6 +86,8 @@ function Profile() {
         return (
           <Articles
             UserID={formData.UserID}
+            NewUploaddata={NewUploaddata}
+            setNewUploaddata={setNewUploaddata}
             setUploadType={setUploadType}
             UploadActive={UploadActive}
             setUploadActive={setUploadActive}
@@ -155,7 +158,11 @@ function Profile() {
       {UploadActive && (
         <div className="w-[100vw] h-[100vh] sm:h-max sm:w-max lg:w-[100vw] lg:h-[100vh]  overflow-y-scroll left-0 top-0 bg-gray-100 dark:bg-black dark:bg-opacity-50 bg-opacity-50 flex  justify-center lg:items-center absolute  rounded-2xl">
           <div className=" w-max h-max bg-white dark:bg-gray-800 sm:p-2 rounded-2xl">
-            <NewUpload type={UploadType} setUploadActive={setUploadActive} />
+            <NewUpload
+              type={UploadType}
+              setUploadActive={setUploadActive}
+              setNewUpload={setNewUploaddata}
+            />
           </div>
         </div>
       )}

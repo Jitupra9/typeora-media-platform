@@ -87,7 +87,7 @@ function Signup(props) {
       loading: true,
     }));
     try {
-      const res = await axios.post(`api/veifyEmail`, {
+      const res = await axios.post(`api/verifyEmail`, {
         email: datas.email,
         otp: datas.otp,
       });

@@ -315,7 +315,6 @@ exports.getUserArticles = async (req, res) => {
       .skip(skip)
       .limit(limit)
       .lean();
-
     const total = await ArticleModel.countDocuments({ userID });
 
     res.status(200).json({

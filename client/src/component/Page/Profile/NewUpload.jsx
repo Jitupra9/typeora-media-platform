@@ -91,6 +91,7 @@ function NewArticle(props) {
         });
         if (result.data?.success) {
           setIsPublished(true);
+          props.setNewUpload(true);
           setTimeout(() => {
             props.setUploadActive(false);
           }, 1000);

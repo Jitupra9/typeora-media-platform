@@ -4,7 +4,7 @@ const schema = new mongoose.Schema(
   {
     userID: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Users",
+      ref: "users",
       required: true,
     },
     title: {
@@ -28,8 +28,9 @@ const schema = new mongoose.Schema(
     },
     fileUrl: {
       type: String,
+      required: true,
     },
-    categories: {
+    category: {
       type: String,
       require: true,
     },
@@ -38,6 +39,10 @@ const schema = new mongoose.Schema(
       default: 0,
     },
     dislike: {
+      type: Number,
+      default: 0,
+    },
+    comment: {
       type: Number,
       default: 0,
     },
