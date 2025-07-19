@@ -10,70 +10,25 @@ import axios from "axios";
 
 const ProfileArticles = (props) => {
   const [layout, setLayout] = useState("grid");
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(0);
   const [Articles, setArticles] = useState([]);
-  const totalPages = 5;
+  const [totalPages, settotalPages] = useState(null);
+
   const Limit = 3;
   const UserId = props.UserID;
-  const demoArticles = [
-    {
-      id: 1,
-      title: "Advanced React Patterns",
-      description:
-        "Explore render props and compound components in modern React development.",
-      category: "Tech",
-      views: "12.4k",
-      comments: 24,
-      likes: 143,
-      readTime: "4 min",
-      isBookmarked: false,
-      image: sports,
-      author: "Helena Thomton",
-      date: "1 min ago",
-    },
-    {
-      id: 2,
-      title: "UI/UX Trends 2024",
-      description:
-        "Minimalism meets immersive interactions in this year's design landscape.",
-      category: "Design",
-      views: "8.2k",
-      comments: 11,
-      likes: 89,
-      readTime: "3 min",
-      isBookmarked: true,
-      image: sports,
-      author: "Marcus Chen",
-      date: "15 min ago",
-    },
-    {
-      id: 3,
-      title: "Sustainable Architecture",
-      description:
-        "How green buildings are reshaping urban environments worldwide.",
-      category: "Architecture",
-      views: "5.7k",
-      comments: 8,
-      likes: 56,
-      readTime: "6 min",
-      isBookmarked: false,
-      image: sports,
-      author: "Sophia Rodriguez",
-      date: "2 hours ago",
-    },
-  ];
+
   const fetchArticles = async () => {
     console.log("rady to fetch articles");
     try {
-      const Articles = await axios.get(`api/articles/user/${UserId}`, {
-        page: currentPage,
-        limit: Limit,
-      });
+      const Articles = await axios.get(
+        `api/articles/user/${UserId}?page=${currentPage}&limit=${Limit}`
+      );
       if (Articles.data?.total) {
-        console.log(Articles?.data);
       }
       if (Articles.data?.success && Articles.data?.data.length !== 0) {
         setArticles(Articles.data?.data);
+        setCurrentPage(Articles?.data?.currentPage);
+        settotalPages(Math.ceil(Articles?.data?.total / Limit));
       }
     } catch (e) {
       console.log(e.message);
@@ -207,7 +162,6 @@ const ProfileArticles = (props) => {
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center  text-center">
-          {/* Illustration */}
           <div className="w-64 h-64 mb-6 relative">
             <div className="absolute inset-0 bg-gray-100 dark:bg-gray-800 rounded-full opacity-20"></div>
             <svg

@@ -296,10 +296,7 @@ exports.reactToArticle = async (req, res) => {
 //////////////////////////////////////////////////////
 exports.getUserArticles = async (req, res) => {
   try {
-    console.log("body:-", req.body);
-    console.log("params:-", req.params);
     const { userID } = req.params;
-    console.log("userID", userID);
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
     const skip = (page - 1) * limit;
