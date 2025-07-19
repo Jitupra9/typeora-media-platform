@@ -6,14 +6,15 @@ import Pagination from "../../utils/pagination";
 import { Link } from "react-router-dom";
 import { Plus, Grid, List, LayoutGrid } from "lucide-react";
 import sports from "../../../assets/images/sports.jpg";
+import axios from "axios";
 
 const ProfileArticles = (props) => {
   const [layout, setLayout] = useState("grid");
   const [currentPage, setCurrentPage] = useState(1);
+
   const totalPages = 5;
-  useEffect(() => {
-    console.log("article component render");
-  });
+  const Limit = 3;
+  const UserId = props.UserID;
   const demoArticles = [
     {
       id: 1,
@@ -61,7 +62,24 @@ const ProfileArticles = (props) => {
       date: "2 hours ago",
     },
   ];
+  const fetchArticles = async () => {
+    console.log("rady to fetch articles");
+    try {
+      const Articles = await axios.get(`api/articles/user/${UserId}`, {
+        page: currentPage,
+        limit: Limit,
+      });
+      if (Articles.data?.total) {
+        console.log(Articles?.data);
+      }
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
 
+  useEffect(() => {
+    fetchArticles();
+  }, [currentPage]);
   const handleArticle = () => {
     props.setUploadType("article");
     props.setUploadActive(!props.UploadActive);

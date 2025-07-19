@@ -85,7 +85,10 @@ function NewArticle(props) {
         articleData.fileUrl = newFileUrl;
         console.log("File uploaded successfully:", newFileUrl);
         console.log("Submitted data is ", articleData);
-        const result = await axios.post("api/NewArticle", articleData);
+        const result = await axios.post("api/articles/NewArticle", {
+          data: articleData,
+          token: Auth.token,
+        });
         if (result.data?.success) {
           setIsPublished(true);
           setTimeout(() => {

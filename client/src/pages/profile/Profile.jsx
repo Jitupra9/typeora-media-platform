@@ -84,6 +84,7 @@ function Profile() {
       case "Article":
         return (
           <Articles
+            UserID={formData.UserID}
             setUploadType={setUploadType}
             UploadActive={UploadActive}
             setUploadActive={setUploadActive}

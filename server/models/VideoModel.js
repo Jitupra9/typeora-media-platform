@@ -13,10 +13,10 @@ const schema = new mongoose.Schema(
     },
     visibility: {
       type: ["Public", "Private"],
+      default: "Public",
     },
     subHeading: {
       type: String,
-      required: true,
     },
     date: {
       type: Date,
@@ -31,6 +31,7 @@ const schema = new mongoose.Schema(
     },
     categories: {
       type: String,
+      require: true,
     },
     like: {
       type: Number,
@@ -53,8 +54,8 @@ const schema = new mongoose.Schema(
       default: [],
     },
   },
-  { collection: "Articles", timestamps: true }
+  { collection: "Videos", timestamps: true }
 );
 
-const ArticleModel = mongoose.model("Articles", schema);
-module.exports = ArticleModel;
+const VideosModel = mongoose.model("Videos", schema);
+module.exports = VideosModel;

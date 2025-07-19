@@ -1,7 +1,6 @@
 const jwt = require("jsonwebtoken");
 
 const isLoggedIn = (req, res, next) => {
-  // console.log("login middlewar called", req.body?.token);
   const token = req.body.token;
 
   if (!token) {

@@ -21,6 +21,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    ProfilePicture: {
+      type: String,
+      default: null,
+    },
     visibility: {
       type: ["Public", "Private"],
     },
@@ -47,6 +51,10 @@ const userSchema = new mongoose.Schema(
     },
     Social: {
       type: [],
+    },
+    Follwers: {
+      type: Number,
+      default: 1,
     },
   },
   { collection: "users" }
