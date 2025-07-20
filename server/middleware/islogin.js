@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 
 const isLoggedIn = (req, res, next) => {
-  const token = req.cookies.token;
+  const token = req.body.token;
 
   if (!token) {
     return res.status(401).json({
@@ -12,7 +12,6 @@ const isLoggedIn = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
     next();
   } catch (error) {
     return res.status(401).json({

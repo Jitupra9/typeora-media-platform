@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState, useMemo } from "react";
-
+import { toast } from "react-hot-toast";
 export const IsAuthnticate = createContext();
 
 function IsAuth({ children }) {
@@ -7,6 +7,7 @@ function IsAuth({ children }) {
     user: [""],
     islogined: false,
     loading: true,
+    token: null,
   });
 
   const fetchUser = () => {
@@ -15,9 +16,10 @@ function IsAuth({ children }) {
     if (result?.user?._id) {
       setAuth((prev) => ({
         ...prev,
-        islogined: true,
+        islogined: true, // change it TRUE if successfully login
         user: result?.user,
         loading: false,
+        token: result?.token,
       }));
     } else {
       setAuth((prev) => ({
@@ -30,8 +32,10 @@ function IsAuth({ children }) {
   useEffect(() => {
     fetchUser();
   }, []);
-
-  const contextValue = useMemo(() => ({ Auth, setAuth }), [Auth]);
+  const LoginAlert = () => {
+    toast.error("Please log in to access this feature");
+  };
+  const contextValue = useMemo(() => ({ Auth, setAuth, LoginAlert }), [Auth]);
 
   return (
     <IsAuthnticate.Provider value={contextValue}>

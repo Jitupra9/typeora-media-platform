@@ -19,15 +19,47 @@ import {
 
 function Profile() {
   const { setheaders } = useContext(Headers);
+  const [NewUploaddata, setNewUploaddata] = useState(false);
   const [isactive, setisactive] = useState("Personal");
   const [UploadType, setUploadType] = useState(null);
+  const [Isedit, setIsedit] = useState(false);
   const [UploadActive, setUploadActive] = useState(false);
   const { Auth } = useContext(IsAuthnticate);
-  const [profileCompletion, setProfileCompletion] = useState(75);
+  const [profileCompletion, setProfileCompletion] = useState(0);
+  const [formData, setFormData] = useState(() => {
+    const u = Auth?.user ?? {};
+    return {
+      UserID: u._id,
+      FirstName: u.Firstname ?? "",
+      LastName: u.LastName ?? "",
+      Gender: Array.isArray(u.Gender) ? u.Gender[0] ?? "" : u.Gender ?? "",
+      PhoneNo: u.PhoneNo ?? "",
+      SecondaryEmail: u.SecondaryEmail ?? "",
+      Company: u.Company ?? "",
+      Location: u.Location ?? "",
+      Role: u.Role ?? "",
+      About: u.About ?? "",
+    };
+  });
+  const calcCompletion = (dataObj) => {
+    const entries = Object.entries(dataObj).filter(([k]) => k !== "UserID");
+
+    const total = entries.length;
+    if (total === 0) return 0;
+
+    const filled = entries.reduce((acc, [, v]) => {
+      if (v === null || v === undefined) return acc;
+      if (typeof v === "string" && v.trim() === "") return acc;
+      return acc + 1;
+    }, 0);
+
+    return Math.round((filled / total) * 100);
+  };
 
   useEffect(() => {
-    setProfileCompletion(60);
-  }, []);
+    setProfileCompletion(calcCompletion(formData));
+  }, [Auth.user]);
+
   const categories = useMemo(
     () => [
       { path: "/profile", name: "Profile" },
@@ -36,13 +68,26 @@ function Profile() {
     []
   );
 
+  const handleEdit = () => {
+    setIsedit(true);
+  };
   const components = (componentName) => {
     switch (componentName) {
       case "Personal":
-        return <Personalinfo />;
+        return (
+          <Personalinfo
+            Isedit={Isedit}
+            setIsedit={setIsedit}
+            formData={formData}
+            setFormData={setFormData}
+          />
+        );
       case "Article":
         return (
           <Articles
+            UserID={formData.UserID}
+            NewUploaddata={NewUploaddata}
+            setNewUploaddata={setNewUploaddata}
             setUploadType={setUploadType}
             UploadActive={UploadActive}
             setUploadActive={setUploadActive}
@@ -69,12 +114,16 @@ function Profile() {
   }, [setheaders, categories]);
 
   return (
-    <div className="relative py-1 font-semibold flex flex-col lg:flex-row justify-between text-gray-700 dark:text-gray-200 gap-5 mb-20 sm:mb-0">
-      <div className="w-full sm:h-[86vh] sm:overflow-y-scroll hidel_slide_roler lg:w-[68%] space-y-5 sm:rounded-xl">
+    <div className="font-semibold flex flex-col lg:flex-row justify-between text-gray-700 dark:text-gray-200 gap-5 pb-20 lg:pb-0">
+      <div
+        className="w-full lg:h-[86vh] lg:overflow-y-scroll hidel_slide_roler lg:w-[68%] space-y-5 lg:rounded-xl"
+        style={{ willChange: "transform" }}
+      >
         <ProfileHeader
           profileCompletion={profileCompletion}
           user={Auth.user}
           setisactive={setisactive}
+          handleEdit={handleEdit}
         />
         <div className="bg-white dark:bg-gray-900 p-5 rounded-xl shadow-sm">
           <ul className="flex overflow-x-auto gap-1 pb-2 hidel_slide_roler">
@@ -107,9 +156,13 @@ function Profile() {
       </div>
       <ProfileSidebar />
       {UploadActive && (
-        <div className="w-full h-full bg-gray-100 dark:bg-black dark:bg-opacity-50 bg-opacity-50 flex  justify-center absolute top-0  rounded-2xl">
+        <div className="w-[100vw] h-[100vh] sm:h-max sm:w-max lg:w-[100vw] lg:h-[100vh]  overflow-y-scroll left-0 top-0 bg-gray-100 dark:bg-black dark:bg-opacity-50 bg-opacity-50 flex  justify-center lg:items-center absolute  rounded-2xl">
           <div className=" w-max h-max bg-white dark:bg-gray-800 sm:p-2 rounded-2xl">
-            <NewUpload type={UploadType} setUploadActive={setUploadActive} />
+            <NewUpload
+              type={UploadType}
+              setUploadActive={setUploadActive}
+              setNewUpload={setNewUploaddata}
+            />
           </div>
         </div>
       )}

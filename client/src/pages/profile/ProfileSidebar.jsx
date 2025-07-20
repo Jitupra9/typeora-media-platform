@@ -5,11 +5,13 @@ import ProfileStats from "../../component/Page/Profile/ProfileStats";
 import { Share2, Github, Twitter, Linkedin } from "lucide-react";
 function ProfileSidebar() {
   return (
-    <div className="w-full sm:h-[86vh] hidel_slide_roler sm:overflow-hidden sm:overflow-y-scroll lg:w-[30%] space-y-5 sm:rounded-xl">
+    <div
+      className="w-full lg:h-[86vh] hidel_slide_roler lg:overflow-hidden lg:overflow-y-scroll lg:w-[30%] space-y-5 lg:rounded-xl"
+      style={{ willChange: "transform" }}
+    >
       <ProfileCheckList />
       <ProfileSkils />
       <ProfileStats />
-
       <div className="p-5 bg-white dark:bg-gray-900 rounded-xl shadow-sm">
         <h3 className="flex items-center gap-3 font-semibold mb-4">
           <Share2 className="w-5 h-5 text-blue-500" />

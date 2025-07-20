@@ -27,8 +27,8 @@ function Login() {
     setLoading(true);
     try {
       const res = await axios.post(`/api/login`, {
-        userEmail: data.email,
-        userPassword: data.password,
+        Email: data.email,
+        Password: data.password,
       });
       console.log(res.data);
       if (res.data?.success) {
@@ -36,6 +36,7 @@ function Login() {
           ...prev,
           islogined: true,
           user: res.data?.userData?.user,
+          token: res.data?.userData?.token,
         }));
         localStorage.setItem("userData", JSON.stringify(res?.data?.userData));
         toast.success("Login successful!");

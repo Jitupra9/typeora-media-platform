@@ -1,9 +1,9 @@
 const userModel = require("../models/userModel.js");
 
 const checkUserExist = async (req, res, next) => {
-  const { userEmail } = req.body;
+  const { Email } = req.body;
   console.log("isUser middleware called");
-  if (!userEmail) {
+  if (!Email) {
     return res.status(400).json({
       success: false,
       message: "Email is required",
@@ -11,7 +11,7 @@ const checkUserExist = async (req, res, next) => {
   }
 
   try {
-    const user = await userModel.findOne({ userEmail });
+    const user = await userModel.findOne({ Email });
     console.log(user);
     if (!user) {
       return res.status(404).json({

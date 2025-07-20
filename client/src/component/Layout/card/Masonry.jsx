@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { getTimeDifference } from "../../utils/getTimeDifference";
+import { calculateReadTime } from "../../utils/readTime";
 import { Link } from "react-router-dom";
 import Sports from "../../../assets/images/sports.jpg";
 
@@ -27,7 +29,7 @@ function Masonry(props) {
       >
         <div className="relative h-64 overflow-hidden">
           <img
-            src={Sports || data.image}
+            src={data.fileUrl || Sports}
             alt="Article thumbnail"
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           />
@@ -62,10 +64,13 @@ function Masonry(props) {
                   alt="Author"
                   className="w-5 h-5 rounded-full object-cover"
                 />
-                <span>{data.author}</span>
+                <span>
+                  {" "}
+                  {data?.userID?.Firstname + " " + data?.userID?.LastName}
+                </span>
               </div>
               <span>•</span>
-              <span>{data.date}</span>
+              <span>{getTimeDifference(data.date)}</span>
             </div>
           </div>
         </div>
@@ -78,21 +83,21 @@ function Masonry(props) {
             <div className="flex gap-3 text-xs text-gray-500 dark:text-gray-400">
               <span className="flex items-center gap-1">
                 <Eye className="w-3 h-3" />
-                {data.views}
+                {data.views || 0}
               </span>
               <span className="flex items-center gap-1">
                 <MessageSquare className="w-3 h-3" />
-                {data.comments}
+                {data.comments || 0}
               </span>
               <span className="flex items-center gap-1">
                 <Heart className="w-3 h-3" />
-                {data.likes}
+                {data.like || 0}
               </span>
             </div>
             {page === "article" && (
               <span className="text-xs flex items-center gap-1 text-gray-500 dark:text-gray-400">
                 <Clock className="w-3 h-3" />
-                {data.readTime} read
+                {calculateReadTime(data.description || data.content)}
               </span>
             )}
             {page === "video" && (

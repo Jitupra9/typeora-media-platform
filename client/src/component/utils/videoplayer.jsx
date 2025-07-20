@@ -1,7 +1,8 @@
 import React, { memo, useEffect, useRef } from "react";
+import "video.js/dist/video-js.css";
+
 import "../../assets/css/video.css";
 import videojs from "video.js";
-import "video.js/dist/video-js.css";
 import "videojs-contrib-quality-levels";
 import "videojs-http-source-selector";
 function Videoplayer({ options, onReady }) {

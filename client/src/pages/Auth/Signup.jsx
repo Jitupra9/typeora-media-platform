@@ -3,7 +3,10 @@ import { Mail, CheckCheck, Lock, EyeOff, Eye, Pencil } from "lucide-react";
 import axios from "axios";
 import toast from "react-hot-toast";
 function Signup(props) {
-  const [isloading, setisloading] = useState(false);
+  const [isloading, setisloading] = useState({
+    loadingName: "",
+    loading: false,
+  });
   const [passEye, setpassEye] = useState(false);
   const [isotp, setisotp] = useState(false);
   const [datas, setdatas] = useState({
@@ -44,7 +47,11 @@ function Signup(props) {
       return toast.error("Enter the velid mail");
     }
     try {
-      setisloading(true);
+      setisloading((prev) => ({
+        ...prev,
+        loadingName: "continue",
+        loading: true,
+      }));
       const result = await axios.post(`/api/sendOTP`, {
         email: datas.email,
       });
@@ -64,14 +71,23 @@ function Signup(props) {
       }
       console.log(err);
     } finally {
-      setisloading(false);
+      setisloading((prev) => ({
+        ...prev,
+        loadingName: "",
+        loading: false,
+      }));
     }
     return;
   };
 
   const Mailverify = async () => {
+    setisloading((prev) => ({
+      ...prev,
+      loadingName: "MailVerify",
+      loading: true,
+    }));
     try {
-      const res = await axios.post(`${SERVER_URL}/veifyEmail`, {
+      const res = await axios.post(`api/verifyEmail`, {
         email: datas.email,
         otp: datas.otp,
       });
@@ -88,6 +104,12 @@ function Signup(props) {
       } else {
         console.log("somthing is wrong");
       }
+    } finally {
+      setisloading((prev) => ({
+        ...prev,
+        loadingName: "",
+        loading: false,
+      }));
     }
     return;
   };
@@ -124,15 +146,25 @@ function Signup(props) {
     if (!datas.Mailverifyed) {
       return toast.error("Email not verified");
     }
+    setisloading((prev) => ({
+      ...prev,
+      loadingName: "signup",
+      loading: true,
+    }));
     try {
       console.log("submited data is ", datas);
-      const res = await axios.post(`${SERVER_URL}/signup`, {
-        userEmail: datas.email,
-        userPassword: datas.password,
-        userFirstname: datas.firstName,
-        userLastName: datas.lastName,
-        userphoneNo: datas.phoneNo,
-        userlocation: datas.location,
+      const res = await axios.post(`api/signup`, {
+        Email: datas.email,
+        Password: datas.password,
+        Firstname: datas.firstName,
+        LastName: datas.lastName,
+        PhoneNo: datas.phoneNo,
+        Gender: null,
+        SecondaryEmail: null,
+        company: null,
+        Role: null,
+        About: null,
+        Location: datas.location,
       });
       if (res.data.success) {
         toast.success("signup successfully");
@@ -147,6 +179,12 @@ function Signup(props) {
       } else {
         console.log("somthing is wrong");
       }
+    } finally {
+      setisloading((prev) => ({
+        ...prev,
+        loadingName: "",
+        loading: false,
+      }));
     }
   };
 
@@ -267,7 +305,7 @@ function Signup(props) {
             </label>
             <input
               type={passEye === true ? "text" : "password"}
-              className="outline-none font-bold text-black mt-1 w-full bg-transparent"
+              className="outline-none font-bold text-black dark:text-gray-400 mt-1 w-full bg-transparent"
               placeholder="********"
               name="password"
               value={datas.password}
@@ -305,7 +343,7 @@ function Signup(props) {
             </label>
             <input
               type="text"
-              className="outline-none font-bold text-black mt-1 w-full bg-transparent"
+              className="outline-none font-bold text-black dark:text-gray-400 mt-1 w-full bg-transparent"
               placeholder="********"
               name="otp"
               onChange={handlechange}
@@ -323,7 +361,11 @@ function Signup(props) {
             }
             `}
           >
-            {datas.Mailverifyed ? "Veifyed" : "Verify"}
+            {isloading.loadingName === "MailVerify" && isloading.loading
+              ? "Verify..."
+              : datas.Mailverifyed
+              ? "Veifyed"
+              : "Verify"}
           </div>
         </div>
       )}
@@ -331,12 +373,12 @@ function Signup(props) {
         <button
           onClick={Mailsend}
           className={` ${
-            isloading !== true
+            isloading.loading !== true
               ? "bg-blue-700 "
               : " bg-blue-300 pointer-events-none"
           } py-3 w-full text-sm text-opacity-90 rounded-xl text-white rounded-x flex justify-center items-center gap-4`}
         >
-          {isloading && (
+          {isloading.loading && isloading.loadingName === "continue" && (
             <div className=" w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
           )}
           Continue
@@ -344,12 +386,12 @@ function Signup(props) {
       ) : (
         <button
           className={` ${
-            isloading !== true
+            isloading.loading !== true && isloading.loadingName !== "signup"
               ? "bg-blue-700 "
               : " bg-blue-300 pointer-events-none"
           } py-3 w-full text-sm text-opacity-90 rounded-xl text-white rounded-x flex items-center justify-center gap-4`}
         >
-          {isloading && (
+          {isloading.loading === true && isloading.loadingName === "signup" && (
             <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
           )}
           signup

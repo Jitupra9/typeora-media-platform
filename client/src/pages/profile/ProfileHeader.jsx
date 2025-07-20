@@ -27,6 +27,7 @@ function ProfileHeader(props) {
   };
   const handleEdit = () => {
     props.setisactive("Personal");
+    props.handleEdit();
   };
   return (
     <div className="bg-white dark:bg-gray-900 px-5 py-2 rounded-xl shadow-sm">
@@ -42,22 +43,26 @@ function ProfileHeader(props) {
           </div>
           <div>
             <h3 className="font-bold text-2xl">
-              {user.userFirstname + " " + user.userLastName}
+              {user.Firstname + " " + user.LastName}
               <span className="ml-2 text-sm bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 px-2 py-1 rounded-full">
                 Pro
               </span>
             </h3>
-            <p className=" flex flex-col lg:flex-row gap-1  text-gray-500 dark:text-gray-400 text-sm ">
-              <div className=" flex items-center">
-                <Briefcase className="w-4 h-4 mr-1" />
-                Senior Full Stack Developer
-              </div>
-              <Dot className="mx-1 hidden lg:block" />
+            <div className=" flex flex-wrap  gap-1  text-gray-500 dark:text-gray-400 text-sm ">
+              {user.userRole && (
+                <div className=" flex items-center">
+                  <Briefcase className="w-4 h-4 mr-1" />
+                  {user.Role}
+                </div>
+              )}
+              {user.userRole && (
+                <Dot className=" hidden sm:block lg:hidden xl:block" />
+              )}
               <div className=" flex items-center">
                 <Mail className="w-4 h-4 mr-1" />
-                {user.userEmail}
+                {user.Email}
               </div>
-            </p>
+            </div>
           </div>
         </div>
         <div className="flex gap-3  justify-between w-full sm:w-max sm:justify-normal ">
@@ -66,7 +71,10 @@ function ProfileHeader(props) {
             className="flex items-center gap-2 text-sm bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors"
           >
             <Edit className="w-4 h-4" />
-            Edit Profile
+            Edit{" "}
+            <span className=" sm:hidden md:inline-block lg:hidden xl:inline-block">
+              Profile
+            </span>
           </button>
           <button
             onClick={handleShare}
@@ -91,7 +99,7 @@ function ProfileHeader(props) {
             <p className="text-gray-400">Location</p>
             <h3 className="font-semibold flex items-center gap-1">
               <Globe className="w-4 h-4" />
-              {user.userlocation}
+              {user.Location}
             </h3>
           </div>
         </div>
@@ -102,7 +110,9 @@ function ProfileHeader(props) {
           </div>
           <div>
             <p className="text-gray-400">Company</p>
-            <h3 className="font-semibold">Web Bocket</h3>
+            <h3 className="font-semibold">
+              {user?.Company ? user?.Company : "Not Mention"}
+            </h3>
           </div>
         </div>
 
@@ -135,11 +145,19 @@ function ProfileHeader(props) {
             Profile Completion:
             {profileCompletion}%
           </span>
-          <span className="text-xs text-blue-500">Complete Profile</span>
+          <span
+            className={`text-xs ${
+              profileCompletion === 100 ? "text-green-500" : "text-blue-500"
+            }`}
+          >
+            Complete Profile
+          </span>
         </div>
         <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
           <div
-            className="bg-blue-500 h-2 rounded-full"
+            className={`${
+              profileCompletion === 100 ? "bg-green-500" : "bg-blue-500"
+            } h-2 rounded-full`}
             style={{ width: `${profileCompletion}%` }}
           ></div>
         </div>

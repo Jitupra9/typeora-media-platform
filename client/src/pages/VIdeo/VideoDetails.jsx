@@ -31,21 +31,6 @@ function LiveStream() {
     responsive: true,
     fluid: true,
     language: "en",
-    controlBar: {
-      volumePanel: true,
-      pictureInPictureToggle: false,
-      children: [
-        "playToggle",
-        "volumePanel",
-        "currentTimeDisplay",
-        "timeDivider",
-        "durationDisplay",
-        "progressControl",
-        "remainingTimeDisplay",
-        "playbackRateMenuButton",
-        "fullscreenToggle",
-      ],
-    },
     sources: [
       {
         src: "http://content.jwplatform.com/manifests/vM7nH0Kl.m3u8",
