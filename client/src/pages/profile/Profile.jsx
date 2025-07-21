@@ -96,6 +96,9 @@ function Profile() {
       case "Videos":
         return (
           <Videos
+            UserID={formData.UserID}
+            NewUploaddata={NewUploaddata}
+            setNewUploaddata={setNewUploaddata}
             setUploadType={setUploadType}
             UploadActive={UploadActive}
             setUploadActive={setUploadActive}

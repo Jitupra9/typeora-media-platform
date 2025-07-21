@@ -1,70 +1,66 @@
 import React, { memo, useState, useEffect } from "react";
 import RenderGridItem from "../../Layout/card/Grid";
+import ServerOffline from "../../utils/ServerOffline";
+import axios from "axios";
 import Masonry from "../../Layout/card/Masonry";
 import ListCard from "../../Layout/card/List";
 import Pagination from "../../utils/pagination";
 import { Link } from "react-router-dom";
-import { Plus, Grid, List, LayoutGrid } from "lucide-react";
+import {
+  Plus,
+  Grid,
+  List,
+  Film,
+  LayoutGrid,
+  Video,
+  CirclePlay,
+  CloudUpload,
+} from "lucide-react";
 import videoThumbnail from "../../../assets/images/sports.jpg";
 
 const Videos = (props) => {
   const [layout, setLayout] = useState("grid");
+  const [error, seterror] = useState(null);
+
+  const [Videos, setVideos] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 5;
+  const [totalPages, settotalPages] = useState(0);
+  const [Limit, setLimit] = useState(10);
+  const UserId = props.UserID;
+
+  useEffect(() => {
+    console.log("video component render");
+  });
+
+  const fetchVideo = async () => {
+    try {
+      const res = await axios.get(
+        `api/videos/user/${UserId}?page=${currentPage}&&limit=${Limit}`
+      );
+      if (res.data?.success && res.data?.data.length !== 0) {
+        setVideos(res?.data?.data);
+        settotalPages(Math.ceil(res?.data?.total / Limit));
+      }
+    } catch (e) {
+      console.log(e);
+      if (e.response?.status === 500) {
+        seterror(500);
+      }
+    } finally {
+      props.setNewUploaddata(false);
+    }
+  };
+  useEffect(() => {
+    fetchVideo();
+  }, [currentPage, props.NewUploaddata]);
   const handleUpload = () => {
     props.setUploadType("videos");
     props.setUploadActive(!props.UploadActive);
   };
-  useEffect(() => {
-    console.log("video component render");
-  });
-  const demoVideos = [
-    {
-      id: 1,
-      title: "Advanced React Patterns Explained",
-      description:
-        "Learn about modern React patterns in this comprehensive tutorial.",
-      category: "Tech",
-      views: "124k",
-      comments: 42,
-      likes: 843,
-      duration: "12:34",
-      date: "2 days ago",
-      isBookmarked: false,
-      thumbnail: videoThumbnail,
-      author: "Helena Thomton",
-    },
-    {
-      id: 2,
-      title: "UI/UX Design Trends 2024",
-      description:
-        "Explore the latest design trends shaping user interfaces this year.",
-      category: "Design",
-      views: "82k",
-      comments: 31,
-      likes: 589,
-      duration: "08:45",
-      date: "1 week ago",
-      isBookmarked: true,
-      thumbnail: videoThumbnail,
-      author: "Marcus Chen",
-    },
-    {
-      id: 3,
-      title: "Sustainable Architecture Documentary",
-      description:
-        "How green buildings are transforming urban landscapes worldwide.",
-      category: "Architecture",
-      views: "57k",
-      comments: 18,
-      likes: 356,
-      duration: "22:12",
-      date: "3 weeks ago",
-      isBookmarked: false,
-      thumbnail: videoThumbnail,
-      author: "Sophia Rodriguez",
-    },
-  ];
+  if (error === 500) {
+    return <ServerOffline />;
+  }
+
   return (
     <div className="">
       <div className="flex flex-col sm:flex-row gap-y-4 sm:gap-y-0 justify-between items-center mb-6">
@@ -153,40 +149,270 @@ const Videos = (props) => {
         </div>
       </div>
 
-      {layout === "grid" && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {demoVideos.map((video) => (
-            <RenderGridItem data={video} page="video" />
-          ))}
-        </div>
-      )}
-
-      {layout === "list" && (
-        <div className="grid grid-cols-1 gap-4">
-          {demoVideos.map((video) => (
-            <ListCard data={video} page="video" />
-          ))}
-        </div>
-      )}
-
-      {layout === "masonry" && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {demoVideos.map((video, index) => (
-            <div
-              key={video.id}
-              className={index % 4 === 0 ? "sm:col-span-2" : ""}
-            >
-              {<Masonry data={video} page="video" />}
+      {Videos.length !== 0 ? (
+        <div>
+          {layout === "grid" && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {Videos.map((video) => (
+                <RenderGridItem data={video} page="video" />
+              ))}
             </div>
-          ))}
+          )}
+          {layout === "list" && (
+            <div className="grid grid-cols-1 gap-4">
+              {Videos.map((video) => (
+                <ListCard data={video} page="video" />
+              ))}
+            </div>
+          )}
+          {layout === "masonry" && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {Videos.map((video, index) => (
+                <div
+                  key={video.id}
+                  className={index % 4 === 0 ? "sm:col-span-2" : ""}
+                >
+                  {<Masonry data={video} page="video" />}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      ) : (
+        <div className=" relative flex flex-col items-center justify-center min-h-[56vh] px-4 text-center">
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-purple-400/10 dark:bg-blue-400/10 rounded-full blur-3xl animate-pulse-slow"></div>
+            <div className="absolute bottom-1/3 right-1/3 w-40 h-40 bg-blue-400/10 dark:bg-purple-400/10 rounded-full blur-3xl animate-pulse-medium"></div>
+          </div>
+
+          <div className="relative w-80 h-80 mb-10">
+            <div className="absolute inset-0 bg-gradient-to-tr from-blue-300 via-purple-300 to-pink-300 dark:from-gray-600 dark:via-gray-700 dark:to-gray-800 rounded-full blur-[60px] opacity-70 animate-gradient-shift"></div>
+
+            <div className="relative z-10 w-full h-full flex items-center justify-center animate-float-main">
+              <div className="absolute w-48 h-36 bg-white dark:bg-gray-800 rounded-lg shadow-2xl border-4 border-gray-100 dark:border-gray-700 transform rotate-[-5deg] group hover:rotate-0 transition-transform duration-500">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Video className="text-indigo-500 dark:text-indigo-400 w-11 h-11 group-hover:scale-110 transition-transform duration-300" />
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-purple-500 dark:from-blue-400 dark:to-purple-400 rounded-b-lg"></div>
+              </div>
+
+              <div className="absolute flex justify-center items-center top-0 left-10 w-16 h-16 bg-white dark:bg-gray-700 rounded-lg shadow-lg border-2 border-gray-100 dark:border-gray-600 transform rotate-[10deg] animate-float1">
+                <CirclePlay className="text-pink-500 dark:text-pink-400 w-6 h-6 hover:scale-110 transition-transform" />
+              </div>
+              <div className="absolute flex justify-center items-center bottom-5 right-8 w-20 h-14 bg-white dark:bg-gray-700 rounded-lg shadow-lg border-2 border-gray-100 dark:border-gray-600 transform rotate-[5deg] animate-float2">
+                <CirclePlay className="text-blue-500 dark:text-blue-400 w-6 h-6 hover:scale-110 transition-transform" />
+              </div>
+              <div className="absolute flex justify-center items-center top-8 right-12 w-12 h-12 bg-white dark:bg-gray-700 rounded-lg shadow-md border-2 border-gray-100 dark:border-gray-600 transform rotate-[-8deg] animate-float3">
+                <Film className="text-purple-500 dark:text-purple-400 w-5 h-5 hover:scale-110 transition-transform" />
+              </div>
+            </div>
+          </div>
+
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-3 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent animate-text-shimmer">
+            Ready for Your Close-up?
+          </h2>
+
+          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-md mb-8 leading-relaxed animate-fade-in">
+            Your video collection is empty now, but your next masterpiece is
+            just an upload away!
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 mb-8">
+            <button
+              onClick={handleUpload}
+              className="relative flex items-center justify-center space-x-2 bg-blue-500 text-white px-6 py-3.5 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden group"
+            >
+              <span className="relative z-10 flex items-center">
+                <CloudUpload className="w-5 h-5 mr-2 transition-all duration-300 group-hover:scale-110 group-hover:animate-bounce" />
+                Upload First Video
+              </span>
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 dark:from-purple-600 dark:to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 overflow-hidden">
+                <div className="absolute -inset-y-full -left-20 w-16 bg-white/30 group-hover:animate-shine group-hover:left-[120%] transition-all duration-1000"></div>
+              </div>
+            </button>
+
+            <Link
+              to="/video-ideas"
+              className="relative flex items-center justify-center space-x-2 border-2 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 px-6 py-3.5 rounded-lg transition-all duration-300 hover:-translate-y-1 group"
+            >
+              <svg
+                className="w-5 h-5 text-yellow-500 dark:text-yellow-400 group-hover:animate-spin-slow"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                />
+              </svg>
+              <span>Get Video Ideas</span>
+              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-yellow-400 dark:bg-yellow-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+            </Link>
+          </div>
+
+          <div className="absolute top-12 left-1/2 transform  pointer-events-none">
+            {[...Array(10)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute w-2 h-2 bg-yellow-400 rounded-full opacity-0 animate-sparkle"
+                style={{
+                  left: `${Math.random() * 100 - 50}px`,
+                  top: `${Math.random() * 30 - 15}px`,
+                  animationDelay: `${i * 0.5}s`,
+                }}
+              ></div>
+            ))}
+          </div>
+
+          <style jsx="true">{`
+            @keyframes float-main {
+              0%,
+              100% {
+                transform: translateY(0);
+              }
+              50% {
+                transform: translateY(-10px);
+              }
+            }
+            @keyframes float1 {
+              0%,
+              100% {
+                transform: translateY(0) rotate(10deg);
+              }
+              50% {
+                transform: translateY(-15px) rotate(12deg) scale(1.05);
+              }
+            }
+            @keyframes float2 {
+              0%,
+              100% {
+                transform: translateY(0) rotate(5deg);
+              }
+              50% {
+                transform: translateY(-10px) rotate(7deg) scale(1.05);
+              }
+            }
+            @keyframes float3 {
+              0%,
+              100% {
+                transform: translateY(0) rotate(-8deg);
+              }
+              50% {
+                transform: translateY(-12px) rotate(-5deg) scale(1.05);
+              }
+            }
+            @keyframes shine {
+              to {
+                left: 120%;
+              }
+            }
+            @keyframes gradient-shift {
+              0% {
+                background-position: 0% 50%;
+              }
+              50% {
+                background-position: 100% 50%;
+              }
+              100% {
+                background-position: 0% 50%;
+              }
+            }
+            @keyframes text-shimmer {
+              0% {
+                background-position: 0% 50%;
+              }
+              50% {
+                background-position: 100% 50%;
+              }
+              100% {
+                background-position: 0% 50%;
+              }
+            }
+            @keyframes spin-slow {
+              from {
+                transform: rotate(0deg);
+              }
+              to {
+                transform: rotate(360deg);
+              }
+            }
+            @keyframes sparkle {
+              0% {
+                opacity: 0;
+                transform: scale(0);
+              }
+              50% {
+                opacity: 1;
+                transform: scale(1.5);
+              }
+              100% {
+                opacity: 0;
+                transform: scale(0);
+              }
+            }
+            @keyframes fade-in {
+              from {
+                opacity: 0;
+                transform: translateY(10px);
+              }
+              to {
+                opacity: 1;
+                transform: translateY(0);
+              }
+            }
+            .animate-float-main {
+              animation: float-main 8s ease-in-out infinite;
+            }
+            .animate-float1 {
+              animation: float1 6s ease-in-out infinite;
+            }
+            .animate-float2 {
+              animation: float2 8s ease-in-out infinite 1s;
+            }
+            .animate-float3 {
+              animation: float3 7s ease-in-out infinite 0.5s;
+            }
+            .animate-gradient-shift {
+              background-size: 200% 200%;
+              animation: gradient-shift 12s ease infinite;
+            }
+            .animate-text-shimmer {
+              background-size: 200% 200%;
+              animation: text-shimmer 8s ease infinite;
+            }
+            .animate-spin-slow {
+              animation: spin-slow 4s linear infinite;
+            }
+            .animate-sparkle {
+              animation: sparkle 1.5s ease-out infinite;
+            }
+            .animate-fade-in {
+              animation: fade-in 1s ease-out forwards;
+            }
+            .animate-shine {
+              animation: shine 1.5s ease-out forwards;
+            }
+            .animate-pulse-slow {
+              animation: pulse 6s ease-in-out infinite;
+            }
+            .animate-pulse-medium {
+              animation: pulse 4s ease-in-out infinite 1s;
+            }
+          `}</style>
         </div>
       )}
 
-      <Pagination
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        totalPages={totalPages}
-      />
+      {Videos.length !== 0 && (
+        <Pagination
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalPages={totalPages}
+        />
+      )}
     </div>
   );
 };

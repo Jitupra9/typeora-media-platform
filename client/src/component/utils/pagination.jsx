@@ -1,5 +1,6 @@
 import React, { memo } from "react";
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
+import { useEffect } from "react";
 function pagination(props) {
   const totalPages = props.totalPages;
   const currentPage = props.currentPage;

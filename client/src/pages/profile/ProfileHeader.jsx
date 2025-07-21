@@ -49,13 +49,13 @@ function ProfileHeader(props) {
               </span>
             </h3>
             <div className=" flex flex-wrap  gap-1  text-gray-500 dark:text-gray-400 text-sm ">
-              {user.userRole && (
+              {user.Role && (
                 <div className=" flex items-center">
                   <Briefcase className="w-4 h-4 mr-1" />
                   {user.Role}
                 </div>
               )}
-              {user.userRole && (
+              {user.Role && (
                 <Dot className=" hidden sm:block lg:hidden xl:block" />
               )}
               <div className=" flex items-center">
