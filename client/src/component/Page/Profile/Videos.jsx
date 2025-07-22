@@ -25,7 +25,7 @@ const Videos = (props) => {
   const [Videos, setVideos] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, settotalPages] = useState(0);
-  const [Limit, setLimit] = useState(10);
+  const [Limit, setLimit] = useState(3);
   const UserId = props.UserID;
 
   useEffect(() => {
@@ -40,6 +40,9 @@ const Videos = (props) => {
       if (res.data?.success && res.data?.data.length !== 0) {
         setVideos(res?.data?.data);
         settotalPages(Math.ceil(res?.data?.total / Limit));
+        setTimeout(() => {
+          props.setUploadActive(false);
+        }, 1000);
       }
     } catch (e) {
       console.log(e);
@@ -254,155 +257,22 @@ const Videos = (props) => {
             </Link>
           </div>
 
-          <div className="absolute top-12 left-1/2 transform  pointer-events-none">
-            {[...Array(10)].map((_, i) => (
-              <div
-                key={i}
-                className="absolute w-2 h-2 bg-yellow-400 rounded-full opacity-0 animate-sparkle"
-                style={{
-                  left: `${Math.random() * 100 - 50}px`,
-                  top: `${Math.random() * 30 - 15}px`,
-                  animationDelay: `${i * 0.5}s`,
-                }}
-              ></div>
-            ))}
+          <div className=" absolute w-full h-full">
+            {" "}
+            <div className="absolute inset-0 transform  pointer-events-none">
+              {[...Array(50)].map((_, i) => (
+                <div
+                  key={i}
+                  className="absolute w-1 h-1 dark:bg-white bg-red-500 rounded-full opacity-0 animate-sparkle"
+                  style={{
+                    left: `${Math.random() * 95}%`,
+                    top: `${Math.random() * 95}%`,
+                    animationDelay: `${i * 0.5}s`,
+                  }}
+                ></div>
+              ))}
+            </div>
           </div>
-
-          <style jsx="true">{`
-            @keyframes float-main {
-              0%,
-              100% {
-                transform: translateY(0);
-              }
-              50% {
-                transform: translateY(-10px);
-              }
-            }
-            @keyframes float1 {
-              0%,
-              100% {
-                transform: translateY(0) rotate(10deg);
-              }
-              50% {
-                transform: translateY(-15px) rotate(12deg) scale(1.05);
-              }
-            }
-            @keyframes float2 {
-              0%,
-              100% {
-                transform: translateY(0) rotate(5deg);
-              }
-              50% {
-                transform: translateY(-10px) rotate(7deg) scale(1.05);
-              }
-            }
-            @keyframes float3 {
-              0%,
-              100% {
-                transform: translateY(0) rotate(-8deg);
-              }
-              50% {
-                transform: translateY(-12px) rotate(-5deg) scale(1.05);
-              }
-            }
-            @keyframes shine {
-              to {
-                left: 120%;
-              }
-            }
-            @keyframes gradient-shift {
-              0% {
-                background-position: 0% 50%;
-              }
-              50% {
-                background-position: 100% 50%;
-              }
-              100% {
-                background-position: 0% 50%;
-              }
-            }
-            @keyframes text-shimmer {
-              0% {
-                background-position: 0% 50%;
-              }
-              50% {
-                background-position: 100% 50%;
-              }
-              100% {
-                background-position: 0% 50%;
-              }
-            }
-            @keyframes spin-slow {
-              from {
-                transform: rotate(0deg);
-              }
-              to {
-                transform: rotate(360deg);
-              }
-            }
-            @keyframes sparkle {
-              0% {
-                opacity: 0;
-                transform: scale(0);
-              }
-              50% {
-                opacity: 1;
-                transform: scale(1.5);
-              }
-              100% {
-                opacity: 0;
-                transform: scale(0);
-              }
-            }
-            @keyframes fade-in {
-              from {
-                opacity: 0;
-                transform: translateY(10px);
-              }
-              to {
-                opacity: 1;
-                transform: translateY(0);
-              }
-            }
-            .animate-float-main {
-              animation: float-main 8s ease-in-out infinite;
-            }
-            .animate-float1 {
-              animation: float1 6s ease-in-out infinite;
-            }
-            .animate-float2 {
-              animation: float2 8s ease-in-out infinite 1s;
-            }
-            .animate-float3 {
-              animation: float3 7s ease-in-out infinite 0.5s;
-            }
-            .animate-gradient-shift {
-              background-size: 200% 200%;
-              animation: gradient-shift 12s ease infinite;
-            }
-            .animate-text-shimmer {
-              background-size: 200% 200%;
-              animation: text-shimmer 8s ease infinite;
-            }
-            .animate-spin-slow {
-              animation: spin-slow 4s linear infinite;
-            }
-            .animate-sparkle {
-              animation: sparkle 1.5s ease-out infinite;
-            }
-            .animate-fade-in {
-              animation: fade-in 1s ease-out forwards;
-            }
-            .animate-shine {
-              animation: shine 1.5s ease-out forwards;
-            }
-            .animate-pulse-slow {
-              animation: pulse 6s ease-in-out infinite;
-            }
-            .animate-pulse-medium {
-              animation: pulse 4s ease-in-out infinite 1s;
-            }
-          `}</style>
         </div>
       )}
 

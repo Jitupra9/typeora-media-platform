@@ -15,7 +15,7 @@ const ProfileArticles = (props) => {
   const [Articles, setArticles] = useState([]);
   const [totalPages, settotalPages] = useState(null);
   const [error, seterror] = useState(null);
-  const [Limit, setLimit] = useState(10);
+  const [Limit, setLimit] = useState(3);
   const UserId = props.UserID;
   // const isMobile = useMediaQuery({ maxWidth: 645 });
   // const isTablet = useMediaQuery({ minWidth: 646, maxWidth: 1439 });

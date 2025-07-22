@@ -1,4 +1,5 @@
 import React from "react";
+import "../../assets/css/serverOffline.css";
 import { Server, WifiOff, CloudOff, Satellite, RefreshCw } from "lucide-react";
 
 function ServerOffline() {
@@ -80,111 +81,7 @@ function ServerOffline() {
       </div>
 
       {/* Animation styles */}
-      <style jsx="true">{`
-        @keyframes orbit-slow {
-          0% {
-            transform: rotate(0deg) translateX(25px) rotate(0deg);
-          }
-          100% {
-            transform: rotate(360deg) translateX(25px) rotate(360deg);
-          }
-        }
-        @keyframes orbit-medium {
-          0% {
-            transform: rotate(120deg) translateX(60px) rotate(120deg);
-          }
-          100% {
-            transform: rotate(480deg) translateX(60px) rotate(480deg);
-          }
-        }
-        @keyframes orbit-fast {
-          0% {
-            transform: rotate(240deg) translateX(35px) rotate(240deg);
-          }
-          100% {
-            transform: rotate(600deg) translateX(35px) rotate(600deg);
-          }
-        }
-        @keyframes rotate-slow {
-          from {
-            transform: rotate(0deg);
-          }
-          to {
-            transform: rotate(360deg);
-          }
-        }
-        @keyframes rotate-medium-reverse {
-          from {
-            transform: rotate(0deg);
-          }
-          to {
-            transform: rotate(-360deg);
-          }
-        }
-        @keyframes rotate-fast {
-          from {
-            transform: rotate(360deg);
-          }
-          to {
-            transform: rotate(0deg);
-          }
-        }
-        @keyframes pulse-slow {
-          0%,
-          100% {
-            transform: scale(1);
-            opacity: 1;
-          }
-          50% {
-            transform: scale(1.08);
-            opacity: 0.9;
-          }
-        }
-        @keyframes ping-slow {
-          0% {
-            transform: scale(0.8);
-            opacity: 0.8;
-          }
-          70%,
-          100% {
-            transform: scale(1.4);
-            opacity: 0;
-          }
-        }
-        @keyframes float {
-          0%,
-          100% {
-            transform: translateY(0) translateX(0);
-          }
-          50% {
-            transform: translateY(-20px) translateX(10px);
-          }
-        }
-        .animate-orbit-slow {
-          animation: orbit-slow 20s linear infinite;
-        }
-        .animate-orbit-medium {
-          animation: orbit-medium 16s linear infinite;
-        }
-        .animate-orbit-fast {
-          animation: orbit-fast 12s linear infinite;
-        }
-        .animate-rotate-slow {
-          animation: rotate-slow 45s linear infinite;
-        }
-        .animate-rotate-medium-reverse {
-          animation: rotate-medium-reverse 35s linear infinite;
-        }
-        .animate-rotate-fast {
-          animation: rotate-fast 25s linear infinite;
-        }
-        .animate-pulse-slow {
-          animation: pulse-slow 3.5s ease-in-out infinite;
-        }
-        .animate-ping-slow {
-          animation: ping-slow 3s ease-out infinite;
-        }
-      `}</style>
+      <style jsx="true">{``}</style>
     </div>
   );
 }
