@@ -1,4 +1,5 @@
-import React, { memo, useState, useEffect } from "react";
+import React, { memo, useState, useEffect, useContext } from "react";
+import { ProfileDataContext } from "../../../context/page/ProfileContext";
 import RenderGridItem from "../../Layout/card/Grid";
 import ServerOffline from "../../utils/ServerOffline";
 import axios from "axios";
@@ -19,9 +20,11 @@ import {
 import videoThumbnail from "../../../assets/images/sports.jpg";
 
 const Videos = (props) => {
+  const { contextValue, SetcontextValue } = useContext(ProfileDataContext);
+  const { NewUploadData, uploadActive } = contextValue;
+  const { setNewUploadData, setUploadActive } = SetcontextValue;
   const [layout, setLayout] = useState("grid");
   const [error, seterror] = useState(null);
-
   const [Videos, setVideos] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, settotalPages] = useState(0);
@@ -41,7 +44,7 @@ const Videos = (props) => {
         setVideos(res?.data?.data);
         settotalPages(Math.ceil(res?.data?.total / Limit));
         setTimeout(() => {
-          props.setUploadActive(false);
+          setUploadActive(false);
         }, 1000);
       }
     } catch (e) {
@@ -50,15 +53,15 @@ const Videos = (props) => {
         seterror(500);
       }
     } finally {
-      props.setNewUploaddata(false);
+      setNewUploadData(false);
     }
   };
   useEffect(() => {
     fetchVideo();
-  }, [currentPage, props.NewUploaddata]);
+  }, [currentPage, NewUploadData]);
   const handleUpload = () => {
     props.setUploadType("videos");
-    props.setUploadActive(!props.UploadActive);
+    setUploadActive(!uploadActive);
   };
   if (error === 500) {
     return <ServerOffline />;

@@ -1,4 +1,5 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useEffect, useState, useContext } from "react";
+import { ProfileDataContext } from "../../../context/page/ProfileContext";
 import RenderGridItem from "../../Layout/card/Grid";
 import ListGrid from "../../Layout/card/List";
 import Masonry from "../../Layout/card/Masonry";
@@ -10,6 +11,9 @@ import sports from "../../../assets/images/sports.jpg";
 import axios from "axios";
 import { useMediaQuery } from "react-responsive";
 const ProfileArticles = (props) => {
+  const { contextValue, SetcontextValue } = useContext(ProfileDataContext);
+  const { NewUploadData, uploadActive } = contextValue;
+  const { setNewUploadData, setUploadActive } = SetcontextValue;
   const [layout, setLayout] = useState("grid");
   const [currentPage, setCurrentPage] = useState(1);
   const [Articles, setArticles] = useState([]);
@@ -39,6 +43,9 @@ const ProfileArticles = (props) => {
       if (Articles.data?.success && Articles.data?.data.length !== 0) {
         setArticles(Articles.data?.data);
         settotalPages(Math.ceil(Articles?.data?.total / Limit));
+        setTimeout(() => {
+          setUploadActive(false);
+        }, 1000);
       }
     } catch (e) {
       console.log(e);
@@ -46,16 +53,16 @@ const ProfileArticles = (props) => {
         seterror(500);
       }
     } finally {
-      props.setNewUploaddata(false);
+      setNewUploadData(false);
     }
   };
 
   useEffect(() => {
     fetchArticles();
-  }, [currentPage, props.NewUploaddata, Limit]);
+  }, [currentPage, NewUploadData, Limit]);
   const handleArticle = () => {
     props.setUploadType("article");
-    props.setUploadActive(!props.UploadActive);
+    setUploadActive(!uploadActive);
   };
 
   if (error === 500) {

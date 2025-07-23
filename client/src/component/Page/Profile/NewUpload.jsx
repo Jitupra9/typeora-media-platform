@@ -1,6 +1,7 @@
 import { memo, useState, useEffect, useContext } from "react";
 import CloudinaryUpload from "../../utils/CloudinaryUpload";
 import { IsAuthnticate } from "../../../context/Auth/IsAuth";
+import { ProfileDataContext } from "../../../context/page/ProfileContext";
 import {
   Upload,
   Image as ImageIcon,
@@ -18,6 +19,8 @@ import axios from "axios";
 
 function NewUpload(props) {
   const { Auth } = useContext(IsAuthnticate);
+  const { SetcontextValue } = useContext(ProfileDataContext);
+  const { setNewUploadData, setUploadActive } = SetcontextValue;
   const type = props.type;
   const [UploadData, setUploadData] = useState({
     userID: Auth.user?._id,
@@ -37,7 +40,7 @@ function NewUpload(props) {
   const [currentUploadPhase, setCurrentUploadPhase] = useState("");
 
   const handleArticle = () => {
-    props.setUploadActive(false);
+    setUploadActive(false);
   };
 
   const { uploadFile } = CloudinaryUpload();
@@ -125,9 +128,9 @@ function NewUpload(props) {
               );
         if (result.data?.success) {
           setIsPublished(true);
-          props.setNewUpload(true);
+          setNewUploadData(true);
           setTimeout(() => {
-            props.setUploadActive(false);
+            setUploadActive(false);
           }, 1000);
         }
       }

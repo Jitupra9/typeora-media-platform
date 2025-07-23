@@ -1,4 +1,5 @@
 import Authntication from "../pages/Auth/Authntication.jsx";
+import ProfileContext from "../context/page/ProfileContext.jsx";
 import IsAuthRoutes from "./Auth-Routes/IsAuthRoutes";
 import Layout from "../layout/Layout";
 import Pagenotfound from "../pages/Pagenotfound";
@@ -113,7 +114,9 @@ const routes = [
         path: "profile",
         component: () => (
           <IsAuthRoutes>
-            <Profile />
+            <ProfileContext>
+              <Profile />
+            </ProfileContext>
           </IsAuthRoutes>
         ),
       },

@@ -16,7 +16,7 @@ function IsAuth({ children }) {
     if (result?.user?._id) {
       setAuth((prev) => ({
         ...prev,
-        islogined: true, // change it TRUE if successfully login
+        islogined: true,
         user: result?.user,
         loading: false,
         token: result?.token,
@@ -28,7 +28,6 @@ function IsAuth({ children }) {
       }));
     }
   };
-
   useEffect(() => {
     fetchUser();
   }, []);

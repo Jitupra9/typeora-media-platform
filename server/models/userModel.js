@@ -52,10 +52,6 @@ const userSchema = new mongoose.Schema(
     Social: {
       type: [],
     },
-    Follwers: {
-      type: Number,
-      default: 1,
-    },
   },
   { collection: "users" }
 );
