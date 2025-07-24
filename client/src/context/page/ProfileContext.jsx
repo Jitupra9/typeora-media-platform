@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect, useContext } from "react";
 import { IsAuthnticate } from "../Auth/IsAuth";
 
 export const ProfileDataContext = createContext();
-
+import APIS from "../../services/APIS";
 function ProfileContext({ children }) {
   const { Auth } = useContext(IsAuthnticate);
   const [NewUploadData, setNewUploadData] = useState(false);
@@ -10,9 +10,18 @@ function ProfileContext({ children }) {
   const [isEdit, setIsEdit] = useState(false);
   const [uploadActive, setUploadActive] = useState(false);
   const [profileCompletion, setProfileCompletion] = useState(0);
+  const [TotalData, setTotalData] = useState({
+    totalArticle: 0,
+    totoalVideo: 0,
+    totalPost: 0,
+    totalFollwer: 0,
+    totalFollowing: 0,
+    totalViews: 0,
+  });
   const handleEdit = () => {
     setIsEdit(true);
   };
+
   const [formData, setFormData] = useState(() => {
     const u = Auth?.user ?? {};
     return {
@@ -28,6 +37,21 @@ function ProfileContext({ children }) {
       About: u.About ?? "",
     };
   });
+
+  const api = APIS();
+  useEffect(() => {
+    const fetchArticles = async () => {
+      const totalArticle = await api.fetchTotalArticles();
+      const totalVideo = await api.fetchTotalVideos();
+      setTotalData((prev) => ({
+        ...prev,
+        totalPost: totalArticle + totalVideo,
+        totalArticle: totalArticle,
+        totoalVideo: totalVideo,
+      }));
+    };
+    fetchArticles();
+  }, [api]);
 
   const calcCompletion = (dataObj) => {
     const entries = Object.entries(dataObj).filter(([k]) => k !== "UserID");
@@ -48,6 +72,7 @@ function ProfileContext({ children }) {
   }, [Auth.user]);
 
   const contextValue = {
+    TotalData,
     NewUploadData,
     uploadType,
     isEdit,
@@ -56,6 +81,7 @@ function ProfileContext({ children }) {
     formData,
   };
   const SetcontextValue = {
+    setTotalData,
     setProfileCompletion,
     setUploadActive,
     setUploadType,

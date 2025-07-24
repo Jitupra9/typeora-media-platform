@@ -1,6 +1,11 @@
-import React, { memo } from "react";
+import React, { memo, useContext, useState, useEffect } from "react";
 import { ListCheck, CheckCircle } from "lucide-react";
+import { ProfileDataContext } from "../../../context/page/ProfileContext";
+
 function ProfileCheckList() {
+  const { contextValue } = useContext(ProfileDataContext);
+  const { profileCompletion, TotalData } = contextValue;
+
   return (
     <div className="p-5 bg-white dark:bg-gray-900 rounded-xl shadow-sm">
       <div className="flex items-center justify-between">
@@ -21,13 +26,13 @@ function ProfileCheckList() {
             description: "Setup your basic profile",
           },
           {
-            title: "Post Articles",
-            completed: true,
-            description: "Upload Articles on Typeora",
+            title: "Post Article & Video",
+            completed: TotalData.totalPost !== 0 ? true : false,
+            description: "Upload Articles & Videos on Typeora",
           },
           {
             title: "Complete Profile",
-            completed: true,
+            completed: profileCompletion === 100 ? true : false,
             description: "Fillup all personal information",
           },
           {
