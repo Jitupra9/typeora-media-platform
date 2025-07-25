@@ -1,6 +1,7 @@
 import { memo, useState, useEffect, useContext } from "react";
 import CloudinaryUpload from "../../utils/CloudinaryUpload";
 import { IsAuthnticate } from "../../../context/Auth/IsAuth";
+import { ProfileDataContext } from "../../../context/page/ProfileContext";
 import {
   Upload,
   Image as ImageIcon,
@@ -16,10 +17,12 @@ import {
 } from "lucide-react";
 import axios from "axios";
 
-function NewArticle(props) {
+function NewUpload(props) {
   const { Auth } = useContext(IsAuthnticate);
+  const { SetcontextValue } = useContext(ProfileDataContext);
+  const { setNewUploadData, setUploadActive } = SetcontextValue;
   const type = props.type;
-  const [newArticle, setNewArticle] = useState({
+  const [UploadData, setUploadData] = useState({
     userID: Auth.user?._id,
     fileUrl: "",
     title: "",
@@ -33,24 +36,26 @@ function NewArticle(props) {
   const [newTag, setNewTag] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [isPublished, setIsPublished] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [currentUploadPhase, setCurrentUploadPhase] = useState("");
 
   const handleArticle = () => {
-    props.setUploadActive(false);
+    setUploadActive(false);
   };
 
-  const { uploadImage } = CloudinaryUpload();
+  const { uploadFile } = CloudinaryUpload();
 
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
-    setNewArticle((prev) => ({
+    setUploadData((prev) => ({
       ...prev,
       [name]: type === "file" ? files[0] : value,
     }));
   };
 
   const addTag = () => {
-    if (newTag.trim() && !newArticle.tags.includes(newTag)) {
-      setNewArticle((prev) => ({
+    if (newTag.trim() && !UploadData.tags.includes(newTag)) {
+      setUploadData((prev) => ({
         ...prev,
         tags: [...prev.tags, newTag],
       }));
@@ -59,7 +64,7 @@ function NewArticle(props) {
   };
 
   const removeTag = (tagToRemove) => {
-    setNewArticle((prev) => ({
+    setUploadData((prev) => ({
       ...prev,
       tags: prev.tags.filter((tag) => tag !== tagToRemove),
     }));
@@ -68,32 +73,64 @@ function NewArticle(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsUploading(true);
+    setUploadProgress(0);
+    setCurrentUploadPhase("cloudinary");
 
     const finalCategory =
-      newArticle.category === "other"
-        ? newArticle.customCategory
-        : newArticle.category;
+      UploadData.category === "other"
+        ? UploadData.customCategory
+        : UploadData.category;
 
-    const { customCategory, ...articleData } = {
-      ...newArticle,
+    const { customCategory, ...Datas } = {
+      ...UploadData,
       category: finalCategory,
     };
 
     try {
-      const newFileUrl = await uploadImage(articleData.fileUrl);
+      const newFileUrl = await uploadFile(Datas.fileUrl, type, (p) => {
+        setUploadProgress(Math.round(p));
+      });
       if (newFileUrl) {
-        articleData.fileUrl = newFileUrl;
-        console.log("File uploaded successfully:", newFileUrl);
-        console.log("Submitted data is ", articleData);
-        const result = await axios.post("api/articles/NewArticle", {
-          data: articleData,
-          token: Auth.token,
-        });
+        Datas.fileUrl = newFileUrl;
+        setCurrentUploadPhase("api");
+        setUploadProgress(0);
+        const result =
+          type === "videos"
+            ? await axios.post(
+                "api/videos/NewVideo",
+                {
+                  data: Datas,
+                  token: Auth.token,
+                },
+                {
+                  onUploadProgress: (progressEvent) => {
+                    const progress = Math.round(
+                      (progressEvent.loaded * 100) / progressEvent.total
+                    );
+                    setUploadProgress(progress);
+                  },
+                }
+              )
+            : await axios.post(
+                "api/articles/NewArticle",
+                {
+                  data: Datas,
+                  token: Auth.token,
+                },
+                {
+                  onUploadProgress: (progressEvent) => {
+                    const progress = Math.round(
+                      (progressEvent.loaded * 100) / progressEvent.total
+                    );
+                    setUploadProgress(progress);
+                  },
+                }
+              );
         if (result.data?.success) {
           setIsPublished(true);
-          props.setNewUpload(true);
+          setNewUploadData(true);
           setTimeout(() => {
-            props.setUploadActive(false);
+            setUploadActive(false);
           }, 1000);
         }
       }
@@ -141,7 +178,7 @@ function NewArticle(props) {
 
               <div
                 className={`border-2 border-dashed rounded-2xl p-6 transition-colors ${
-                  newArticle.fileUrl
+                  UploadData.fileUrl
                     ? "border-green-500 bg-green-50 dark:bg-green-900/20"
                     : "border-gray-300 dark:border-gray-600 hover:border-blue-500"
                 }`}
@@ -153,19 +190,19 @@ function NewArticle(props) {
                   <div className="flex flex-col items-center">
                     <Upload className="w-10 h-10 my-3 text-blue-500" />
                     <p className="text-gray-600 dark:text-gray-300">
-                      {newArticle.fileUrl
+                      {UploadData.fileUrl
                         ? "Change image"
                         : "Drag & drop your file or"}
                     </p>
                     <label
                       htmlFor="files"
                       className={`mt-3 cursor-pointer px-5 py-2 rounded-lg text-white flex items-center gap-2 ${
-                        newArticle.fileUrl
+                        UploadData.fileUrl
                           ? "bg-green-500 hover:bg-green-600"
                           : "bg-blue-500 hover:bg-blue-600"
                       }`}
                     >
-                      {newArticle.fileUrl ? (
+                      {UploadData.fileUrl ? (
                         <>
                           <CheckCircle className="w-4 h-4" />
                           {type === "article" ? "Image" : "Video"} Selected
@@ -177,10 +214,10 @@ function NewArticle(props) {
                         </>
                       )}
                     </label>
-                    {newArticle.fileUrl && (
+                    {UploadData.fileUrl && (
                       <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
-                        {typeof newArticle.fileUrl === "object"
-                          ? newArticle.fileUrl.name
+                        {typeof UploadData.fileUrl === "object"
+                          ? UploadData.fileUrl.name
                           : "File ready"}
                       </p>
                     )}
@@ -211,7 +248,7 @@ function NewArticle(props) {
                   className="w-full border border-gray-300 dark:border-gray-600 bg-transparent rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   type="text"
                   name="title"
-                  value={newArticle.title}
+                  value={UploadData.title}
                   onChange={handleChange}
                   placeholder="Enter article title"
                   required
@@ -227,7 +264,7 @@ function NewArticle(props) {
                   className="w-full border border-gray-300 dark:border-gray-600 bg-transparent rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   type="text"
                   name="subHeading"
-                  value={newArticle.subHeading}
+                  value={UploadData.subHeading}
                   onChange={handleChange}
                   placeholder="A short description"
                 />
@@ -240,7 +277,7 @@ function NewArticle(props) {
                 </label>
                 <select
                   name="category"
-                  value={newArticle.category}
+                  value={UploadData.category}
                   onChange={handleChange}
                   className="w-full border dark:text-gray-300 dark:*:bg-gray-900 border-gray-300 dark:border-gray-600 bg-transparent rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   required
@@ -262,7 +299,7 @@ function NewArticle(props) {
                 </select>
               </div>
 
-              {newArticle.category === "other" && (
+              {UploadData.category === "other" && (
                 <div>
                   <label className="text-sm font-medium mb-2 flex items-center gap-2 text-gray-700 dark:text-gray-300">
                     <ChevronDown className="w-4 h-4 text-blue-500" />
@@ -272,10 +309,10 @@ function NewArticle(props) {
                     className="w-full border border-gray-300 dark:border-gray-600 bg-transparent rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     type="text"
                     name="customCategory"
-                    value={newArticle.customCategory}
+                    value={UploadData.customCategory}
                     onChange={handleChange}
                     placeholder="Enter custom category"
-                    required={newArticle.category === "other"}
+                    required={UploadData.category === "other"}
                   />
                 </div>
               )}
@@ -303,9 +340,9 @@ function NewArticle(props) {
                     <Plus className="w-4 h-4" />
                   </button>
                 </div>
-                {newArticle.tags.length > 0 && (
+                {UploadData.tags.length > 0 && (
                   <div className="flex flex-wrap gap-2 mt-2">
-                    {newArticle.tags.map((tag) => (
+                    {UploadData.tags.map((tag) => (
                       <span
                         key={tag}
                         className="inline-flex items-center gap-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300 px-3 py-1 rounded-full text-sm"
@@ -333,13 +370,32 @@ function NewArticle(props) {
                 <textarea
                   className="w-full border border-gray-300 dark:border-gray-600 bg-transparent rounded-lg px-4 py-3 h-40 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   name="description"
-                  value={newArticle.description}
+                  value={UploadData.description}
                   onChange={handleChange}
                   placeholder="Write your article content here..."
                   required
                 />
               </div>
             </div>
+
+            {isUploading && (
+              <div className="mb-4">
+                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
+                  <div
+                    className="bg-blue-600 h-2.5 rounded-full transition-all duration-300"
+                    style={{ width: `${uploadProgress}%` }}
+                  ></div>
+                </div>
+                <p className="text-xs mt-1 text-gray-500 dark:text-gray-400">
+                  {currentUploadPhase === "cloudinary"
+                    ? `Uploading ${
+                        type === "videos" ? "video" : "image"
+                      } to Cloudinary... ${uploadProgress}%`
+                    : `Saving to database... ${uploadProgress}%`}
+                </p>
+              </div>
+            )}
+
             <div className="mt-6 flex justify-end">
               <button
                 type="submit"
@@ -365,7 +421,7 @@ function NewArticle(props) {
                 ) : (
                   <>
                     <FileText className="w-4 h-4" />
-                    Publish {type === "article" ? "Article" : "Video"}
+                    Publish {type !== "videos" ? "Article" : "Video"}
                   </>
                 )}
               </button>
@@ -377,4 +433,4 @@ function NewArticle(props) {
   );
 }
 
-export default memo(NewArticle);
+export default memo(NewUpload);

@@ -1,6 +1,8 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useEffect, useState, useContext } from "react";
 import people from "../../assets/images/people.jpg";
+import { IsAuthnticate } from "../../context/Auth/IsAuth";
 import Shareing from "../../component/models/Share";
+import { ProfileDataContext } from "../../context/page/ProfileContext";
 import {
   Dot,
   Calendar,
@@ -14,13 +16,12 @@ import {
   Globe,
 } from "lucide-react";
 function ProfileHeader(props) {
+  const { contextValue } = useContext(ProfileDataContext);
+  const { Auth } = useContext(IsAuthnticate);
   const [shareActive, setshareActive] = useState(false);
-  const [profileCompletion, setprofileCompletion] = useState();
-  const [user, setuser] = useState({});
-  useEffect(() => {
-    setprofileCompletion(props.profileCompletion);
-    setuser(props.user);
-  }, [props]);
+  const { profileCompletion } = contextValue;
+  const { user } = Auth;
+
   const handleShare = (e) => {
     e.preventDefault();
     setshareActive(!shareActive);
@@ -49,13 +50,13 @@ function ProfileHeader(props) {
               </span>
             </h3>
             <div className=" flex flex-wrap  gap-1  text-gray-500 dark:text-gray-400 text-sm ">
-              {user.userRole && (
+              {user.Role && (
                 <div className=" flex items-center">
                   <Briefcase className="w-4 h-4 mr-1" />
                   {user.Role}
                 </div>
               )}
-              {user.userRole && (
+              {user.Role && (
                 <Dot className=" hidden sm:block lg:hidden xl:block" />
               )}
               <div className=" flex items-center">

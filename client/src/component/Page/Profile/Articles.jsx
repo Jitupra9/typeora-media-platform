@@ -1,49 +1,75 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useEffect, useState, useContext } from "react";
+import { ProfileDataContext } from "../../../context/page/ProfileContext";
 import RenderGridItem from "../../Layout/card/Grid";
+import ArticleNF from "../../DATA-NOT-FOUND/ArticleNF";
+
 import ListGrid from "../../Layout/card/List";
 import Masonry from "../../Layout/card/Masonry";
 import Pagination from "../../utils/pagination";
+import ServerOffline from "../../utils/ServerOffline";
 import { Link } from "react-router-dom";
 import { Plus, Grid, List, LayoutGrid } from "lucide-react";
-import sports from "../../../assets/images/sports.jpg";
+// import sports from "../../../assets/images/sports.jpg";
 import axios from "axios";
-
+// import { useMediaQuery } from "react-responsive";
 const ProfileArticles = (props) => {
+  const { contextValue, SetcontextValue } = useContext(ProfileDataContext);
+  const { NewUploadData, uploadActive } = contextValue;
+  const { setNewUploadData, setUploadActive } = SetcontextValue;
   const [layout, setLayout] = useState("grid");
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [Articles, setArticles] = useState([]);
   const [totalPages, settotalPages] = useState(null);
-
-  const Limit = 3;
+  const [error, seterror] = useState(null);
+  const [Limit, setLimit] = useState(3);
   const UserId = props.UserID;
+  // const isMobile = useMediaQuery({ maxWidth: 645 });
+  // const isTablet = useMediaQuery({ minWidth: 646, maxWidth: 1439 });
+  // const isDesktop = useMediaQuery({ minWidth: 1440 });
 
+  // useEffect(() => {
+  //   if (isMobile) {
+  //     setLimit(10);
+  //   } else if (isTablet) {
+  //     setLimit(2);
+  //   } else {
+  //     setLimit(3);
+  //   }
+  // }, [isMobile, isTablet, isDesktop]);
   const fetchArticles = async () => {
     console.log("rady to fetch articles");
     try {
       const Articles = await axios.get(
-        `api/articles/user/${UserId}?page=${currentPage}&limit=${Limit}`
+        `/api/articles/user/${UserId}?page=${currentPage}&limit=${Limit}`
       );
-      if (Articles.data?.total) {
-      }
       if (Articles.data?.success && Articles.data?.data.length !== 0) {
         setArticles(Articles.data?.data);
-        setCurrentPage(Articles?.data?.currentPage);
         settotalPages(Math.ceil(Articles?.data?.total / Limit));
+        setTimeout(() => {
+          setUploadActive(false);
+        }, 1000);
       }
     } catch (e) {
-      console.log(e.message);
+      console.log(e);
+      if (e.response?.status === 500) {
+        seterror(500);
+      }
     } finally {
-      props.setNewUploaddata(false);
+      setNewUploadData(false);
     }
   };
 
   useEffect(() => {
     fetchArticles();
-  }, [currentPage, props.NewUploaddata]);
+  }, [currentPage, NewUploadData, Limit]);
   const handleArticle = () => {
     props.setUploadType("article");
-    props.setUploadActive(!props.UploadActive);
+    setUploadActive(!uploadActive);
   };
+
+  if (error === 500) {
+    return <ServerOffline />;
+  }
   return (
     <div className="">
       <div className="flex flex-col sm:flex-row gap-y-4 sm:gap-y-0 justify-between items-center mb-6">
@@ -134,7 +160,7 @@ const ProfileArticles = (props) => {
       {Articles.length !== 0 ? (
         <div>
           {layout === "grid" && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-3 gap-4">
               {Articles.map((article, key) => (
                 <RenderGridItem data={article} key={key} page="article" />
               ))}
@@ -161,57 +187,16 @@ const ProfileArticles = (props) => {
           )}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center  text-center">
-          <div className="w-64 h-64 mb-6 relative">
-            <div className="absolute inset-0 bg-gray-100 dark:bg-gray-800 rounded-full opacity-20"></div>
-            <svg
-              className="w-full h-full text-gray-400 dark:text-gray-500"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1.5}
-                d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"
-              />
-            </svg>
-          </div>
-
-          <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-2">
-            No Articles Yet
-          </h3>
-
-          <p className="text-gray-600 dark:text-gray-400 max-w-md mb-6">
-            You haven't created any articles yet. Start sharing your knowledge
-            and ideas with the community.
-          </p>
-
-          <button
-            onClick={handleArticle}
-            className="flex items-center space-x-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-6 py-3 rounded-lg shadow-md transition-all duration-200 transform hover:scale-105"
-          >
-            <Plus className="h-5 w-5" />
-            <span className="font-medium">Create Your First Article</span>
-          </button>
-
-          <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
-            Need inspiration?{" "}
-            <Link
-              to="/explore"
-              className="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300"
-            >
-              Browse popular articles
-            </Link>
-          </p>
-        </div>
+        <ArticleNF handleArticle={handleArticle} />
       )}
-      <Pagination
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        totalPages={totalPages}
-      />
+
+      {totalPages !== null && (
+        <Pagination
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalPages={totalPages}
+        />
+      )}
     </div>
   );
 };

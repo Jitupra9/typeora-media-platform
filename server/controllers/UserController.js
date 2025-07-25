@@ -1,5 +1,5 @@
 const UserModel = require("../models/userModel");
-
+const mongoose = require("mongoose");
 exports.UpdateUser = async (req, res) => {
   try {
     console.log(req.body.formData);
@@ -25,5 +25,40 @@ exports.UpdateUser = async (req, res) => {
   } catch (err) {
     console.log(err.message);
     res.status(500).json({ message: "Not complete", success: false });
+  }
+};
+
+exports.skillsController = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const skills = req.body.Skills;
+    console.log(req.body);
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ error: "Invalid user ID" });
+    }
+
+    if (!Array.isArray(skills)) {
+      return res
+        .status(400)
+        .json({ error: "Skills must be provided as an array" });
+    }
+
+    const updatedUser = await UserModel.findByIdAndUpdate(
+      userId,
+      { Skills: skills },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.status(200).json({
+      message: "Skills updated successfully",
+      user: updatedUser,
+      success: true,
+    });
+  } catch (error) {
+    console.error("Error updating skills:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };

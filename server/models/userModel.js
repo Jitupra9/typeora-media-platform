@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema(
   {
+    ProfilePicture: {
+      type: String,
+      default: null,
+    },
     Email: {
       type: String,
       required: true,
@@ -52,10 +56,12 @@ const userSchema = new mongoose.Schema(
     Social: {
       type: [],
     },
-    Follwers: {
-      type: Number,
-      default: 1,
+    Skills: {
+      type: [],
     },
+
+    followersCount: { type: Number, default: 0 },
+    followingCount: { type: Number, default: 0 },
   },
   { collection: "users" }
 );

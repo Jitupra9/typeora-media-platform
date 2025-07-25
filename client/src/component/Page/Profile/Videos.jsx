@@ -1,70 +1,73 @@
-import React, { memo, useState, useEffect } from "react";
+import React, { memo, useState, useEffect, useContext } from "react";
+import { ProfileDataContext } from "../../../context/page/ProfileContext";
 import RenderGridItem from "../../Layout/card/Grid";
+import ServerOffline from "../../utils/ServerOffline";
+import axios from "axios";
 import Masonry from "../../Layout/card/Masonry";
 import ListCard from "../../Layout/card/List";
 import Pagination from "../../utils/pagination";
+import VideoNF from "../../DATA-NOT-FOUND/VideoNF";
 import { Link } from "react-router-dom";
-import { Plus, Grid, List, LayoutGrid } from "lucide-react";
-import videoThumbnail from "../../../assets/images/sports.jpg";
+import {
+  Plus,
+  Grid,
+  List,
+  Film,
+  LayoutGrid,
+  Video,
+  CirclePlay,
+  CloudUpload,
+} from "lucide-react";
+// import videoThumbnail from "../../../assets/images/sports.jpg";
 
 const Videos = (props) => {
+  const { contextValue, SetcontextValue } = useContext(ProfileDataContext);
+  const { NewUploadData, uploadActive } = contextValue;
+  const { setNewUploadData, setUploadActive } = SetcontextValue;
   const [layout, setLayout] = useState("grid");
+  const [error, seterror] = useState(null);
+  const [Videos, setVideos] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 5;
-  const handleUpload = () => {
-    props.setUploadType("videos");
-    props.setUploadActive(!props.UploadActive);
-  };
+  const [totalPages, settotalPages] = useState(0);
+  const [Limit, setLimit] = useState(3);
+  const UserId = props.UserID;
+
   useEffect(() => {
     console.log("video component render");
   });
-  const demoVideos = [
-    {
-      id: 1,
-      title: "Advanced React Patterns Explained",
-      description:
-        "Learn about modern React patterns in this comprehensive tutorial.",
-      category: "Tech",
-      views: "124k",
-      comments: 42,
-      likes: 843,
-      duration: "12:34",
-      date: "2 days ago",
-      isBookmarked: false,
-      thumbnail: videoThumbnail,
-      author: "Helena Thomton",
-    },
-    {
-      id: 2,
-      title: "UI/UX Design Trends 2024",
-      description:
-        "Explore the latest design trends shaping user interfaces this year.",
-      category: "Design",
-      views: "82k",
-      comments: 31,
-      likes: 589,
-      duration: "08:45",
-      date: "1 week ago",
-      isBookmarked: true,
-      thumbnail: videoThumbnail,
-      author: "Marcus Chen",
-    },
-    {
-      id: 3,
-      title: "Sustainable Architecture Documentary",
-      description:
-        "How green buildings are transforming urban landscapes worldwide.",
-      category: "Architecture",
-      views: "57k",
-      comments: 18,
-      likes: 356,
-      duration: "22:12",
-      date: "3 weeks ago",
-      isBookmarked: false,
-      thumbnail: videoThumbnail,
-      author: "Sophia Rodriguez",
-    },
-  ];
+
+  const fetchVideo = async () => {
+    try {
+      const res = await axios.get(
+        `api/videos/user/${UserId}?page=${currentPage}&&limit=${Limit}`
+      );
+      if (res.data?.success && res.data?.data.length !== 0) {
+        setVideos(res?.data?.data);
+        settotalPages(Math.ceil(res?.data?.total / Limit));
+        setTimeout(() => {
+          setUploadActive(false);
+        }, 1000);
+      }
+    } catch (e) {
+      console.log(e);
+      if (e.response?.status === 500) {
+        seterror(500);
+      }
+    } finally {
+      setNewUploadData(false);
+    }
+  };
+  useEffect(() => {
+    fetchVideo();
+  }, [currentPage, NewUploadData]);
+  const handleUpload = () => {
+    props.setUploadType("videos");
+    setUploadActive(!uploadActive);
+  };
+  if (error === 500) {
+    return <ServerOffline />;
+  }
+
   return (
     <div className="">
       <div className="flex flex-col sm:flex-row gap-y-4 sm:gap-y-0 justify-between items-center mb-6">
@@ -153,40 +156,46 @@ const Videos = (props) => {
         </div>
       </div>
 
-      {layout === "grid" && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {demoVideos.map((video) => (
-            <RenderGridItem data={video} page="video" />
-          ))}
-        </div>
-      )}
-
-      {layout === "list" && (
-        <div className="grid grid-cols-1 gap-4">
-          {demoVideos.map((video) => (
-            <ListCard data={video} page="video" />
-          ))}
-        </div>
-      )}
-
-      {layout === "masonry" && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {demoVideos.map((video, index) => (
-            <div
-              key={video.id}
-              className={index % 4 === 0 ? "sm:col-span-2" : ""}
-            >
-              {<Masonry data={video} page="video" />}
+      {Videos.length !== 0 ? (
+        <div>
+          {layout === "grid" && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {Videos.map((video) => (
+                <RenderGridItem data={video} page="video" />
+              ))}
             </div>
-          ))}
+          )}
+          {layout === "list" && (
+            <div className="grid grid-cols-1 gap-4">
+              {Videos.map((video) => (
+                <ListCard data={video} page="video" />
+              ))}
+            </div>
+          )}
+          {layout === "masonry" && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {Videos.map((video, index) => (
+                <div
+                  key={video.id}
+                  className={index % 4 === 0 ? "sm:col-span-2" : ""}
+                >
+                  {<Masonry data={video} page="video" />}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
+      ) : (
+        <VideoNF handleUpload={handleUpload} />
       )}
 
-      <Pagination
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        totalPages={totalPages}
-      />
+      {Videos.length !== 0 && (
+        <Pagination
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalPages={totalPages}
+        />
+      )}
     </div>
   );
 };

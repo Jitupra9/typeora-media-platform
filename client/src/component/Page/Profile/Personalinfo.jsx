@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { ProfileDataContext } from "../../../context/page/ProfileContext";
 import { IsAuthnticate } from "../../../context/Auth/IsAuth";
 import axios from "axios";
 import {
@@ -17,7 +18,10 @@ import {
 import { memo, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-function Personalinfo({ Isedit, setIsedit, formData, setFormData }) {
+function Personalinfo({ Isedit, setIsedit }) {
+  const { contextValue, SetcontextValue } = useContext(ProfileDataContext);
+  const { formData } = contextValue;
+  const { setFormData } = SetcontextValue;
   const [loading, setloading] = useState({
     loading: false,
     loadingName: null,
