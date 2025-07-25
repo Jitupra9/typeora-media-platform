@@ -51,7 +51,7 @@ function ProfileContext({ children }) {
       }));
     };
     fetchArticles();
-  }, [api]);
+  }, []);
 
   const calcCompletion = (dataObj) => {
     const entries = Object.entries(dataObj).filter(([k]) => k !== "UserID");

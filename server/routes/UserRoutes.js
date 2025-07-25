@@ -5,7 +5,7 @@ const IsLogin = require("../middleware/isLogin");
 // const followController = require("../controllers/followController");
 
 router.put("/UpdateProfile", IsLogin, UserController.UpdateUser);
-
+router.put("/UpdateSkill/:userId", IsLogin, UserController.skillsController);
 // router.post("/follow", followController.followUser);
 // router.post("/unfollow", followController.unfollowUser);
 // router.get("/followers/:userId", followController.getFollowers);

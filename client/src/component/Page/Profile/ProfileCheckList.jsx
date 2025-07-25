@@ -1,11 +1,11 @@
 import React, { memo, useContext, useState, useEffect } from "react";
 import { ListCheck, CheckCircle } from "lucide-react";
 import { ProfileDataContext } from "../../../context/page/ProfileContext";
-
+import { IsAuthnticate } from "../../../context/Auth/IsAuth";
 function ProfileCheckList() {
   const { contextValue } = useContext(ProfileDataContext);
   const { profileCompletion, TotalData } = contextValue;
-
+  const { Auth } = useContext(IsAuthnticate);
   return (
     <div className="p-5 bg-white dark:bg-gray-900 rounded-xl shadow-sm">
       <div className="flex items-center justify-between">
@@ -37,7 +37,7 @@ function ProfileCheckList() {
           },
           {
             title: "Add Skills",
-            completed: false,
+            completed: Auth?.user?.Skills.length !== 0 ? true : false,
             description: "Showcase your top skills",
           },
           {
