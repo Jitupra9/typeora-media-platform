@@ -1,9 +1,11 @@
-import React, { useState, useEffect, memo } from "react";
+import React, { useState, useEffect, memo, useContext } from "react";
 import { BarChart2 } from "lucide-react";
-
+import { ProfileDataContext } from "../../../context/page/ProfileContext";
 function ProfileStats() {
+  const { contextValue } = useContext(ProfileDataContext);
+
   const [stats, setStats] = useState({
-    articles: 24,
+    articles: contextValue?.TotalData?.totalArticle,
     followers: 1342,
     following: 543,
     views: 12500,

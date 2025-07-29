@@ -42,7 +42,7 @@ function ProfileCheckList() {
           },
           {
             title: "Connect Social",
-            completed: false,
+            completed: Auth?.user?.Social.length !== 0 ? true : false,
             description: "Link your social profiles",
           },
         ].map((item, index) => (
