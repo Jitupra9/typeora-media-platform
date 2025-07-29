@@ -5,12 +5,17 @@ function ProfileStats() {
   const { contextValue } = useContext(ProfileDataContext);
 
   const [stats, setStats] = useState({
-    articles: contextValue?.TotalData?.totalArticle,
-    followers: 1342,
-    following: 543,
-    views: 12500,
+    articles: 0,
+    followers: 0,
+    following: 0,
+    views: 0,
   });
-
+  useEffect(() => {
+    setStats((prev) => ({
+      ...prev,
+      articles: contextValue?.TotalData?.totalArticle,
+    }));
+  }, [contextValue.TotalData]);
   return (
     <div className="p-5 bg-white dark:bg-gray-900 rounded-xl shadow-sm">
       <h3 className="flex items-center gap-3 font-semibold mb-4">
