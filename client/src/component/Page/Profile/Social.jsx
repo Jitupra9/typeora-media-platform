@@ -1,6 +1,16 @@
-import React, { memo, useContext, useState } from "react";
-import { Share2, Github, Twitter, Linkedin, Plus, X } from "lucide-react";
+import React, { memo, useContext, useEffect, useState } from "react";
+import {
+  Share2,
+  Github,
+  Twitter,
+  Linkedin,
+  Plus,
+  X,
+  Loader,
+} from "lucide-react";
 import { IsAuthnticate } from "../../../context/Auth/IsAuth";
+import toast from "react-hot-toast";
+import axios from "axios";
 
 const socialIcons = {
   github: <Github className="w-5 h-5" />,
@@ -10,27 +20,71 @@ const socialIcons = {
 };
 
 function Social() {
-  const { Auth } = useContext(IsAuthnticate);
-  const [socialLinks, setSocialLinks] = useState(Auth?.user?.social || {});
+  const { Auth, setAuth } = useContext(IsAuthnticate);
+  const [socialLinks, setSocialLinks] = useState(Auth?.user?.Social || []);
   const [showAddInput, setShowAddInput] = useState(false);
   const [newPlatform, setNewPlatform] = useState("github");
   const [customPlatform, setCustomPlatform] = useState("");
   const [newUrl, setNewUrl] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [selectedKeys, setSelectedKeys] = useState([]);
 
-  const addSocialLink = () => {
-    if (newUrl.trim()) {
-      const platformKey =
-        newPlatform === "other"
-          ? customPlatform.toLowerCase().replace(/\s+/g, "-")
-          : newPlatform;
+  useEffect(() => {
+    setSocialLinks(Auth?.user?.Social || []);
+  }, [Auth]);
 
-      setSocialLinks({
-        ...socialLinks,
-        [platformKey]: {
-          url: newUrl.trim(),
-          platform: newPlatform === "other" ? customPlatform : newPlatform,
-        },
+  const addSocialLink = async () => {
+    if (!newUrl.trim()) return;
+
+    const platformKey =
+      newPlatform === "other"
+        ? customPlatform.toLowerCase().replace(/\s+/g, "-")
+        : newPlatform;
+
+    const newLink = {
+      platform: newPlatform === "other" ? customPlatform : newPlatform,
+      url: newUrl.trim(),
+      key: platformKey,
+    };
+
+    const alreadyExists = socialLinks.some((link) => link.key === platformKey);
+    if (alreadyExists) {
+      return toast.error("Platform already exists");
+    }
+
+    try {
+      setLoading(true);
+
+      const res = await axios.put(`/api/UpdateSocials/${Auth?.user?._id}`, {
+        token: Auth.token,
+        social: [...socialLinks, newLink],
       });
+
+      if (res.data?.success) {
+        const updatedUser = res.data.user;
+        setAuth((prev) => ({
+          ...prev,
+          user: updatedUser,
+        }));
+
+        localStorage.setItem(
+          "userData",
+          JSON.stringify({
+            token: Auth.token,
+            user: updatedUser,
+          })
+        );
+
+        setSocialLinks(updatedUser.Social);
+        toast.success("Social link added");
+      } else {
+        toast.error(res.data?.message || "Failed to update socials");
+      }
+    } catch (e) {
+      console.error(e);
+      toast.error("Something went wrong while updating");
+    } finally {
+      setLoading(false);
       setNewUrl("");
       setCustomPlatform("");
       setNewPlatform("github");
@@ -38,10 +92,45 @@ function Social() {
     }
   };
 
-  const removeSocialLink = (platform) => {
-    const updatedLinks = { ...socialLinks };
-    delete updatedLinks[platform];
-    setSocialLinks(updatedLinks);
+  const removeSocialLinks = async (keysToRemove) => {
+    const updatedLinks = socialLinks.filter(
+      (link) => !keysToRemove.includes(link.key)
+    );
+
+    try {
+      setLoading(true);
+      const res = await axios.put(`/api/UpdateSocials/${Auth?.user?._id}`, {
+        token: Auth.token,
+        social: updatedLinks,
+      });
+
+      if (res.data?.success) {
+        const updatedUser = res.data.user;
+        setAuth((prev) => ({
+          ...prev,
+          user: updatedUser,
+        }));
+
+        localStorage.setItem(
+          "userData",
+          JSON.stringify({
+            token: Auth.token,
+            user: updatedUser,
+          })
+        );
+
+        setSocialLinks(updatedUser.Social);
+        setSelectedKeys([]);
+        toast.success("Social link(s) removed");
+      } else {
+        toast.error(res.data?.message || "Failed to remove social link(s)");
+      }
+    } catch (e) {
+      console.error(e);
+      toast.error("Error occurred while removing link(s)");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -82,7 +171,7 @@ function Social() {
             />
           )}
 
-          <div className="flex gap-2">
+          <div className="flex gap-2 items-center">
             <input
               type="url"
               value={newUrl}
@@ -96,27 +185,59 @@ function Social() {
             />
             <button
               onClick={addSocialLink}
-              className="px-3 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm"
+              disabled={loading}
+              className="px-3 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm flex items-center gap-2"
             >
-              Add
+              {loading ? (
+                <>
+                  <Loader className="w-4 h-4 animate-spin" />
+                  Saving
+                </>
+              ) : (
+                "Add"
+              )}
             </button>
           </div>
         </div>
       )}
 
-      {Object.keys(socialLinks).length > 0 ? (
+      {socialLinks.length > 0 ? (
         <div className="mt-4 space-y-2">
-          {Object.entries(socialLinks).map(([key, { url, platform }]) => (
+          {selectedKeys.length > 0 && (
+            <div className="text-right mb-2">
+              <button
+                onClick={() => removeSocialLinks(selectedKeys)}
+                disabled={loading}
+                className="px-4 py-2 bg-red-500 text-white text-sm rounded-lg hover:bg-red-600"
+              >
+                Delete Selected ({selectedKeys.length})
+              </button>
+            </div>
+          )}
+
+          {socialLinks.map(({ key, url, platform }) => (
             <div
               key={key}
               className="relative group flex items-center gap-3 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 px-4 py-3 rounded-lg"
             >
+              <input
+                type="checkbox"
+                className=" hidden group-hover:inline-block form-checkbox text-blue-500"
+                checked={selectedKeys.includes(key)}
+                onChange={(e) => {
+                  const isChecked = e.target.checked;
+                  setSelectedKeys((prev) =>
+                    isChecked ? [...prev, key] : prev.filter((k) => k !== key)
+                  );
+                }}
+                disabled={loading}
+              />
               <span className="flex-shrink-0">
                 {socialIcons[key] || socialIcons.other}
               </span>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-gray-700 dark:text-gray-300 truncate">
-                  {platform || key}
+                  {platform}
                 </p>
                 <a
                   href={url}
@@ -128,7 +249,8 @@ function Social() {
                 </a>
               </div>
               <button
-                onClick={() => removeSocialLink(key)}
+                onClick={() => removeSocialLinks([key])}
+                disabled={loading}
                 className="text-gray-400 hover:text-red-500 transition-colors"
               >
                 <X className="w-4 h-4" />
