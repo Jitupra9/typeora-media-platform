@@ -59,7 +59,6 @@ const userSchema = new mongoose.Schema(
     Skills: {
       type: [],
     },
-
     followersCount: { type: Number, default: 0 },
     followingCount: { type: Number, default: 0 },
   },

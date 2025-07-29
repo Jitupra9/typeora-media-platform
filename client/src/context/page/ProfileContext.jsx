@@ -52,7 +52,9 @@ function ProfileContext({ children }) {
     };
     fetchArticles();
   }, []);
-
+  useEffect(() => {
+    console.log(TotalData);
+  }, [TotalData]);
   const calcCompletion = (dataObj) => {
     const entries = Object.entries(dataObj).filter(([k]) => k !== "UserID");
     const total = entries.length;
