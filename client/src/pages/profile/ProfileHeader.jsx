@@ -11,6 +11,7 @@ import {
   CheckCircle,
   Edit,
   Award,
+  Users,
   Share2,
   Mail,
   Globe,
@@ -62,6 +63,18 @@ function ProfileHeader(props) {
               <div className=" flex items-center">
                 <Mail className="w-4 h-4 mr-1" />
                 {user.Email}
+              </div>
+            </div>
+            <div className="flex items-center gap-4 mt-2">
+              <div className="flex items-center gap-1 text-sm cursor-pointer hover:text-blue-500 transition-colors">
+                <Users className="w-4 h-4" />
+                <span className="font-semibold">1,243</span>
+                <span>Followers</span>
+              </div>
+              <div className="flex items-center gap-1 text-sm cursor-pointer hover:text-blue-500 transition-colors">
+                <Users className="w-4 h-4" />
+                <span className="font-semibold">567</span>
+                <span>Following</span>
               </div>
             </div>
           </div>

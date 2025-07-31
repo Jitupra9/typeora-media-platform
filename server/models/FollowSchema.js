@@ -10,6 +10,14 @@ const FollowSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "users",
     },
+    requests: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "users",
+    },
+    sent: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "users",
+    },
   },
   { timestamps: true }
 );
