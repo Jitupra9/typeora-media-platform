@@ -19,7 +19,7 @@ import Report from "../pages/Report";
 import Feedback from "../pages/FeedBack";
 import MyActions from "../pages/Actions/MyActions";
 import MyContent from "../pages/MyContent/MyContent";
-import VisitedProfileContent from "../pages/visitedProfileContent";
+import VisitedProfileContent from "../pages/vistedprofile/visitedProfileContent";
 const routes = [
   {
     path: "/",
