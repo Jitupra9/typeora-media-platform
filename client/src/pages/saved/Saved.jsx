@@ -15,7 +15,7 @@ function Saved() {
   };
 
   return (
-    <div className="min-h-screen  mb-16">
+    <div className=" mb-16" style={{ willChange: "transform" }}>
       <Headers />
       <div className="content mt-10 sm:mt-20 text-gray-600 dark:text-gray-200">
         <SavedType activeTab={activeTab} setActiveTab={setActiveTab} />
