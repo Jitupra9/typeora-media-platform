@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { X } from "lucide-react";
+import { Star, X } from "lucide-react";
 function FollowingModel({ user, setShowFollowingModal }) {
   const [following, setFollowing] = useState(
     Array.from({ length: 567 }, (_, i) => ({
@@ -58,7 +58,17 @@ function FollowingModel({ user, setShowFollowingModal }) {
                   className="w-10 h-10 rounded-full mr-3"
                 />
                 <div>
-                  <p className="font-medium">{followed.name}</p>
+                  <p className=" font-medium flex gap-1">
+                    {followed.name}{" "}
+                    {followed.isCloseFriend && (
+                      <div className=" group relative">
+                        <Star className=" cursor-pointer  stroke-none fill-green-600 w-3 h-3" />
+                        <p className=" text-nowrap hidden group-hover:block -top-3 ml-4 absolute  text-xs font-normal ">
+                          ! close friends
+                        </p>
+                      </div>
+                    )}
+                  </p>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
                     {followed.role}
                   </p>
@@ -86,11 +96,6 @@ function FollowingModel({ user, setShowFollowingModal }) {
                   >
                     Follow
                   </button>
-                )}
-                {followed.isCloseFriend && (
-                  <span className="px-2 py-1 text-xs bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full">
-                    Close
-                  </span>
                 )}
               </div>
             </div>

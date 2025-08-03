@@ -75,7 +75,6 @@ function ProfileHeader(props) {
               </div>
             </div>
             <div>
-              {/* ///////////////////////////////////////////////////////////////////////////////////////// */}
               <div className="flex items-center gap-4 mt-2">
                 <div
                   onClick={() => {
