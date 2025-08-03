@@ -1,6 +1,8 @@
-import React, { memo, useEffect, useState, useContext } from "react";
+import React, { memo, useState, useContext } from "react";
 import people from "../../assets/images/people.jpg";
 import { IsAuthnticate } from "../../context/Auth/IsAuth";
+import FollowersModal from "../../component/models/FollowersModel";
+import FollowingModel from "../../component/models/FollowingModel";
 import Shareing from "../../component/models/Share";
 import { ProfileDataContext } from "../../context/page/ProfileContext";
 import {
@@ -22,7 +24,14 @@ function ProfileHeader(props) {
   const [shareActive, setshareActive] = useState(false);
   const { profileCompletion } = contextValue;
   const { user } = Auth;
-
+  const [ShowFollowing, setShowFollowing] = useState(false);
+  const [ShowFollowers, SetShowFollowers] = useState(false);
+  const followers = Array.from({ length: 1243 }, (_, i) => ({
+    id: i + 1,
+    name: `Follower ${i + 1}`,
+    avatar: `https://i.pravatar.cc/150?img=${i % 70}`,
+    role: i % 3 === 0 ? "Developer" : i % 3 === 1 ? "Designer" : "Manager",
+  }));
   const handleShare = (e) => {
     e.preventDefault();
     setshareActive(!shareActive);
@@ -65,17 +74,44 @@ function ProfileHeader(props) {
                 {user.Email}
               </div>
             </div>
-            <div className="flex items-center gap-4 mt-2">
-              <div className="flex items-center gap-1 text-sm cursor-pointer hover:text-blue-500 transition-colors">
-                <Users className="w-4 h-4" />
-                <span className="font-semibold">1,243</span>
-                <span>Followers</span>
+            <div>
+              {/* ///////////////////////////////////////////////////////////////////////////////////////// */}
+              <div className="flex items-center gap-4 mt-2">
+                <div
+                  onClick={() => {
+                    SetShowFollowers(true);
+                  }}
+                  className="flex items-center gap-1 text-sm cursor-pointer hover:text-blue-500 transition-colors"
+                >
+                  <Users className="w-4 h-4" />
+                  <span className="font-semibold">1,243</span>
+                  <span>Followers</span>
+                </div>
+                <div
+                  onClick={() => {
+                    setShowFollowing(true);
+                  }}
+                  className="flex items-center gap-1 text-sm cursor-pointer hover:text-blue-500 transition-colors"
+                >
+                  <Users className="w-4 h-4" />
+                  <span className="font-semibold">567</span>
+                  <span>Following</span>
+                </div>
               </div>
-              <div className="flex items-center gap-1 text-sm cursor-pointer hover:text-blue-500 transition-colors">
-                <Users className="w-4 h-4" />
-                <span className="font-semibold">567</span>
-                <span>Following</span>
-              </div>
+              {ShowFollowers && (
+                <FollowersModal
+                  user={user}
+                  showFollowersModal={ShowFollowers}
+                  setShowFollowersModal={SetShowFollowers}
+                  followers={followers}
+                />
+              )}
+              {ShowFollowing && (
+                <FollowingModel
+                  user={user}
+                  setShowFollowingModal={setShowFollowing}
+                />
+              )}
             </div>
           </div>
         </div>
@@ -85,7 +121,7 @@ function ProfileHeader(props) {
             className="flex items-center gap-2 text-sm bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors"
           >
             <Edit className="w-4 h-4" />
-            Edit{" "}
+            Edit
             <span className=" sm:hidden md:inline-block lg:hidden xl:inline-block">
               Profile
             </span>
