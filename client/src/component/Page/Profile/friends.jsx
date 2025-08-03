@@ -281,7 +281,7 @@ const Friends = () => {
                         ></div>
                       )}
                     </div>
-                    <div className="flex sm:hidden items-center ">
+                    <div className="flex sm:hidden items-center  ">
                       <div>
                         <h3 className="font-semibold text-gray-800 dark:text-white">
                           {contact.name}

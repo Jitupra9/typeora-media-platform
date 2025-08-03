@@ -31,6 +31,7 @@ const userSchema = new mongoose.Schema(
     },
     visibility: {
       type: ["Public", "Private"],
+      default: "Public",
     },
     Gender: {
       type: ["male", "female", "other", ""],

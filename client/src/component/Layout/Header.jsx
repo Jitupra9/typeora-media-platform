@@ -1,6 +1,7 @@
 import React, { memo, useContext, useState, useRef, useEffect } from "react";
 import { Headers } from "../../context/utils/Headercontext";
 import { ThemeContext } from "../../context/utils/ThemeProvide";
+import axios from "axios";
 import {
   BellRing,
   Search,
@@ -16,8 +17,6 @@ import {
   X,
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-
-// Enhanced demo data with more realistic content
 const demoSearchData = {
   articles: [
     {
@@ -105,9 +104,9 @@ function Header(props) {
   const categoriesOne = headers.slice(0, 4);
   const categoriesTwo = headers.slice(4);
 
-  const setScreen = () => {
+  function setScreen() {
     setTheme(theme === "day" ? "night" : "day");
-  };
+  }
 
   const filteredResults = {
     articles: demoSearchData.articles.filter(
@@ -133,19 +132,31 @@ function Header(props) {
   };
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    function handleClickOutside(event) {
       if (searchRef.current && !searchRef.current.contains(event.target)) {
         setShowSuggestions(false);
       }
-    };
+    }
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+  async function handleUniversalsearch(e) {
+    const query = e.target.value;
+    setSearchQuery(query);
 
-  const renderResultItem = (item, type) => {
+    try {
+      const result = await axios.get(
+        `/api/SearchQuery/${encodeURIComponent(query)}`
+      );
+      console.log(result.data);
+    } catch (error) {
+      console.error("Search failed:", error);
+    }
+  }
+  function renderResultItem(item, type) {
     switch (type) {
       case "articles":
         return (
@@ -249,7 +260,7 @@ function Header(props) {
       default:
         return null;
     }
-  };
+  }
 
   return (
     <div className="relative w-full bg-white text-gray-500 font-semibold dark:bg-gray-900 border-b border-gray-200 dark:border-gray-900 dark:border-opacity-70 dark:text-gray-400">
@@ -273,7 +284,7 @@ function Header(props) {
               type="text"
               placeholder="Search Typeora..."
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={handleUniversalsearch}
               onFocus={() => setShowSuggestions(true)}
             />
             {searchQuery ? (
@@ -286,7 +297,6 @@ function Header(props) {
               <Search className="text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors" />
             )}
           </div>
-          {/* Navigation Items */}
           <ul className="hidden lg:flex items-center gap-x-6 *:py-3 *:tracking-wide *:cursor-pointer">
             {categoriesOne.map((item, i) => (
               <li
