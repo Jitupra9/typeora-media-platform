@@ -2,9 +2,8 @@ const ArticleModel = require("../models/ArticleModel");
 const VideosModel = require("../models/VideoModel");
 const UserModel = require("../models/userModel");
 
-// Cache frequently used queries (simple in-memory cache)
 const searchCache = new Map();
-const CACHE_TTL = 30000; // 30 seconds
+const CACHE_TTL = 30000;
 
 exports.universalSearch = async (req, res) => {
   try {
@@ -32,8 +31,8 @@ exports.universalSearch = async (req, res) => {
 
     const contentSearch = {
       $or: [
-        { title: { $regex: `^${query}`, $options: "i" } }, // Starts with
-        { title: { $regex: query, $options: "i" } }, // Contains
+        { title: { $regex: `^${query}`, $options: "i" } },
+        { title: { $regex: query, $options: "i" } },
         { tags: { $in: [new RegExp(query, "i")] } },
       ],
       visibility: "Public",
@@ -47,7 +46,7 @@ exports.universalSearch = async (req, res) => {
           $expr: {
             $regexMatch: {
               input: { $concat: ["$Firstname", " ", "$LastName"] },
-              regex: query,
+              regex: `\\b${query}`,
               options: "i",
             },
           },
@@ -72,13 +71,12 @@ exports.universalSearch = async (req, res) => {
 
       !type || type === "all" || type === "users"
         ? UserModel.find(userSearch)
-            .select("Firstname LastName Email ProfilePicture")
+            .select("Firstname LastName  ProfilePicture Role followersCount")
             .limit(parseInt(limit))
             .lean()
         : Promise.resolve([]),
     ]);
 
-    // Prepare response
     const response = {
       success: true,
       results: {
