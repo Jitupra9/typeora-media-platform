@@ -1,6 +1,14 @@
-import React, { memo, useContext, useState, useRef, useEffect } from "react";
+import React, {
+  memo,
+  useContext,
+  useState,
+  useRef,
+  useEffect,
+  useCallback,
+} from "react";
 import { Headers } from "../../context/utils/Headercontext";
 import { ThemeContext } from "../../context/utils/ThemeProvide";
+import axios from "axios";
 import {
   BellRing,
   Search,
@@ -14,138 +22,135 @@ import {
   Film,
   MessageSquare,
   X,
+  Dot,
 } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
-
-// Enhanced demo data with more realistic content
-const demoSearchData = {
-  articles: [
-    {
-      id: 1,
-      title: "React Hooks Explained",
-      description: "Learn about React hooks in depth with practical examples",
-      author: "Sarah Johnson",
-      date: "2 days ago",
-      readTime: "5 min read",
-      category: "Technology",
-    },
-    {
-      id: 2,
-      title: "Modern CSS Techniques",
-      description: "Explore cutting-edge CSS features for 2023",
-      author: "Michael Chen",
-      date: "1 week ago",
-      readTime: "8 min read",
-      category: "Web Development",
-    },
-  ],
-  people: [
-    {
-      id: 1,
-      name: "John Doe",
-      role: "Senior React Developer",
-      followers: "12.5K",
-      isVerified: true,
-    },
-    {
-      id: 2,
-      name: "Jane Smith",
-      role: "UX Designer at Typeora",
-      followers: "8.2K",
-      isVerified: false,
-    },
-  ],
-  videos: [
-    {
-      id: 1,
-      title: "Building a Modern UI",
-      description: "Step-by-step guide to modern design patterns",
-      duration: "12:45",
-      views: "1.2M",
-      uploadDate: "3 weeks ago",
-    },
-    {
-      id: 2,
-      title: "TypeScript Crash Course",
-      description: "Learn TypeScript fundamentals in one hour",
-      duration: "58:22",
-      views: "456K",
-      uploadDate: "1 month ago",
-    },
-  ],
-  opinions: [
-    {
-      id: 1,
-      title: "The Future of AI in Development",
-      author: "Alex Morgan",
-      excerpt: "How AI will change the way we write code in the next decade...",
-      likes: "845",
-      comments: "132",
-    },
-    {
-      id: 2,
-      title: "Why Accessibility Matters",
-      author: "Taylor Swift",
-      excerpt: "Building inclusive products isn't optional anymore...",
-      likes: "1.2K",
-      comments: "287",
-    },
-  ],
-};
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 function Header(props) {
   const location = useLocation();
+  const navigate = useNavigate();
   const { headers } = useContext(Headers);
   const { theme, setTheme } = useContext(ThemeContext);
   const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [activeTab, setActiveTab] = useState("articles");
   const searchRef = useRef(null);
+  const inputRef = useRef(null);
+  const [searchData, setSearchData] = useState({
+    articles: [],
+    users: [],
+    videos: [],
+    opinions: [],
+  });
 
   const categoriesOne = headers.slice(0, 4);
   const categoriesTwo = headers.slice(4);
 
-  const setScreen = () => {
+  const setScreen = useCallback(() => {
     setTheme(theme === "day" ? "night" : "day");
-  };
+  }, [theme, setTheme]);
 
   const filteredResults = {
-    articles: demoSearchData.articles.filter(
+    articles: searchData.articles.filter(
       (article) =>
-        article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        article.description.toLowerCase().includes(searchQuery.toLowerCase())
+        article.title.toLowerCase().includes(debouncedQuery.toLowerCase()) ||
+        article.description.toLowerCase().includes(debouncedQuery.toLowerCase())
     ),
-    people: demoSearchData.people.filter(
+    people: searchData.users.filter(
       (person) =>
-        person.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        person.role.toLowerCase().includes(searchQuery.toLowerCase())
+        person.Firstname.toLowerCase().includes(debouncedQuery.toLowerCase()) ||
+        person.LastName.toLowerCase().includes(debouncedQuery.toLowerCase()) ||
+        person.Role.toLowerCase().includes(debouncedQuery.toLowerCase())
     ),
-    videos: demoSearchData.videos.filter(
+    videos: searchData.videos.filter(
       (video) =>
-        video.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        video.description.toLowerCase().includes(searchQuery.toLowerCase())
-    ),
-    opinions: demoSearchData.opinions.filter(
-      (opinion) =>
-        opinion.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        opinion.excerpt.toLowerCase().includes(searchQuery.toLowerCase())
+        video.title.toLowerCase().includes(debouncedQuery.toLowerCase()) ||
+        video.description.toLowerCase().includes(debouncedQuery.toLowerCase())
     ),
   };
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (searchRef.current && !searchRef.current.contains(event.target)) {
+    const handler = setTimeout(() => {
+      setDebouncedQuery(searchQuery);
+    }, 300);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [searchQuery]);
+
+  useEffect(() => {
+    if (debouncedQuery.length < 1) {
+      setSearchData({ articles: [], videos: [], users: [] });
+      return;
+    }
+    handleUniversalSearch(debouncedQuery);
+  }, [debouncedQuery]);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
         setShowSuggestions(false);
       }
     };
 
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [searchQuery]);
+
+  const handleClickOutside = useCallback((event) => {
+    if (searchRef.current && !searchRef.current.contains(event.target)) {
+      setShowSuggestions(false);
+    }
+  }, []);
+
+  useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
+  }, [handleClickOutside]);
+
+  const handleUniversalSearch = useCallback(async (query) => {
+    try {
+      const { data } = await axios.get(
+        `/api/SearchQuery/${encodeURIComponent(query)}`
+      );
+
+      if (data.success && data.results) {
+        const { articles = [], videos = [], users = [] } = data.results;
+        setSearchData({ articles, videos, users });
+      } else {
+        setSearchData({ articles: [], videos: [], users: [] });
+      }
+    } catch (error) {
+      console.error("Search failed:", error);
+      setSearchData({ articles: [], videos: [], users: [] });
+    }
   }, []);
 
-  const renderResultItem = (item, type) => {
+  const removeSearch = useCallback(() => {
+    setSearchQuery("");
+    setSearchData({ articles: [], videos: [], users: [] });
+    setShowSuggestions(false);
+    inputRef.current?.focus();
+  }, []);
+
+  const handleInputChange = useCallback((e) => {
+    setSearchQuery(e.target.value);
+    if (e.target.value.trim().length > 0) {
+      setShowSuggestions(true);
+    }
+  }, []);
+
+  const handleInputFocus = useCallback(() => {
+    if (searchQuery.trim().length > 0) {
+      setShowSuggestions(true);
+    }
+  }, [searchQuery]);
+
+  const renderResultItem = useCallback((item, type) => {
     switch (type) {
       case "articles":
         return (
@@ -179,24 +184,25 @@ function Header(props) {
             <div>
               <div className="flex items-center gap-1">
                 <h4 className="font-medium text-gray-800 dark:text-gray-100">
-                  {item.name}
+                  {item.Firstname + " " + item.LastName}
                 </h4>
-                {item.isVerified && (
-                  <svg
-                    className="w-3 h-3 text-blue-500"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
-                  </svg>
-                )}
+                <svg
+                  className="w-3 h-3 text-blue-500"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                </svg>
               </div>
-              <p className="text-sm text-gray-600 dark:text-gray-300">
-                {item.role}
+              <p className="flex items-center text-xs text-gray-600 dark:text-gray-400">
+                <span className="text-xs">
+                  @{item.Firstname.trim() + item.LastName.trim()}
+                </span>
+                <Dot /> {item.Role}
               </p>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
-                {item.followers} followers
-              </p>
+              {item.followersCount !== undefined && (
+                <div>{item.followersCount} follower</div>
+              )}
             </div>
           </div>
         );
@@ -223,33 +229,10 @@ function Header(props) {
             </div>
           </div>
         );
-      case "opinions":
-        return (
-          <div className="flex gap-3">
-            <div className="flex-shrink-0 mt-1">
-              <MessageSquare size={18} className="text-yellow-500" />
-            </div>
-            <div>
-              <h4 className="font-medium text-gray-800 dark:text-gray-100">
-                {item.title}
-              </h4>
-              <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-1">
-                {item.excerpt}
-              </p>
-              <div className="flex items-center gap-2 mt-1 text-xs text-gray-500 dark:text-gray-400">
-                <span>By {item.author}</span>
-                <span>•</span>
-                <span>{item.likes} likes</span>
-                <span>•</span>
-                <span>{item.comments} comments</span>
-              </div>
-            </div>
-          </div>
-        );
       default:
         return null;
     }
-  };
+  }, []);
 
   return (
     <div className="relative w-full bg-white text-gray-500 font-semibold dark:bg-gray-900 border-b border-gray-200 dark:border-gray-900 dark:border-opacity-70 dark:text-gray-400">
@@ -267,26 +250,26 @@ function Header(props) {
               Typeora
             </span>
           </Link>
-          <div className=" hidden sm:flex lg:hidden items-center border border-gray-500 rounded-lg px-3 py-1 text-sm hover:border-cyan-600 dark:hover:border-cyan-400 transition-colors">
+          <div className="hidden sm:flex lg:hidden items-center border border-gray-500 rounded-lg px-3 py-1 text-sm hover:border-cyan-600 dark:hover:border-cyan-400 transition-colors">
             <input
+              ref={inputRef}
               className="outline-none border-none bg-transparent w-32 sm:w-44 placeholder-gray-400 dark:placeholder-gray-500"
               type="text"
               placeholder="Search Typeora..."
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              onFocus={() => setShowSuggestions(true)}
+              onChange={handleInputChange}
+              onFocus={handleInputFocus}
             />
             {searchQuery ? (
               <X
                 size={18}
                 className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors cursor-pointer"
-                onClick={() => setSearchQuery("")}
+                onClick={removeSearch}
               />
             ) : (
               <Search className="text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors" />
             )}
           </div>
-          {/* Navigation Items */}
           <ul className="hidden lg:flex items-center gap-x-6 *:py-3 *:tracking-wide *:cursor-pointer">
             {categoriesOne.map((item, i) => (
               <li
@@ -361,21 +344,22 @@ function Header(props) {
           >
             <AlignRight className="w-7 h-7 sm:w-4 sm:h-4" />
           </div>
-          <div className=" flex  lg:flex items-center" ref={searchRef}>
+          <div className="flex lg:flex items-center" ref={searchRef}>
             <div className="flex sm:hidden lg:flex items-center border border-gray-300 rounded-lg px-3 py-2 text-sm hover:border-cyan-600 dark:hover:border-cyan-400 transition-colors">
               <input
+                ref={inputRef}
                 className="outline-none border-none bg-transparent w-32 sm:w-44 placeholder-gray-400 dark:placeholder-gray-500"
                 type="text"
                 placeholder="Search Typeora..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                onFocus={() => setShowSuggestions(true)}
+                onChange={handleInputChange}
+                onFocus={handleInputFocus}
               />
               {searchQuery ? (
                 <X
                   size={18}
                   className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors cursor-pointer"
-                  onClick={() => setSearchQuery("")}
+                  onClick={removeSearch}
                 />
               ) : (
                 <Search className="text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors" />
@@ -384,7 +368,7 @@ function Header(props) {
             {showSuggestions && (
               <div className="absolute top-full left-0 mt-1 w-full sm:w-96 sm:left-2 md:left-2 lg:left-auto lg:right-3 bg-white dark:bg-gray-800 rounded-lg shadow-xl z-50 border border-gray-200 dark:border-gray-700 max-h-[28rem] overflow-hidden flex flex-col">
                 <div className="flex border-b border-gray-200 dark:border-gray-700">
-                  {["articles", "people", "videos", "opinions"].map((tab) => (
+                  {["articles", "people", "videos"].map((tab) => (
                     <button
                       key={tab}
                       className={`flex-1 py-3 text-sm font-medium capitalize transition-colors ${
@@ -402,9 +386,9 @@ function Header(props) {
                 <div className="overflow-y-auto flex-1">
                   {filteredResults[activeTab].length > 0 ? (
                     <ul className="divide-y divide-gray-200 dark:divide-gray-700">
-                      {filteredResults[activeTab].map((item) => (
+                      {filteredResults[activeTab].map((item, index) => (
                         <li
-                          key={item.id}
+                          key={`${activeTab}-${index}`}
                           className="px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer"
                         >
                           {renderResultItem(item, activeTab)}
@@ -428,7 +412,6 @@ function Header(props) {
                   )}
                 </div>
 
-                {/* Footer */}
                 <div className="border-t border-gray-200 dark:border-gray-700 px-4 py-2 text-xs text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-700/50">
                   <div className="flex justify-between items-center">
                     <span>Press Enter to search all results</span>

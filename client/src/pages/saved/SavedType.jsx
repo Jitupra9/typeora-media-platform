@@ -13,7 +13,7 @@ function SavedType(props) {
   const { activeTab, setActiveTab } = props;
   return (
     <div className="my-5">
-      <ul className="flex gap-x-2 *:px-6 *:py-2 *:rounded-lg *:cursor-pointer *:transition-colors">
+      <ul className="flex gap-x-2 *:px-6 *:py-2 *:rounded-lg *:cursor-pointer ">
         <li
           className={`flex items-center gap-2 ${
             activeTab === "article"
