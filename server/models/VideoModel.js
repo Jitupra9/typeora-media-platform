@@ -11,10 +11,6 @@ const schema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    visibility: {
-      type: ["Public", "Private"],
-      default: "Public",
-    },
     subHeading: {
       type: String,
     },

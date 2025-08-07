@@ -26,7 +26,165 @@ import {
   ChevronRight,
   AlertCircle,
   Info,
+  Heart,
+  Bookmark,
+  Filter,
+  ShieldAlert,
+  Palette,
+  Moon,
+  Sun,
+  Smartphone,
+  CreditCard,
+  Calendar,
+  Gift,
+  Headphones,
+  HelpCircle,
+  ShieldCheck,
+  Flag,
+  Zap,
+  Battery,
+  Wifi,
+  Database,
+  BellOff,
+  Volume2,
+  Mic,
+  Keyboard,
+  MousePointer,
+  Monitor,
+  Smartphone as Device,
+  Cloud,
 } from "lucide-react";
+
+function SettingItem({ icon, title, description, action, danger = false }) {
+  return (
+    <div
+      className={`flex items-start justify-between gap-4 ${
+        danger ? "text-red-600 dark:text-red-400" : ""
+      }`}
+    >
+      <div className="flex items-start gap-3">
+        <div
+          className={`p-2 rounded-lg ${
+            danger
+              ? "bg-red-50 dark:bg-red-900/20"
+              : "bg-gray-50 dark:bg-gray-800"
+          }`}
+        >
+          {React.cloneElement(icon, {
+            className: `w-4 h-4 ${
+              danger ? "text-red-500" : "text-gray-500 dark:text-gray-400"
+            }`,
+          })}
+        </div>
+        <div>
+          <h3
+            className={`font-medium ${
+              danger
+                ? "text-red-600 dark:text-red-400"
+                : "text-gray-900 dark:text-gray-100"
+            }`}
+          >
+            {title}
+          </h3>
+          <p
+            className={`text-sm ${
+              danger
+                ? "text-red-500 dark:text-red-400"
+                : "text-gray-500 dark:text-gray-400"
+            }`}
+          >
+            {description}
+          </p>
+        </div>
+      </div>
+      <div className="flex-shrink-0">{action}</div>
+    </div>
+  );
+}
+
+function ToggleSwitch({ enabled, label }) {
+  return (
+    <div className="flex items-center gap-2">
+      <button
+        type="button"
+        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${
+          enabled ? "bg-blue-600" : "bg-gray-200 dark:bg-gray-700"
+        }`}
+        onClick={() => {}} // Add your toggle handler here
+      >
+        <span
+          className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+            enabled ? "translate-x-6" : "translate-x-1"
+          }`}
+        />
+      </button>
+      {label && (
+        <span className="text-sm text-gray-500 dark:text-gray-400">
+          {label}
+        </span>
+      )}
+    </div>
+  );
+}
+
+function BlueButton({ children }) {
+  return (
+    <button className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+      {children}
+    </button>
+  );
+}
+
+function RedButton({ children }) {
+  return (
+    <button className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+      {children}
+    </button>
+  );
+}
+
+function Select({ options, selected }) {
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [selectedOption, setSelectedOption] = React.useState(
+    selected || options[0]
+  );
+
+  return (
+    <div className="relative">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="inline-flex justify-between items-center w-full px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-800 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        {selectedOption}
+        <ChevronRight
+          className={`w-4 h-4 ml-2 transform ${isOpen ? "rotate-90" : ""}`}
+        />
+      </button>
+      {isOpen && (
+        <div className="absolute z-10 mt-1 w-full rounded-md shadow-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+          <div className="py-1">
+            {options.map((option, index) => (
+              <button
+                key={index}
+                onClick={() => {
+                  setSelectedOption(option);
+                  setIsOpen(false);
+                }}
+                className={`block w-full text-left px-4 py-2 text-sm ${
+                  selectedOption === option
+                    ? "bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200"
+                    : "text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                }`}
+              >
+                {option}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 function Settings() {
   const { setheaders } = useContext(Headers);
@@ -38,19 +196,33 @@ function Settings() {
     ],
     []
   );
+
   useEffect(() => {
     setheaders(categories);
   }, [setheaders, categories]);
+
   const accountPublic = true;
   const twoFactorAuth = false;
   const storageUsed = 65;
+  const darkModeEnabled = true;
+  const autoPlayVideos = false;
+  const restrictedMode = true;
+  const batterySaver = false;
+
   const loginLocations = [
     { location: "New York, USA", device: "iPhone 12", time: "2 hours ago" },
     { location: "London, UK", device: "MacBook Pro", time: "1 day ago" },
+    { location: "Tokyo, Japan", device: "iPad Air", time: "3 days ago" },
+  ];
+
+  const connectedDevices = [
+    { name: "iPhone 12", os: "iOS 15.4", lastActive: "Now" },
+    { name: "MacBook Pro", os: "macOS 12.3", lastActive: "2 hours ago" },
+    { name: "iPad Air", os: "iPadOS 15.4", lastActive: "1 day ago" },
   ];
 
   return (
-    <div className="min-h-screen  dark:text-gray-300 mb-20">
+    <div className="min-h-screen dark:text-gray-300 mb-20">
       <div className="max-w-7xl mx-auto">
         <div className="mb-6">
           <nav className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-2">
@@ -71,6 +243,7 @@ function Settings() {
             Manage your account settings and preferences
           </p>
         </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <StatCard
             icon={<User className="w-5 h-5" />}
@@ -113,18 +286,14 @@ function Settings() {
             </div>
           </div>
         )}
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Security & Privacy Section */}
           <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 p-6">
             <h2 className="text-xl font-semibold mb-4 flex items-center gap-3">
-              <Lock className="w-5 h-5" /> Account Security
+              <ShieldCheck className="w-5 h-5" /> Security & Privacy
             </h2>
             <div className="space-y-4">
-              <SettingItem
-                icon={<Mail />}
-                title="Email Address"
-                description="john.doe@example.com"
-                action={<BlueButton>Change</BlueButton>}
-              />
               <SettingItem
                 icon={<Lock />}
                 title="Password"
@@ -133,85 +302,110 @@ function Settings() {
               />
               <SettingItem
                 icon={<Shield />}
-                title="Two-Factor Authentication"
-                description="Add an extra layer of security"
+                title="Two-Factor Auth"
+                description="Add extra security"
                 action={<ToggleSwitch enabled={twoFactorAuth} />}
               />
               <SettingItem
-                icon={<Clock />}
-                title="Recent Activity"
-                description="View login history"
-                action={<BlueButton>View</BlueButton>}
-              />
-            </div>
-          </div>
-          <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 p-6">
-            <h2 className="text-xl font-semibold mb-4 flex items-center gap-3">
-              <User className="w-5 h-5" /> Profile Information
-            </h2>
-            <div className="space-y-4">
-              <SettingItem
-                icon={<User />}
-                title="Username"
-                description="@johndoe"
-                action={<BlueButton>Edit</BlueButton>}
+                icon={<ShieldAlert />}
+                title="Login Alerts"
+                description="Get notified of new logins"
+                action={<ToggleSwitch enabled={true} />}
               />
               <SettingItem
-                icon={<Image />}
-                title="Profile Picture"
-                description="Upload a new photo"
-                action={<BlueButton>Change</BlueButton>}
-              />
-              <SettingItem
-                icon={<Link2 />}
-                title="Social Links"
-                description="Connect your profiles"
+                icon={<Database />}
+                title="Data Permissions"
+                description="Control third-party access"
                 action={<BlueButton>Manage</BlueButton>}
               />
               <SettingItem
-                icon={<Eye />}
-                title="Profile Visibility"
-                description="Control who sees your profile"
-                action={
-                  <ToggleSwitch
-                    enabled={accountPublic}
-                    label={accountPublic ? "Public" : "Private"}
-                  />
-                }
+                icon={<Flag />}
+                title="Content Reporting"
+                description="Manage reporting preferences"
+                action={<BlueButton>Settings</BlueButton>}
               />
             </div>
           </div>
+
+          {/* Post & Content Preferences */}
           <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 p-6">
             <h2 className="text-xl font-semibold mb-4 flex items-center gap-3">
-              <Globe className="w-5 h-5" /> Preferences
+              <MessageSquare className="w-5 h-5" /> Post & Content
             </h2>
             <div className="space-y-4">
               <SettingItem
-                icon={<Globe />}
-                title="Language"
-                description="Change interface language"
-                action={<Select options={["English", "Hindi", "Spanish"]} />}
-              />
-              <SettingItem
                 icon={<MessageSquare />}
-                title="Default Post Visibility"
+                title="Default Post Privacy"
                 description="Set default for new posts"
                 action={<Select options={["Public", "Friends", "Private"]} />}
               />
               <SettingItem
-                icon={<Archive />}
-                title="Auto-Save Drafts"
-                description="Save drafts automatically"
-                action={<ToggleSwitch enabled={true} />}
+                icon={<Heart />}
+                title="Like Visibility"
+                description="Who can see your likes"
+                action={<Select options={["Public", "Friends", "Private"]} />}
+              />
+              <SettingItem
+                icon={<Bookmark />}
+                title="Saved Posts"
+                description="Private by default"
+                action={<ToggleSwitch enabled={true} label="Private" />}
               />
               <SettingItem
                 icon={<Video />}
-                title="Video Quality"
-                description="Preferred streaming quality"
-                action={<Select options={["Auto", "HD", "SD"]} />}
+                title="Auto-play Videos"
+                description="Play videos automatically"
+                action={<ToggleSwitch enabled={autoPlayVideos} />}
+              />
+              <SettingItem
+                icon={<Filter />}
+                title="Content Filters"
+                description="Filter sensitive content"
+                action={<BlueButton>Configure</BlueButton>}
               />
             </div>
           </div>
+
+          {/* Safe Browsing & Restrictions */}
+          <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 p-6">
+            <h2 className="text-xl font-semibold mb-4 flex items-center gap-3">
+              <ShieldAlert className="w-5 h-5" /> Safe Browsing
+            </h2>
+            <div className="space-y-4">
+              <SettingItem
+                icon={<Shield />}
+                title="Restricted Mode"
+                description="Limit sensitive content"
+                action={<ToggleSwitch enabled={restrictedMode} />}
+              />
+              <SettingItem
+                icon={<Filter />}
+                title="Content Filters"
+                description="Filter mature content"
+                action={<Select options={["Strict", "Moderate", "Off"]} />}
+              />
+              <SettingItem
+                icon={<EyeOff />}
+                title="Hide Sensitive Media"
+                description="Blur sensitive images"
+                action={<ToggleSwitch enabled={true} />}
+              />
+              <SettingItem
+                icon={<Flag />}
+                title="Report Settings"
+                description="Configure reporting options"
+                action={<BlueButton>Manage</BlueButton>}
+              />
+              <SettingItem
+                icon={<HelpCircle />}
+                title="Safety Resources"
+                description="Learn about online safety"
+                action={<BlueButton>View</BlueButton>}
+              />
+            </div>
+          </div>
+
+          {/* Notifications Section */}
           <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 p-6">
             <h2 className="text-xl font-semibold mb-4 flex items-center gap-3">
               <Bell className="w-5 h-5" /> Notifications
@@ -220,7 +414,7 @@ function Settings() {
               <SettingItem
                 icon={<Mail />}
                 title="Email Notifications"
-                description="Receive emails for important updates"
+                description="Receive emails for updates"
                 action={<ToggleSwitch enabled={true} />}
               />
               <SettingItem
@@ -241,41 +435,168 @@ function Settings() {
                 description="Summary of your activity"
                 action={<ToggleSwitch enabled={false} />}
               />
+              <SettingItem
+                icon={<BellOff />}
+                title="Do Not Disturb"
+                description="Pause notifications"
+                action={<BlueButton>Schedule</BlueButton>}
+              />
             </div>
           </div>
 
+          {/* Devices & Apps Section */}
           <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 p-6">
             <h2 className="text-xl font-semibold mb-4 flex items-center gap-3">
-              <Shield className="w-5 h-5" /> Privacy
+              <Smartphone className="w-5 h-5" /> Devices & Apps
             </h2>
             <div className="space-y-4">
               <SettingItem
-                icon={<EyeOff />}
-                title="Blocked Users"
-                description="Manage your block list"
+                icon={<Device />}
+                title="Connected Devices"
+                description={`${connectedDevices.length} devices`}
                 action={<BlueButton>Manage</BlueButton>}
               />
               <SettingItem
-                icon={<MessageSquare />}
-                title="Direct Messages"
-                description="Control who can message you"
-                action={<Select options={["Everyone", "Friends", "None"]} />}
-              />
-              <SettingItem
-                icon={<MapPin />}
-                title="Location Sharing"
-                description="Share your location in posts"
+                icon={<Wifi />}
+                title="Data Saver"
+                description="Reduce data usage"
                 action={<ToggleSwitch enabled={false} />}
               />
               <SettingItem
-                icon={<Users />}
-                title="Tagging Permissions"
-                description="Who can tag you in posts"
-                action={<Select options={["Everyone", "Friends", "None"]} />}
+                icon={<Battery />}
+                title="Battery Saver"
+                description="Optimize for battery life"
+                action={<ToggleSwitch enabled={batterySaver} />}
+              />
+              <SettingItem
+                icon={<Cloud />}
+                title="Auto Backup"
+                description="Backup your data"
+                action={<ToggleSwitch enabled={true} />}
+              />
+              <div className="pt-4 border-t border-gray-200 dark:border-gray-800">
+                <h3 className="font-medium mb-2 flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+                  <Info className="w-4 h-4" /> Active Sessions
+                </h3>
+                <div className="space-y-3">
+                  {connectedDevices.map((device, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center gap-3 text-sm"
+                    >
+                      <div
+                        className={`w-2 h-2 rounded-full flex-shrink-0 ${
+                          index === 0 ? "bg-green-500" : "bg-gray-400"
+                        }`}
+                      ></div>
+                      <div className="flex-1">
+                        <div className="font-medium">{device.name}</div>
+                        <div className="text-gray-500 dark:text-gray-400 text-xs">
+                          {device.os} • {device.lastActive}
+                        </div>
+                      </div>
+                      {index === 0 && (
+                        <span className="text-xs bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 px-2 py-0.5 rounded-full">
+                          Active
+                        </span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Accessibility Section */}
+          <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 p-6">
+            <h2 className="text-xl font-semibold mb-4 flex items-center gap-3">
+              <Headphones className="w-5 h-5" /> Accessibility
+            </h2>
+            <div className="space-y-4">
+              <SettingItem
+                icon={<Palette />}
+                title="Theme"
+                description="Appearance settings"
+                action={
+                  <Select
+                    options={["System", "Light", "Dark"]}
+                    selected={darkModeEnabled ? "Dark" : "Light"}
+                  />
+                }
+              />
+              <SettingItem
+                icon={<Volume2 />}
+                title="Audio Descriptions"
+                description="For video content"
+                action={<ToggleSwitch enabled={false} />}
+              />
+              <SettingItem
+                icon={<Keyboard />}
+                title="Keyboard Shortcuts"
+                description="Enable quick navigation"
+                action={<ToggleSwitch enabled={true} />}
+              />
+              <SettingItem
+                icon={<MousePointer />}
+                title="Pointer Size"
+                description="Adjust cursor size"
+                action={<Select options={["Small", "Medium", "Large"]} />}
+              />
+              <SettingItem
+                icon={<Monitor />}
+                title="Display Size"
+                description="Adjust text and elements"
+                action={<Select options={["Default", "Large", "Larger"]} />}
+              />
+              <SettingItem
+                icon={<Mic />}
+                title="Voice Control"
+                description="Navigate with voice commands"
+                action={<ToggleSwitch enabled={false} />}
               />
             </div>
           </div>
 
+          {/* Payments & Subscriptions */}
+          <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 p-6">
+            <h2 className="text-xl font-semibold mb-4 flex items-center gap-3">
+              <CreditCard className="w-5 h-5" /> Payments
+            </h2>
+            <div className="space-y-4">
+              <SettingItem
+                icon={<CreditCard />}
+                title="Payment Methods"
+                description="Visa •••• 4242"
+                action={<BlueButton>Manage</BlueButton>}
+              />
+              <SettingItem
+                icon={<Zap />}
+                title="Premium Membership"
+                description="Inactive"
+                action={<BlueButton>Upgrade</BlueButton>}
+              />
+              <SettingItem
+                icon={<Gift />}
+                title="Gift Cards"
+                description="Redeem or purchase"
+                action={<BlueButton>View</BlueButton>}
+              />
+              <SettingItem
+                icon={<Clock />}
+                title="Billing History"
+                description="View past transactions"
+                action={<BlueButton>View</BlueButton>}
+              />
+              <SettingItem
+                icon={<HelpCircle />}
+                title="Payment Support"
+                description="Get help with payments"
+                action={<BlueButton>Contact</BlueButton>}
+              />
+            </div>
+          </div>
+
+          {/* Advanced Settings */}
           <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 p-6">
             <h2 className="text-xl font-semibold mb-4 flex items-center gap-3">
               <SettingsIcon className="w-5 h-5" /> Advanced
@@ -294,6 +615,18 @@ function Settings() {
                 action={<RedButton>Delete</RedButton>}
                 danger
               />
+              <SettingItem
+                icon={<Globe />}
+                title="Language & Region"
+                description="English (United States)"
+                action={<BlueButton>Change</BlueButton>}
+              />
+              <SettingItem
+                icon={<Database />}
+                title="Cache & Storage"
+                description="Clear temporary files"
+                action={<BlueButton>Clear</BlueButton>}
+              />
               <div className="pt-4 border-t border-gray-200 dark:border-gray-800">
                 <h3 className="font-medium mb-2 flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
                   <Info className="w-4 h-4" /> Recent Logins
@@ -304,7 +637,11 @@ function Settings() {
                       key={index}
                       className="flex items-center gap-3 text-sm"
                     >
-                      <div className="w-2 h-2 rounded-full bg-green-500 flex-shrink-0"></div>
+                      <div
+                        className={`w-2 h-2 rounded-full flex-shrink-0 ${
+                          index === 0 ? "bg-green-500" : "bg-gray-400"
+                        }`}
+                      ></div>
                       <div className="flex-1">
                         <div className="font-medium">{login.location}</div>
                         <div className="text-gray-500 dark:text-gray-400 text-xs">
@@ -325,92 +662,6 @@ function Settings() {
         </div>
       </div>
     </div>
-  );
-}
-
-function SettingItem({ icon, title, description, action, danger = false }) {
-  return (
-    <div
-      className={`flex items-start justify-between py-3 ${
-        danger ? "text-red-500 dark:text-red-400" : ""
-      }`}
-    >
-      <div className="flex items-start gap-3">
-        <div
-          className={`p-2 rounded-lg mt-0.5 ${
-            danger
-              ? "bg-red-100 dark:bg-red-900/30"
-              : "bg-gray-100 dark:bg-gray-800"
-          }`}
-        >
-          {React.cloneElement(icon, { className: "w-4 h-4" })}
-        </div>
-        <div>
-          <div className="font-medium">{title}</div>
-          {description && (
-            <div
-              className={`text-xs ${
-                danger
-                  ? "text-red-400 dark:text-red-300"
-                  : "text-gray-500 dark:text-gray-400"
-              }`}
-            >
-              {description}
-            </div>
-          )}
-        </div>
-      </div>
-      <div className="mt-1">{action}</div>
-    </div>
-  );
-}
-
-function ToggleSwitch({ enabled, label }) {
-  return (
-    <div className="flex items-center gap-2">
-      <div
-        className={`relative w-12 h-6 rounded-full transition-colors ${
-          enabled ? "bg-blue-500" : "bg-gray-300 dark:bg-gray-600"
-        }`}
-      >
-        <div
-          className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${
-            enabled ? "left-7" : "left-1"
-          }`}
-        />
-      </div>
-      {label && (
-        <span className="text-sm text-gray-500 dark:text-gray-400">
-          {label}
-        </span>
-      )}
-    </div>
-  );
-}
-
-function BlueButton({ children }) {
-  return (
-    <button className="px-3 py-1 text-sm bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors whitespace-nowrap">
-      {children}
-    </button>
-  );
-}
-
-function RedButton({ children }) {
-  return (
-    <button className="px-3 py-1 text-sm bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-300 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/50 transition-colors whitespace-nowrap">
-      {children}
-    </button>
-  );
-}
-
-function Select({ options }) {
-  return (
-    <select className="px-2 py-1 text-sm border rounded-lg bg-white dark:bg-gray-800 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500 min-w-[100px]">
-      {options.map((option, index) => (
-        <option key={index}>{option}</option>
-      ))}
-    </select>
   );
 }
 
