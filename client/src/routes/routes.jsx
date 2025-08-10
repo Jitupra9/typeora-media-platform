@@ -3,6 +3,7 @@ import ProfileContext from "../context/page/ProfileContext.jsx";
 import IsAuthRoutes from "./Auth-Routes/IsAuthRoutes";
 import Layout from "../layout/Layout";
 import Pagenotfound from "../pages/Pagenotfound";
+import Home from "../pages/Home/Home.jsx";
 import Blogs from "../pages/Article/Article";
 import LiveReports from "../pages/VIdeo/VIdeos";
 import Saved from "../pages/saved/Saved";
@@ -25,6 +26,10 @@ const routes = [
     path: "/",
     component: Layout,
     children: [
+      {
+        path: "/home",
+        component: Home,
+      },
       {
         path: "",
         component: LiveReports,

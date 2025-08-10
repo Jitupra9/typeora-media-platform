@@ -25,15 +25,12 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 function Header(props) {
   const location = useLocation();
   const navigate = useNavigate();
-  const { headers } = useContext(Headers);
   const { theme, setTheme } = useContext(ThemeContext);
   const [searchQuery, setSearchQuery] = useState("");
+  const [activeTab, setActiveTab] = useState("public");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const searchRef = useRef(null);
   const inputRef = useRef(null);
-
-  const categoriesOne = headers.slice(0, 4);
-  const categoriesTwo = headers.slice(4);
 
   const setScreen = useCallback(() => {
     setTheme(theme === "day" ? "night" : "day");
@@ -118,50 +115,29 @@ function Header(props) {
               <Search className="text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors" />
             )}
           </div>
-          <ul className="hidden lg:flex items-center gap-x-6 *:py-3 *:tracking-wide *:cursor-pointer">
-            {categoriesOne.map((item, i) => (
-              <li
-                key={i}
-                className={`relative group ${
-                  location.pathname === item.path
-                    ? "text-cyan-600 dark:text-cyan-400"
-                    : "hover:text-gray-800 dark:hover:text-gray-200"
-                }`}
-              >
-                <Link to={item.path}>
-                  {item.name}
-                  <span
-                    className={`absolute left-0 -bottom-1 h-0.5 bg-cyan-600 dark:bg-cyan-400 transition-all duration-300 ${
-                      location.pathname === item.path
-                        ? "w-full"
-                        : "w-0 group-hover:w-full"
-                    }`}
-                  ></span>
-                </Link>
-              </li>
-            ))}
-            {categoriesTwo.length > 0 && (
-              <li className="relative group flex items-center gap-1 cursor-pointer hover:text-gray-800 dark:hover:text-gray-200">
-                More{" "}
-                <ChevronDown
-                  size={16}
-                  className="transition-transform group-hover:rotate-180"
-                />
-                <ul className="absolute dark:bg-gray-900 bg-white left-0 top-full -ml-12 z-30 w-40 py-2 mt-2 rounded-lg text-center shadow-lg opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all duration-200 border border-gray-100 dark:border-gray-700">
-                  {categoriesTwo.map((item, i) => (
-                    <li
-                      key={i}
-                      className="py-3 dark:hover:bg-gray-700 hover:bg-gray-100 transition-colors"
-                    >
-                      <Link to={item.path} className="block">
-                        {item.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            )}
-          </ul>
+          <div className="hidden lg:flex items-center bg-gray-800   rounded-full">
+            <div
+              className={`py-2 px-4 rounded-full cursor-pointer tracking-wide ${
+                activeTab === "public"
+                  ? "bg-gray-600 text-white"
+                  : "text-gray-500 "
+              }`}
+              onClick={() => setActiveTab("public")}
+            >
+              Public
+            </div>
+
+            <div
+              className={`py-2 px-4 rounded-full cursor-pointer tracking-wide ${
+                activeTab === "anynums"
+                  ? "bg-gray-500 text-white"
+                  : "text-gray-500 "
+              }`}
+              onClick={() => setActiveTab("anynums")}
+            >
+              Anonymous
+            </div>
+          </div>
         </div>
 
         <div className="w-full sm:w-fit flex flex-row-reverse md:flex-row justify-between sm:justify-end sm:gap-x-3 items-center py-3">

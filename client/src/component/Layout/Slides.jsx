@@ -21,13 +21,13 @@ import {
   User2,
   PlugZap,
   Sparkles,
+  House,
 } from "lucide-react";
 
 function Slides() {
   const { Auth, setAuth } = useContext(IsAuthnticate);
   const location = useLocation();
 
-  // Professional color palette
   const iconColors = {
     primary: "text-gray-600 dark:text-gray-300",
     accent: "text-blue-600 dark:text-blue-400",
@@ -39,6 +39,11 @@ function Slides() {
   };
 
   const mainPages = [
+    {
+      icon: <House size={18} className={iconColors.accent} />,
+      path: "/Home",
+      name: "Home",
+    },
     {
       icon: <Tv size={18} className={iconColors.accent} />,
       path: "/",
