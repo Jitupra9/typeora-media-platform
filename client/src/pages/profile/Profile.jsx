@@ -7,7 +7,6 @@ import Friends from "../../component/Page/Profile/friends";
 import Setting from "../../component/Page/Profile/Settings";
 import Personalinfo from "../../component/Page/Profile/Personalinfo";
 import NewUpload from "../../component/Page/Profile/NewUpload";
-import { Headers } from "../../context/utils/Headercontext";
 import { ProfileDataContext } from "../../context/page/ProfileContext";
 import {
   User,
@@ -18,21 +17,12 @@ import {
 } from "lucide-react";
 
 function Profile() {
-  const { setheaders } = useContext(Headers);
   const { contextValue } = useContext(ProfileDataContext);
   const { formData, uploadActive } = contextValue;
   const [isactive, setisactive] = useState("Personal");
 
   const [UploadType, setUploadType] = useState(null);
   const [Isedit, setIsedit] = useState(false);
-
-  const categories = useMemo(
-    () => [
-      { path: "/profile", name: "Profile" },
-      { path: "live-now", name: "Live now" },
-    ],
-    []
-  );
 
   const handleEdit = () => {
     setIsedit(true);
@@ -57,12 +47,9 @@ function Profile() {
         return "Click valid button";
     }
   };
-  useEffect(() => {
-    setheaders(categories);
-  }, [setheaders, categories]);
 
   return (
-    <div className="font-semibold flex flex-col lg:flex-row justify-between text-gray-700 dark:text-gray-200 gap-5 pb-20 lg:pb-0">
+    <div className=" font-semibold flex flex-col lg:flex-row justify-between text-gray-700 dark:text-gray-200 gap-5 pb-20 lg:pb-0">
       <div
         className="w-full lg:h-[86vh] lg:overflow-y-scroll hidel_slide_roler lg:w-[68%] space-y-5 lg:rounded-xl"
         style={{ willChange: "transform" }}

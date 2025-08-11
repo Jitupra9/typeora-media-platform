@@ -37,7 +37,10 @@ function LeftContent({
   handleRejectRequest,
 }) {
   return (
-    <div className="  lg:col-span-3 lg:pb-5  hidel_slide_roler xl:h-[calc(100vh-80px)] overflow-y-auto">
+    <div
+      style={{ willChange: "transform" }}
+      className="  lg:col-span-3 lg:pb-5  hidel_slide_roler xl:h-[calc(100vh-80px)] overflow-y-auto"
+    >
       <div className=" grid sm:grid-cols-2 lg:grid-cols-1 gap-2 items-start">
         <div className="dark:bg-gray-900 bg-white rounded-xl shadow p-4">
           <h2 className="font-semibold text-lg mb-4 flex items-center justify-between">

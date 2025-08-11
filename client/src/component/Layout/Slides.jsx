@@ -40,13 +40,13 @@ function Slides() {
 
   const mainPages = [
     {
-      icon: <House size={18} className={iconColors.accent} />,
-      path: "/Home",
+      icon: <House size={18} className={iconColors.danger} />,
+      path: "/",
       name: "Home",
     },
     {
       icon: <Tv size={18} className={iconColors.accent} />,
-      path: "/",
+      path: "/Video",
       name: "Videos",
     },
     {
@@ -121,7 +121,7 @@ function Slides() {
   const isActive = (path) => {
     return (
       location.pathname === path ||
-      (path === "/" && location.pathname.startsWith("/watch")) ||
+      (path === "/Video" && location.pathname.startsWith("/watch")) ||
       (path === "/Articles" &&
         location.pathname.startsWith("/ArticleDetails")) ||
       (path === "/" && /^\/\d+$/.test(location.pathname))
@@ -145,7 +145,10 @@ function Slides() {
   };
 
   return (
-    <div className="h-[100vh] font-medium overflow-hidden text-nowrap bg-white text-gray-700 dark:text-gray-200 dark:bg-gray-900 flex flex-col border-r  sm:border-none border-gray-900 ">
+    <div
+      className="h-[100vh] font-medium overflow-hidden text-nowrap bg-white text-gray-700 dark:text-gray-200 dark:bg-gray-900 flex flex-col border-r  sm:border-none border-gray-900 "
+      style={{ willChange: "transform" }}
+    >
       <div className="text-center py-[14px] lg:py-4">
         <Link to="/" className="flex items-center justify-center gap-2">
           <Sparkles size={24} className="text-blue-600 dark:text-blue-400" />

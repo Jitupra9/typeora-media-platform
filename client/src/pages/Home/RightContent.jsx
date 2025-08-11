@@ -30,7 +30,10 @@ import {
 } from "lucide-react";
 function RightContent({ suggestedGroups, upcomingEvents, recentActivities }) {
   return (
-    <div className="lg:col-span-3 pb-14 lg:pb-5 space-y-6 hidel_slide_roler xl:h-[calc(100vh-80px)] overflow-y-auto">
+    <div
+      style={{ willChange: "transform" }}
+      className="lg:col-span-3 pb-14 lg:pb-5 space-y-6 hidel_slide_roler xl:h-[calc(100vh-80px)] overflow-y-auto"
+    >
       <div className=" grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-1">
         {" "}
         <div className="dark:bg-gray-900 bg-white rounded-xl shadow p-4">

@@ -254,8 +254,8 @@ function Home() {
   };
 
   return (
-    <div style={{ willChange: "transform" }}>
-      <div className="dark:bg-gray-950 bg-gray-50 text-gray-900 dark:text-gray-100">
+    <div className=" overflow-hidden" style={{ willChange: "transform" }}>
+      <div className=" text-gray-900 dark:text-gray-100">
         <main className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
           <div className="lg:col-span-7 xl:col-span-6 xl:col-start-4 order-1">
             <CenterContent
@@ -277,8 +277,8 @@ function Home() {
             />
           </div>
 
-          <div className="lg:col-span-5 xl:contents order-2 hidel_slide_roler lg:h-[calc(100vh-80px)] overflow-y-auto xl:h-max">
-            <div className="xl:col-span-3 xl:order-first">
+          <div className="lg:col-span-5 xl:contents order-2 hidel_slide_roler lg:h-[calc(100vh-80px)]  overflow-y-auto xl:h-max">
+            <div className="xl:col-span-3 xl:order-first mb-3">
               <LeftContent
                 activeFriends={activeFriends}
                 suggestedFriends={suggestedFriends}

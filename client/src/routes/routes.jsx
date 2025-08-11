@@ -27,11 +27,11 @@ const routes = [
     component: Layout,
     children: [
       {
-        path: "/home",
+        path: "",
         component: Home,
       },
       {
-        path: "",
+        path: "/Video",
         component: LiveReports,
       },
       {
