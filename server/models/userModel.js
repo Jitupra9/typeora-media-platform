@@ -29,10 +29,6 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
-    visibility: {
-      type: ["Public", "Private"],
-      default: "Public",
-    },
     Gender: {
       type: ["male", "female", "other", ""],
       required: true,

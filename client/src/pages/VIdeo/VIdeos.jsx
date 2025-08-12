@@ -1,7 +1,6 @@
 import React, { memo, useContext, useEffect, useMemo, useState } from "react";
 import AllOptions from "../../component/models/AllOptions";
 import { IsAuthnticate } from "../../context/Auth/IsAuth";
-import { Headers } from "../../context/utils/Headercontext";
 import { Link } from "react-router-dom";
 import NewUpload from "../../component/Page/Profile/NewUpload";
 import logo from "../../assets/images/logo.png";
@@ -10,30 +9,8 @@ import { Dot, EllipsisVertical, Play, Video } from "lucide-react";
 function LiveReports() {
   const [UploadType, setUploadType] = useState("videos");
   const [UploadActive, setUploadActive] = useState(false);
-  const { setheaders } = useContext(Headers);
   const [ModelOpen, setModelOpen] = useState(null);
-  const categories = useMemo(
-    () => [
-      { path: "/live-reports", name: "All Topic" },
-      { path: "/Personal", name: "Personal" },
-      { path: "/Travel", name: "Travel" },
-      { path: "/Technology", name: "Technology" },
-      { path: "/Education", name: "Education" },
-      { path: "/Health", name: "Health" },
-      { path: "/Fitness", name: "Fitness" },
-      { path: "/Finance", name: "Finance" },
-      { path: "/Food", name: "Food" },
-      { path: "/Lifestyle", name: "Lifestyle" },
-      { path: "/Devt", name: "Devt" },
-      { path: "/Entertainment", name: "Entertainment" },
-      { path: "/Career", name: "Career" },
-      { path: "/Creativity", name: "Creativity" },
-    ],
-    []
-  );
-  useEffect(() => {
-    setheaders(categories);
-  }, [categories, setheaders]);
+
   const handleElips = (e, key) => {
     e.preventDefault();
     setModelOpen((prev) => (prev === key ? null : key));

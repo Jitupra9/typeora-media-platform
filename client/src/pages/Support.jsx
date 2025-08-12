@@ -19,12 +19,6 @@ import {
 } from "lucide-react";
 
 function Support() {
-  const { setheaders } = useContext(Headers);
-
-  const categories = useMemo(() => [], []);
-  useEffect(() => {
-    setheaders(categories);
-  }, [setheaders, categories]);
   const supportTeams = [
     {
       title: "Technical Support",
