@@ -31,7 +31,10 @@ import {
 } from "lucide-react";
 function RightContainer({ trendingTags, suggestedPeople }) {
   return (
-    <div className="lg:col-span-3 space-y-6">
+    <div
+      className=" pb-10 lg:pb-5 space-y-6"
+      style={{ willChange: "transform" }}
+    >
       <div className="bg-white dark:bg-gray-900 rounded-lg shadow-sm p-4">
         <h3 className="font-medium mb-4 flex items-center gap-2">
           <Flame size={18} className="text-orange-500" />

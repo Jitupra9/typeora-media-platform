@@ -42,7 +42,7 @@ function CenterContent({
   getBadge,
 }) {
   return (
-    <div className="lg:col-span-7">
+    <div className=" lg:pb-5">
       <div className="bg-white dark:bg-gray-900 rounded-lg shadow-sm p-4 mb-6">
         <div className="flex items-start gap-3">
           <div className="h-10 w-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-medium">

@@ -187,20 +187,6 @@ function Select({ options, selected }) {
 }
 
 function Settings() {
-  const { setheaders } = useContext(Headers);
-
-  const categories = useMemo(
-    () => [
-      { path: "/", name: "HOME" },
-      { path: "/Profile", name: "ACCOUNT" },
-    ],
-    []
-  );
-
-  useEffect(() => {
-    setheaders(categories);
-  }, [setheaders, categories]);
-
   const accountPublic = true;
   const twoFactorAuth = false;
   const storageUsed = 65;

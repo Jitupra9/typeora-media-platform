@@ -19,6 +19,7 @@ import {
   AlignRight,
   Sparkles,
   X,
+  Sun,
 } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
@@ -115,11 +116,11 @@ function Header(props) {
               <Search className="text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors" />
             )}
           </div>
-          <div className="hidden lg:flex items-center bg-gray-800   rounded-full">
+          <div className="hidden lg:flex items-center bg-gray-200 dark:bg-gray-800   rounded-full">
             <div
               className={`py-2 px-4 rounded-full cursor-pointer tracking-wide ${
                 activeTab === "public"
-                  ? "bg-gray-600 text-white"
+                  ? " bg-gray-500 dark:bg-gray-600 text-white"
                   : "text-gray-500 "
               }`}
               onClick={() => setActiveTab("public")}
@@ -145,7 +146,7 @@ function Header(props) {
             {<Notification />}
             <div className="border-l-2 lg:border-x-2">
               {theme === "day" ? (
-                <SunMoon
+                <Sun
                   className="text-yellow-500 transition-transform duration-300 ease-in-out hover:rotate-[360deg] hover:text-yellow-600"
                   onClick={setScreen}
                 />

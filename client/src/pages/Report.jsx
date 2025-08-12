@@ -24,12 +24,7 @@ function Report() {
   const [reportType, setReportType] = useState("content");
   const [message, setMessage] = useState("");
   const [department, setDepartment] = useState("support");
-  const { setheaders } = useContext(Headers);
 
-  const categories = useMemo(() => [], []);
-  useEffect(() => {
-    setheaders(categories);
-  }, [setheaders, categories]);
   const [reports, setReports] = useState([
     {
       id: 1,
