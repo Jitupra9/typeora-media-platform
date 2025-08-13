@@ -51,11 +51,14 @@ function Profile() {
   return (
     <div className=" font-semibold flex flex-col lg:flex-row justify-between text-gray-700 dark:text-gray-200 gap-5 pb-20 lg:pb-0">
       <div
-        className="w-full lg:h-[86vh] lg:overflow-y-scroll hidel_slide_roler lg:w-[68%] space-y-5 lg:rounded-xl"
+        className="w-full lg:h-[calc(100vh-80px)]  lg:overflow-y-scroll hidel_slide_roler lg:w-[68%] space-y-5 lg:rounded-xl"
         style={{ willChange: "transform" }}
       >
         <ProfileHeader setisactive={setisactive} handleEdit={handleEdit} />
-        <div className="bg-white dark:bg-gray-900 p-5 rounded-xl shadow-sm">
+        <div
+          className="bg-white dark:bg-gray-900 p-3
+         sm:p-5 rounded-xl shadow-sm"
+        >
           <ul className="flex overflow-x-auto gap-1 pb-2 hidel_slide_roler">
             {[
               { name: "Personal", icon: User },

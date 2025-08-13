@@ -71,7 +71,7 @@ function Slides() {
         {
           icon: <FileText size={18} className={iconColors.info} />,
           path: "/myContent",
-          name: "Your Content",
+          name: "My Content",
         },
         {
           icon: <Bookmark size={18} className={iconColors.warning} />,

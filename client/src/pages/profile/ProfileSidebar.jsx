@@ -6,7 +6,7 @@ import Social from "../../component/Page/Profile/Social";
 function ProfileSidebar() {
   return (
     <div
-      className="w-full lg:h-[86vh] hidel_slide_roler lg:overflow-hidden lg:overflow-y-scroll lg:w-[30%] space-y-5 lg:rounded-xl"
+      className="w-full lg:h-[calc(100vh-80px)] hidel_slide_roler lg:overflow-hidden lg:overflow-y-scroll lg:w-[30%] space-y-5 lg:rounded-xl"
       style={{ willChange: "transform" }}
     >
       <ProfileCheckList />

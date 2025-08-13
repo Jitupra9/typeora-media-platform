@@ -91,11 +91,13 @@ function Personalinfo({ Isedit, setIsedit }) {
     <div className="space-y-8 bg-white dark:bg-gray-900 rounded-lg ">
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-2xl font-bold text-blue-400 dark:text-blue-400 flex items-center gap-2">
-            <User className="w-6 h-6 text-pink-500" />
+          <h2 className=" text-xl sm:text-2xl font-bold text-blue-400 dark:text-blue-400 flex items-center gap-2">
+            <div className=" bg-gray-800 rounded-full p-1">
+              <User className="w-6 h-6 text-pink-500" />
+            </div>
             Personal Information
           </h2>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
             {isEditing
               ? "Edit your personal details"
               : "View your personal details"}
@@ -107,7 +109,7 @@ function Personalinfo({ Isedit, setIsedit }) {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 transition-colors"
           >
             <Pencil className="w-4 h-4 text-yellow-300" />
-            Edit<span className=" hidden sm:inline-block">Profile</span>
+            <span className=" hidden sm:inline-block">Edit Profile</span>
           </button>
         ) : (
           <div className="flex gap-2">
