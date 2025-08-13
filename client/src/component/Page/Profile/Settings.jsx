@@ -42,19 +42,22 @@ function Settings() {
               Account Settings
             </h1>
           </div>
-          <button
-            onClick={toggleDarkMode}
-            className="p-2 rounded-full bg-gray-100  dark:bg-gray-700 text-gray-700 dark:text-gray-200"
-            aria-label={
-              theme === "day" ? "Switch to light mode" : "Switch to dark mode"
-            }
-          >
-            {theme === "day" ? (
-              <Sun className="h-5 w-5 text-orange-500" />
-            ) : (
-              <Moon className="h-5 w-5" />
-            )}
-          </button>
+          <div className="flex items-center gap-2 ">
+            <div className=" bg-gray-700 px-3 py-1 rounded-md">save</div>
+            <button
+              onClick={toggleDarkMode}
+              className="p-2 rounded-full bg-gray-100  dark:bg-gray-700 text-gray-700 dark:text-gray-200"
+              aria-label={
+                theme === "day" ? "Switch to light mode" : "Switch to dark mode"
+              }
+            >
+              {theme === "day" ? (
+                <Sun className="h-5 w-5 text-orange-500" />
+              ) : (
+                <Moon className="h-5 w-5" />
+              )}
+            </button>
+          </div>
         </div>
         <div className="flex border-b border-gray-200 dark:border-gray-700 mb-6 overflow-x-auto">
           <button

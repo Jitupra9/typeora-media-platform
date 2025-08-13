@@ -41,7 +41,7 @@ function ProfileHeader(props) {
     props.handleEdit();
   };
   return (
-    <div className="bg-white dark:bg-gray-900 px-5 py-2 rounded-xl shadow-sm">
+    <div className="bg-white dark:bg-gray-900 px-3 sm:px-5 py-2 rounded-xl shadow-sm">
       <div className=" relative flex flex-col sm:flex-row py-3 items-start sm:items-center justify-between border-b border-gray-200 dark:border-gray-700 gap-4">
         <div className="flex items-center gap-4">
           <div className="relative">
