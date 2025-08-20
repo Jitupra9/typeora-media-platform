@@ -1,4 +1,4 @@
-import React, { memo, useContext, useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import {
   Share2,
   Github,
@@ -8,10 +8,10 @@ import {
   X,
   Loader,
 } from "lucide-react";
-import { IsAuthnticate } from "../../../context/Auth/IsAuth";
 import toast from "react-hot-toast";
 import axios from "axios";
-
+import { useSelector, useDispatch } from "react-redux";
+import { setUser } from "../../../store/Auth";
 const socialIcons = {
   github: <Github className="w-5 h-5" />,
   twitter: <Twitter className="w-5 h-5 text-blue-400" />,
@@ -20,8 +20,9 @@ const socialIcons = {
 };
 
 function Social() {
-  const { Auth, setAuth } = useContext(IsAuthnticate);
-  const [socialLinks, setSocialLinks] = useState(Auth?.user?.Social || []);
+  const { user, token } = useSelector((state) => state.Auth);
+  const Dispatch = useDispatch();
+  const [socialLinks, setSocialLinks] = useState(user?.Social || []);
   const [showAddInput, setShowAddInput] = useState(false);
   const [newPlatform, setNewPlatform] = useState("github");
   const [customPlatform, setCustomPlatform] = useState("");
@@ -30,8 +31,8 @@ function Social() {
   const [selectedKeys, setSelectedKeys] = useState([]);
 
   useEffect(() => {
-    setSocialLinks(Auth?.user?.Social || []);
-  }, [Auth]);
+    setSocialLinks(user?.Social || []);
+  }, [socialLinks]);
 
   const addSocialLink = async () => {
     if (!newUrl.trim()) return;
@@ -55,22 +56,19 @@ function Social() {
     try {
       setLoading(true);
 
-      const res = await axios.put(`/api/UpdateSocials/${Auth?.user?._id}`, {
-        token: Auth.token,
+      const res = await axios.put(`/api/UpdateSocials/${user?._id}`, {
+        token: token,
         social: [...socialLinks, newLink],
       });
 
       if (res.data?.success) {
         const updatedUser = res.data.user;
-        setAuth((prev) => ({
-          ...prev,
-          user: updatedUser,
-        }));
 
+        Dispatch(setUser(updatedUser));
         localStorage.setItem(
           "userData",
           JSON.stringify({
-            token: Auth.token,
+            token: token,
             user: updatedUser,
           })
         );
@@ -99,22 +97,19 @@ function Social() {
 
     try {
       setLoading(true);
-      const res = await axios.put(`/api/UpdateSocials/${Auth?.user?._id}`, {
-        token: Auth.token,
+      const res = await axios.put(`/api/UpdateSocials/${user?._id}`, {
+        token: token,
         social: updatedLinks,
       });
 
       if (res.data?.success) {
         const updatedUser = res.data.user;
-        setAuth((prev) => ({
-          ...prev,
-          user: updatedUser,
-        }));
+        Dispatch(setUser(updatedUser));
 
         localStorage.setItem(
           "userData",
           JSON.stringify({
-            token: Auth.token,
+            token: token,
             user: updatedUser,
           })
         );

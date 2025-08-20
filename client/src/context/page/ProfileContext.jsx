@@ -1,10 +1,9 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
-import { IsAuthnticate } from "../Auth/IsAuth";
-
+import { useSelector } from "react-redux";
 export const ProfileDataContext = createContext();
-import APIS from "../../services/APIS";
+import APIS from "../../services/CountApi";
 function ProfileContext({ children }) {
-  const { Auth } = useContext(IsAuthnticate);
+  const { user } = useSelector((state) => state.Auth);
   const [NewUploadData, setNewUploadData] = useState(false);
   const [uploadType, setUploadType] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
@@ -23,7 +22,7 @@ function ProfileContext({ children }) {
   };
 
   const [formData, setFormData] = useState(() => {
-    const u = Auth?.user ?? {};
+    const u = user ?? {};
     return {
       UserID: u._id,
       FirstName: u.Firstname ?? "",
@@ -71,7 +70,7 @@ function ProfileContext({ children }) {
 
   useEffect(() => {
     setProfileCompletion(calcCompletion(formData));
-  }, [Auth.user]);
+  }, [user]);
 
   const contextValue = {
     TotalData,

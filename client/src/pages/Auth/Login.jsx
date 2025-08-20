@@ -1,11 +1,19 @@
 import React, { useState, useContext } from "react";
 import { Mail, CheckCheck, Lock, EyeOff, Eye } from "lucide-react";
+import { useDispatch } from "react-redux";
+import {
+  setUser,
+  setLoading,
+  setToken,
+  setLoginStatus,
+} from "../../store/Auth";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { IsAuthnticate } from "../../context/Auth/IsAuth";
+// import { IsAuthnticate } from "../../context/Auth/IsAuth";
 
 function Login() {
+  const Dispatch = useDispatch();
   const [passEye, setpassEye] = useState(false);
   const [loading, setLoading] = useState(false);
   const [data, setdata] = useState({
@@ -20,7 +28,6 @@ function Login() {
       [name]: value,
     }));
   };
-  const { setAuth } = useContext(IsAuthnticate);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,13 +39,10 @@ function Login() {
       });
       console.log(res.data);
       if (res.data?.success) {
-        setAuth((prev) => ({
-          ...prev,
-          islogined: true,
-          user: res.data?.userData?.user,
-          token: res.data?.userData?.token,
-        }));
         localStorage.setItem("userData", JSON.stringify(res?.data?.userData));
+        Dispatch(setUser(res.data?.userData?.user));
+        Dispatch(setToken(res?.data?.userData?.token));
+        Dispatch(setLoginStatus(true));
         toast.success("Login successful!");
         navigate("/");
       } else {

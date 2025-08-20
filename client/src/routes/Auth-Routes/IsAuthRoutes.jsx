@@ -1,18 +1,19 @@
 import React, { useContext, useEffect } from "react";
 import { Navigate } from "react-router-dom";
-import { IsAuthnticate } from "../../context/Auth/IsAuth";
 
+import { useSelector } from "react-redux";
 function IsAuthRoutes({ children }) {
-  const { Auth } = useContext(IsAuthnticate);
-  useEffect(() => {
-    if (!Auth.loading && Auth.islogined) {
-    } else if (!Auth.loading && !Auth.islogined) {
-    }
-  }, [Auth?.loading, Auth?.islogined]);
+  const { islogined, loading } = useSelector((state) => state.Auth);
 
-  return Auth.loading ? (
+  useEffect(() => {
+    if (!loading && islogined) {
+    } else if (!loading && !islogined) {
+    }
+  }, [loading, islogined]);
+
+  return loading ? (
     "loading..."
-  ) : Auth.islogined ? (
+  ) : islogined ? (
     children
   ) : (
     <Navigate to="/login" />

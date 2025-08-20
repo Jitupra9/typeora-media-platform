@@ -1,12 +1,13 @@
-import React, { memo, useContext, useState } from "react";
+import React, { memo, useState } from "react";
 import { Award, Flag, Plus, X, Loader } from "lucide-react";
-import { IsAuthnticate } from "../../../context/Auth/IsAuth";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-
+import { setUser } from "../../../store/Auth";
+import { useDispatch, useSelector } from "react-redux";
 function ProfileSkills() {
-  const { Auth, setAuth } = useContext(IsAuthnticate);
-  const [skills, setSkills] = useState(Auth?.user?.Skills || []);
+  const { user, token } = useSelector((state) => state.Auth);
+  const Dispatch = useDispatch();
+  const [skills, setSkills] = useState(user?.Skills || []);
   const [newSkill, setNewSkill] = useState("");
   const [loading, setLoading] = useState({
     add: false,
@@ -16,22 +17,19 @@ function ProfileSkills() {
 
   const updateSkills = async (updatedSkills) => {
     try {
-      const result = await axios.put(`/api/UpdateSkill/${Auth?.user?._id}`, {
+      const result = await axios.put(`/api/UpdateSkill/${user?._id}`, {
         Skills: updatedSkills,
-        token: Auth.token,
+        token: token,
       });
 
       if (result?.data?.success) {
         console.log(result.data);
         const usersData = result.data.user;
-        setAuth((prev) => ({
-          ...prev,
-          user: usersData,
-        }));
+        Dispatch(setUser(usersData));
         localStorage.setItem(
           "userData",
           JSON.stringify({
-            token: Auth.token,
+            token: token,
             user: usersData,
           })
         );

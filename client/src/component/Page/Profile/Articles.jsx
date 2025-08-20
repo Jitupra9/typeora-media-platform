@@ -9,9 +9,7 @@ import Pagination from "../../utils/pagination";
 import ServerOffline from "../../utils/ServerOffline";
 import { Link } from "react-router-dom";
 import { Plus, Grid, List, LayoutGrid } from "lucide-react";
-// import sports from "../../../assets/images/sports.jpg";
 import axios from "axios";
-// import { useMediaQuery } from "react-responsive";
 const ProfileArticles = (props) => {
   const { contextValue, SetcontextValue } = useContext(ProfileDataContext);
   const { NewUploadData, uploadActive } = contextValue;
@@ -23,19 +21,7 @@ const ProfileArticles = (props) => {
   const [error, seterror] = useState(null);
   const [Limit, setLimit] = useState(3);
   const UserId = props.UserID;
-  // const isMobile = useMediaQuery({ maxWidth: 645 });
-  // const isTablet = useMediaQuery({ minWidth: 646, maxWidth: 1439 });
-  // const isDesktop = useMediaQuery({ minWidth: 1440 });
 
-  // useEffect(() => {
-  //   if (isMobile) {
-  //     setLimit(10);
-  //   } else if (isTablet) {
-  //     setLimit(2);
-  //   } else {
-  //     setLimit(3);
-  //   }
-  // }, [isMobile, isTablet, isDesktop]);
   const fetchArticles = async () => {
     console.log("rady to fetch articles");
     try {

@@ -1,21 +1,21 @@
-import React, { memo, useContext, useEffect, useMemo, useState } from "react";
+import React, { memo, useState } from "react";
 import AllOptions from "../../component/models/AllOptions";
-import { IsAuthnticate } from "../../context/Auth/IsAuth";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import NewUpload from "../../component/Page/Profile/NewUpload";
 import logo from "../../assets/images/logo.png";
 import poster from "../../assets/images/videos2.jpg";
 import { Dot, EllipsisVertical, Play, Video } from "lucide-react";
+import toast from "react-hot-toast";
 function LiveReports() {
   const [UploadType, setUploadType] = useState("videos");
   const [UploadActive, setUploadActive] = useState(false);
   const [ModelOpen, setModelOpen] = useState(null);
-
+  const { islogined } = useSelector((state) => state.Auth);
   const handleElips = (e, key) => {
     e.preventDefault();
     setModelOpen((prev) => (prev === key ? null : key));
   };
-  const { Auth, LoginAlert } = useContext(IsAuthnticate);
   return (
     <div className=" relative text-gray-200 dark:text-gray-400 mb-10">
       <div className="flex items-center justify-between mb-6">
@@ -245,11 +245,13 @@ function LiveReports() {
         <div className="flex items-center space-x-2 sm:space-x-4">
           <button
             onClick={
-              Auth.islogined
+              islogined
                 ? () => {
                     setUploadActive(true);
                   }
-                : LoginAlert
+                : () => {
+                    toast.error("Please Login First");
+                  }
             }
             className={`flex items-center space-x-1 
               bg-blue-600 hover:bg-blue-700

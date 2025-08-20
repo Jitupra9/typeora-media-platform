@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { ProfileDataContext } from "../../../context/page/ProfileContext";
-import { IsAuthnticate } from "../../../context/Auth/IsAuth";
+import { setUser } from "../../../store/Auth";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import {
   Pencil,
@@ -19,6 +20,8 @@ import { memo, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 function Personalinfo({ Isedit, setIsedit }) {
+  const { token } = useSelector((state) => state.Auth);
+  const Dispatch = useDispatch();
   const { contextValue, SetcontextValue } = useContext(ProfileDataContext);
   const { formData } = contextValue;
   const { setFormData } = SetcontextValue;
@@ -28,7 +31,6 @@ function Personalinfo({ Isedit, setIsedit }) {
   });
   const [tempData, settempData] = useState(formData);
   const [isEditing, setIsEditing] = useState(false);
-  const { Auth, setAuth } = useContext(IsAuthnticate);
   useEffect(() => {
     if (Isedit) {
       setIsEditing(true);
@@ -47,21 +49,18 @@ function Personalinfo({ Isedit, setIsedit }) {
     try {
       const res = await axios.put("api/UpdateProfile", {
         formData,
-        token: Auth.token,
+        token: token,
       });
       if (res.data?.success) {
         setIsEditing(false);
         toast.success(res.data.message);
         if (res.data?.user) {
           console.log(res.data);
-          setAuth((prev) => ({
-            ...prev,
-            user: res.data.user,
-          }));
+          Dispatch(setUser(res?.data?.user));
           localStorage.setItem(
             "userData",
             JSON.stringify({
-              token: Auth.token,
+              token: token,
               user: res.data.user,
             })
           );

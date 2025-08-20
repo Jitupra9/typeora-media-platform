@@ -1,6 +1,6 @@
 import React, { memo, useState } from "react";
-import Slides from "../component/Layout/Slides";
-import Header from "../component/Layout/header/Header.jsx";
+import Slides from "./Slides";
+import Header from "./header/Header";
 import { Outlet } from "react-router-dom";
 function Layout() {
   const [sidebarActive, setsidebarActive] = useState(false);

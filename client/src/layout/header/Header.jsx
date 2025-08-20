@@ -6,21 +6,10 @@ import React, {
   useEffect,
   useCallback,
 } from "react";
-import { Headers } from "../../../context/utils/Headercontext";
-import { ThemeContext } from "../../../context/utils/ThemeProvide";
+import { ThemeContext } from "../../context/utils/ThemeProvide";
 import Suggestions from "./Suggestions";
-import Notification from "../../models/Notification";
-import {
-  BellRing,
-  Search,
-  ChevronDown,
-  Moon,
-  SunMoon,
-  AlignRight,
-  Sparkles,
-  X,
-  Sun,
-} from "lucide-react";
+import Notification from "../../component/models/Notification";
+import { Search, Moon, AlignRight, Sparkles, X, Sun } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 function Header(props) {

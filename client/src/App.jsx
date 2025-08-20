@@ -1,12 +1,12 @@
 import "./App.css";
 import RouterProvider from "./routes/RouteProvider";
 import { Toaster } from "react-hot-toast";
-// import ScrollToTop from "./component/utils/ScrollToTop";
+import FetDefault from "./services/API/FetDefault";
 function App() {
   return (
     <>
       <Toaster />
-      {/* <ScrollToTop /> */}
+      <FetDefault />
       <RouterProvider />
     </>
   );

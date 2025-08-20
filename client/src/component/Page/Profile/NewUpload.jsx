@@ -1,6 +1,5 @@
 import { memo, useState, useEffect, useContext } from "react";
 import CloudinaryUpload from "../../utils/CloudinaryUpload";
-import { IsAuthnticate } from "../../../context/Auth/IsAuth";
 import { ProfileDataContext } from "../../../context/page/ProfileContext";
 import {
   Upload,
@@ -16,14 +15,14 @@ import {
   Tag,
 } from "lucide-react";
 import axios from "axios";
-
+import { useSelector } from "react-redux";
 function NewUpload(props) {
-  const { Auth } = useContext(IsAuthnticate);
+  const { user, token } = useSelector((state) => state.Auth);
   const { SetcontextValue } = useContext(ProfileDataContext);
   const { setNewUploadData, setUploadActive } = SetcontextValue;
   const type = props.type;
   const [UploadData, setUploadData] = useState({
-    userID: Auth.user?._id,
+    userID: user?._id,
     fileUrl: "",
     title: "",
     subHeading: "",
@@ -100,7 +99,7 @@ function NewUpload(props) {
                 "api/videos/NewVideo",
                 {
                   data: Datas,
-                  token: Auth.token,
+                  token: token,
                 },
                 {
                   onUploadProgress: (progressEvent) => {
@@ -115,7 +114,7 @@ function NewUpload(props) {
                 "api/articles/NewArticle",
                 {
                   data: Datas,
-                  token: Auth.token,
+                  token: token,
                 },
                 {
                   onUploadProgress: (progressEvent) => {

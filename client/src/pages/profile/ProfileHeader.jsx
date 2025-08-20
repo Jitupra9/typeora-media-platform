@@ -1,6 +1,7 @@
 import React, { memo, useState, useContext } from "react";
+// import { user } from "../../store/Auth";
+import { useSelector } from "react-redux";
 import people from "../../assets/images/people.jpg";
-import { IsAuthnticate } from "../../context/Auth/IsAuth";
 import FollowersModal from "../../component/models/FollowersModel";
 import FollowingModel from "../../component/models/FollowingModel";
 import Shareing from "../../component/models/Share";
@@ -19,11 +20,10 @@ import {
   Globe,
 } from "lucide-react";
 function ProfileHeader(props) {
+  const { user } = useSelector((state) => state.Auth);
   const { contextValue } = useContext(ProfileDataContext);
-  const { Auth } = useContext(IsAuthnticate);
   const [shareActive, setshareActive] = useState(false);
   const { profileCompletion } = contextValue;
-  const { user } = Auth;
   const [ShowFollowing, setShowFollowing] = useState(false);
   const [ShowFollowers, SetShowFollowers] = useState(false);
   const followers = Array.from({ length: 1243 }, (_, i) => ({

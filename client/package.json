@@ -10,16 +10,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.8.2",
     "axios": "^1.10.0",
     "cloudinary": "^2.7.0",
     "dotenv": "^17.0.0",
-    "framer-motion": "^12.23.12",
     "lucide-react": "^0.525.0",
-    "prop-types": "^15.8.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-hot-toast": "^2.5.2",
-    "react-responsive": "^10.0.1",
+    "react-redux": "^9.2.0",
     "react-router-dom": "^7.6.3",
     "react-share": "^5.2.2"
   },

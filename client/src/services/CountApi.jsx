@@ -1,11 +1,8 @@
-// hooks/useAPIs.js
 import axios from "axios";
-import { useContext } from "react";
-import { IsAuthnticate } from "../context/Auth/IsAuth";
-
+import { useSelector } from "react-redux";
 function useAPIs() {
-  const { Auth } = useContext(IsAuthnticate);
-  const userId = Auth.user._id;
+  const { user } = useSelector((state) => state.Auth);
+  const userId = user._id;
 
   return {
     fetchTotalArticles: async () => {

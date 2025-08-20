@@ -1,11 +1,9 @@
 import React, { memo, useState, useContext } from "react";
 import { ThemeContext } from "../../../context/utils/ThemeProvide";
-import SettingItem from "./Setting/SettingItem";
-import ToggleSwitch from "./Setting/ToggleSwitch";
+
 import Ownership from "./Setting/ownership";
 import Security from "./Setting/Security";
 import Content from "./Setting/Content";
-import InputField from "./Setting/InputField";
 import Notification from "./Setting/Notification";
 import {
   ChevronRight,
